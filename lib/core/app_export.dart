@@ -6,3 +6,5 @@ export './utils/navigator_service.dart';
 export './utils/pref_utils.dart';
 export './utils/progress_dialog_utils.dart';
 export './utils/validation_functions.dart';
+export './theme/app_colors.dart';
+export './theme/app_theme.dart';
