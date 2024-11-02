@@ -4,5 +4,9 @@ class ImageConstant {
   static String imagePath = 'assets/images';
 
 // Playlist Recommendation images
-  static String imgImage7 = '$imagePath/img_image_7.png';
+  static String imgNavHome = '$imagePath/home.svg';
+  static String imgNavMore = '$imagePath/more.svg';
+  static String imgUser = '$imagePath/user.svg';
+
+  static var img;
 }
