@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/app_export.dart';
-import '../core/theme/custom_button_style.dart';
 
 class CustomFloatingButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return fabWidget;
+  }
   CustomFloatingButton(
       {Key? key,
       this.alignment,
@@ -18,7 +20,7 @@ class CustomFloatingButton extends StatelessWidget {
 
   final Alignment? alignment;
   final Color? backgroundColor;
-  final VoidCallBack? onTap;
+  final VoidCallback? onTap;
   final ShapeBorder? shape;
   final double? width;
   final double? height;

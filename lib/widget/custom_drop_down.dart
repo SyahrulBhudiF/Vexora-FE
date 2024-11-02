@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vexora_fe/core/app_export.dart';
 
 class CustomDropDown extends StatelessWidget {

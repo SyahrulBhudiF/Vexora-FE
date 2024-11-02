@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/app_export.dart';
 import 'base_button.dart';
 
@@ -10,7 +9,7 @@ class CustomElevatedButton extends BaseButton {
     this.leftIcon,
     this.rightIcon,
     EdgeInsets? margin,
-    VoidCallBack? onPressed,
+    VoidCallback? onPressed,
     ButtonStyle? buttonStyle,
     Alignment? alignment,
     TextStyle? buttonTextStyle,
@@ -33,12 +32,14 @@ class CustomElevatedButton extends BaseButton {
   final BoxDecoration? decoration;
   final Widget? leftIcon;
   final Widget? rightIcon;
+  final ButtonStyle? buttonStyle = ButtonStyle();
+  final TextStyle? buttonTextStyle = TextStyle();
 
   @override
   Widget build(BuildContext context) {
     return alignment !=null ? Align(
       alignment: alignment ?? Alignment.center,
-      child: buildElevatedButtonWidget): buildElevatedButtonWidget;,
+      child: buildElevatedButtonWidget): buildElevatedButtonWidget;
   }
 
   Widget get buildElevatedButtonWidget => Container(

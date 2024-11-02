@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../core/app_export.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum BottomBarEnum { Home, More }
 
 class CustomBottomAppBar extends StatefulWidget {
   CustomBottomAppBar({this.onChanged});
 
-  Function(BottomBarEnum)? onChanged;
+  final Function(BottomBarEnum)? onChanged;
 
   @override
   CustomButtomAppBarState createState() => CustomButtomAppBarState();
@@ -57,10 +56,11 @@ class CustomButtomAppBarState extends State<CustomBottomAppBar> {
                         ),
                         SizedBox(height: 4.h),
                         Text(bottomMenuList[index].title ?? "",
-                            style: AppTheme.lightTheme.textTheme.bodyMedium
-                                ?.copyWith(
+                            style:
+                            CustomTextStyles.labelMediumSemiBold.copyWith(
                               color: Color(0XFF362C62),
-                            ))
+                            ),
+                          )
                       ],
                     )
                   : Column(
