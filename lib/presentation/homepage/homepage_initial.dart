@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/app_export.dart';
 import 'widget/listhappy_one_item_widget.dart';
 import 'widget/listplaylistgal_item_widget.dart';

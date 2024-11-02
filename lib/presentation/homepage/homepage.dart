@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vexora_fe/routes/app_routes.dart';
 import '../../core/app_export.dart';
 import '../../widget/custom_buttom_app_bar.dart';
