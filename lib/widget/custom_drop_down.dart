@@ -4,7 +4,7 @@ import 'package:vexora_fe/core/app_export.dart';
 class CustomDropDown extends StatelessWidget {
   const CustomDropDown({
     Key? key,
-    required this.alignment,
+    this.alignment,
     this.width,
     this.boxDecoration,
     this.focusNode,
@@ -12,7 +12,7 @@ class CustomDropDown extends StatelessWidget {
     this.iconSize,
     this.autofocus = false,
     this.textStyle,
-    required this.hint,
+    this.hintText,
     this.hintStyle,
     this.items,
     this.prefix,
@@ -25,21 +25,21 @@ class CustomDropDown extends StatelessWidget {
     this.onChanged, // Ubah 'onchanged' menjadi 'onChanged' untuk konsistensi
   }) : super(key: key);
 
-  final Alignment alignment;
+  final Alignment? alignment;
   final double? width;
   final BoxDecoration? boxDecoration;
   final FocusNode? focusNode;
-  final Icon? icon;
+  final Widget? icon;
   final double? iconSize;
-  final bool autofocus;
+  final bool? autofocus;
   final TextStyle? textStyle;
-  final String? hint;
+  final String? hintText;
   final TextStyle? hintStyle;
   final List<String>? items;
-  final String? prefix;
+  final Widget? prefix;
   final BoxConstraints? prefixConstraint;
-  final EdgeInsetsGeometry? contentPadding;
-  final BoxDecoration? borderDecoration;
+  final EdgeInsets? contentPadding;
+  final InputBorder? borderDecoration;
   final Color? fillColor;
   final bool filled;
   final FormFieldValidator<String>? validator;
@@ -48,29 +48,28 @@ class CustomDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: alignment,
-      child: dropDownWidget,
-    );
+    return alignment != null
+        ? Align(alignment: alignment ?? Alignment.center, child: dropDownWidget)
+        : dropDownWidget;
   }
 
   Widget get dropDownWidget => Container(
         width: width ?? double.maxFinite,
         decoration: boxDecoration,
-        child: DropdownButtonFormField<String>(
+        child: DropdownButtonFormField(
           // Tambahkan tipe pada DropdownButtonFormField
           focusNode: focusNode,
           icon: icon,
           iconSize: iconSize ?? 24,
-          autofocus: autofocus,
+          autofocus: autofocus!,
           isExpanded: true,
           style: textStyle ?? CustomTextStyles.titleSmallGray50,
           hint: Text(
-            hint ?? "", // Ubah hintText menjadi hint
+            hintText ?? "", // Ubah hintText menjadi hint
             style: hintStyle ?? CustomTextStyles.titleSmallGray50,
             overflow: TextOverflow.ellipsis,
           ),
-          items: (items ?? []).map<DropdownMenuItem<String>>((String value) {
+          items: items?.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(
@@ -83,42 +82,38 @@ class CustomDropDown extends StatelessWidget {
           decoration: decoration,
           validator: validator,
           onChanged: (value) {
-            if (onChanged != null) {
-              // Cek apakah onChanged tidak null
-              onChanged!(value.toString());
-            }
+            // Cek apakah onChanged tidak null
+            onChanged!(value.toString());
           },
         ),
       );
 
   InputDecoration get decoration => InputDecoration(
-        prefixIcon: prefix != null
-            ? Icon(Icons.access_alarm)
-            : null, // Ganti dengan icon sesuai kebutuhan
+        prefixIcon: prefix, // Ganti dengan icon sesuai kebutuhan
         prefixIconConstraints: prefixConstraint,
         isDense: true,
         contentPadding: contentPadding ?? EdgeInsets.all(6.h),
         fillColor: fillColor ?? theme.colorScheme.primary,
         filled: filled,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.h),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.h),
-          borderSide: BorderSide.none,
-        ),
+        border: borderDecoration ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.h),
+              borderSide: BorderSide.none,
+            ),
+        enabledBorder: borderDecoration ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.h),
+              borderSide: BorderSide.none,
+            ),
         focusedBorder: (borderDecoration ??
                 OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.h),
                 ))
             .copyWith(
-          borderSide: BorderSide(color: theme.colorScheme.primary),
-          width: 1,
+          borderSide: BorderSide(
+            color: theme.colorScheme.primary,
+            width: 1,
+          ),
         ),
       );
-}
-
-extension on Object {
-  copyWith({required BorderSide borderSide, required int width}) {}
 }

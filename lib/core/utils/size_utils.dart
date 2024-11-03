@@ -15,10 +15,11 @@ extension ResponsiveExtension on num {
 extension FormatExtension on double {
   double toDoubleValue({int fractionDigits = 2}) =>
       double.parse(toStringAsFixed(fractionDigits));
+  double isNonZero({num defaultValue = 0.0}) =>
+      this > 0 ? this : defaultValue.toDouble();
 }
 
 // Utility function
-double isNonZero({num defaultValue = 0.0}) => this > 0 ? this : defaultValue.toDouble();
 
 // Device type enum
 enum DeviceType { mobile, tablet, desktop }
@@ -57,7 +58,8 @@ class SizeUtils {
   static late double width;
   static late double height;
 
-  static void setScreenSize(BoxConstraints constraints, Orientation currentOrientation) {
+  static void setScreenSize(
+      BoxConstraints constraints, Orientation currentOrientation) {
     boxConstraints = constraints;
     orientation = currentOrientation;
 
