@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import '../core/app_export.dart';
+import '../core/theme/custom_button_style.dart';
 
 class CustomFloatingButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return fabWidget;
-  }
   CustomFloatingButton(
       {Key? key,
       this.alignment,
@@ -28,11 +25,17 @@ class CustomFloatingButton extends StatelessWidget {
   final Widget? child;
 
   @override
+  Widget build(BuildContext context) {
+    return alignment != null
+        ? Align(alignment: alignment ?? Alignment.center, child: fabWidget)
+        : fabWidget;
+  }
+
   Widget get fabWidget => FloatingActionButton(
         backgroundColor: backgroundColor,
         onPressed: onTap,
         shape: shape ??
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.h)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(36.h)),
         child: Container(
           alignment: Alignment.center,
           width: width ?? 0,

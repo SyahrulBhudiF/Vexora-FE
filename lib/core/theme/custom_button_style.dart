@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../app_export.dart';
 
 class CustomButtonStyles {
@@ -25,7 +24,7 @@ class CustomButtonStyles {
       );
   static ButtonStyle get outlineBlueGray => OutlinedButton.styleFrom(
         backgroundColor: appTheme.red600F9,
-        side: Borderside(
+        side: BorderSide(
           color: appTheme.blueGray900,
           width: 1,
         ),
@@ -34,7 +33,7 @@ class CustomButtonStyles {
       );
   static ButtonStyle get outlineGray => OutlinedButton.styleFrom(
         backgroundColor: appTheme.gray20001,
-        side: Borderside(
+        side: BorderSide(
           color: appTheme.gray600,
           width: 1,
         ),
