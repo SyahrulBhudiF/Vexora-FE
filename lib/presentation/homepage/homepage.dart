@@ -42,16 +42,7 @@ class HomeScreen extends StatelessWidget {
           width: double.maxFinite,
           child: _buildBottomNavigation(context),
         ),
-        floatingActionButton: CustomFloatingButton(
-          height: 74,
-          width: 74,
-          backgroundColor: theme.colorScheme.primary,
-          child: CustomImageView(
-            imagePath: ImageConstant.imgNavHome,
-            height: 37.0.h,
-            width: 37.0.h,
-          ),
-        ),
+        floatingActionButton: CustomFloatingButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );

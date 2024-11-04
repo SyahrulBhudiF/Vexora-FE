@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/app_export.dart';
-import '../../../widget/custom_elevated_button.dart';
+import 'package:vexora_fe/core/app_export.dart';
+import 'package:vexora_fe/widget/custom_elevated_button.dart';
 
 class ListhappyOneItemWidget extends StatelessWidget {
   const ListhappyOneItemWidget({Key? key}) : super(key: key);
@@ -10,87 +10,86 @@ class ListhappyOneItemWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 14.h),
       decoration: BoxDecoration(
-          color: theme.colorScheme.onPrimary,
-          borderRadius: BorderRadiusStyle.roundedBorder12,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0X7FBABABA).withOpacity(0.25),
-              spreadRadius: 2.h,
-              blurRadius: 2.h,
-              offset: Offset(0, 4),
-            )
-          ]),
+        color: theme.colorScheme.onPrimary,
+        borderRadius: BorderRadiusStyle.roundedBorder12,
+        boxShadow: [
+          BoxShadow(
+            color: Color(0X7FBABABA).withOpacity(0.25),
+            spreadRadius: 2.h,
+            blurRadius: 2.h,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 4.h),
-              child: Row(
-                children: [
-                  CustomImageView(
-                    imagePath: ImageConstant.imgUser,
-                    height: 60.h,
-                    width: 60.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10.h),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 30.h, vertical: 2.h),
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.primary,
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                          ),
-                          child: Text(
-                            "Happy",
-                            textAlign: TextAlign.left,
-                            style: theme.textTheme.labelLarge,
-                          ),
+            child: Row(
+              children: [
+                CustomImageView(
+                  imagePath: ImageConstant.imgGoodMood,
+                  height: 60.h,
+                  width: 60.h,
+                ),
+                SizedBox(width: 10.h),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30.h, vertical: 2.h),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.primary,
+                          borderRadius: BorderRadiusStyle.roundedBorder8,
                         ),
-                        SizedBox(
-                          height: 6.h,
+                        child: Text(
+                          "Happy",
+                          textAlign: TextAlign.left,
+                          style: theme.textTheme.labelLarge,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CustomImageView(
-                              imagePath: ImageConstant.imgNavHome,
-                              height: 14.h,
-                              width: 14.h,
+                      ),
+                      SizedBox(height: 6.h),
+                      Row(
+                        children: [
+                          CustomImageView(
+                            imagePath: ImageConstant.imgClock,
+                            height: 14.h,
+                            width: 14.h,
+                          ),
+                          SizedBox(width: 2.h),
+                          Flexible(
+                            child: Text(
+                              "09.10 12 April 2024",
+                              style: theme.textTheme.labelMedium,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
-                            SizedBox(
-                              width: 2.h,
-                            ),
-                            Text("09.10 12 April 2024",
-                                style: theme.textTheme.labelMedium)
-                          ],
-                        )
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           CustomElevatedButton(
-            height: 22.h,
-            width: 102.h,
-            text: 'Your Playlist',
+            height: 30.h,
+            width: 140.h,
+            text: 'Your Playlist', // Pastikan teks tidak overflow
             leftIcon: Container(
-              margin: EdgeInsets.only(right: 2.h),
+              margin: EdgeInsets.only(right: 10.h),
               child: CustomImageView(
-                imagePath: ImageConstant.imgNavMore,
-                height: 18.h,
-                width: 18.h,
+                imagePath: ImageConstant.imgHeadps,
+                height: 10.h,
+                width: 10.h,
                 fit: BoxFit.contain,
               ),
             ),
-            buttonTextStyle: theme.textTheme.labelMedium!,
-          )
+            buttonTextStyle: theme.textTheme.labelMedium,
+          ),
         ],
       ),
     );

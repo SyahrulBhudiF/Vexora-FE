@@ -24,7 +24,7 @@ class HomepageInitialState extends State<HomepageInitial> {
               width: double.maxFinite,
               padding: EdgeInsets.symmetric(vertical: 26.h),
               decoration: BoxDecoration(
-                  color: theme.colorScheme.primary,
+                  color: theme.colorScheme.onPrimary,
                   borderRadius: BorderRadiusStyle.customBorderTL40),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -58,23 +58,17 @@ class HomepageInitialState extends State<HomepageInitial> {
               style: theme.textTheme.titleMedium,
             ),
           ),
-          SizedBox(height: 10.h),
+          SizedBox(height: 5.h),
           Container(
               margin: EdgeInsets.symmetric(horizontal: 42.h),
               width: double.maxFinite,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: 12.h,
-                  children: List.generate(4, (index) {
-                    return ListsadOneItemWidget();
-                  }),
-                ),
+                child:
+                    Wrap(direction: Axis.horizontal, spacing: 10.h, children: [
+                  ListsadOneItemWidget(),
+                ]),
               )),
-          SizedBox(
-            height: 22.h,
-          ),
           Container(
             width: double.maxFinite,
             margin: EdgeInsets.only(right: 14.h),
@@ -119,7 +113,7 @@ class HomepageInitialState extends State<HomepageInitial> {
   Widget _buildYourPlaylistSection(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      margin: EdgeInsets.only(left: 24.h),
+      margin: EdgeInsets.only(left: 15.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -142,12 +136,15 @@ class HomepageInitialState extends State<HomepageInitial> {
               child: Wrap(
                 direction: Axis.horizontal,
                 spacing: 20.h,
-                children: List.generate(3, (index) {
+                children: List.generate(4, (index) {
                   return ListplaylistgalItemWidget();
                 }),
               ),
             ),
           ),
+          SizedBox(
+            height: 55.h,
+          )
         ],
       ),
     );
@@ -161,14 +158,15 @@ class HomepageInitialState extends State<HomepageInitial> {
         width: double.maxFinite,
         margin: EdgeInsets.only(top: 38.h, left: 26.h),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Align(
               alignment: Alignment.center,
               child: SizedBox(
-                width: 170.h,
+                width: 180.h,
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment
+                      .start, // Pastikan semua children berada di bagian atas
                   children: [
                     SizedBox(
                       height: 46.h,
@@ -203,39 +201,35 @@ class HomepageInitialState extends State<HomepageInitial> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.h),
-                      child: Text(
-                        "Vexora",
-                        style: CustomTextStyles.titleLargeBold,
-                      ),
+                    CustomImageView(
+                      imagePath: ImageConstant.imgLogoVexora,
+                      height: 40.h,
+                      width: 40.h,
                     ),
                   ],
                 ),
               ),
             ),
             Row(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 62.h),
-                      child: Text(
-                        "Hello, Rizky",
-                        style: CustomTextStyles.titleLargeBold,
-                      ),
-                    )),
-                SizedBox(
-                  width: 12.h,
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 1.h),
+                    child: Text(
+                      "Hello, Rizky",
+                      style: CustomTextStyles.titleLargeSemiBold,
+                    ),
+                  ),
                 ),
+                SizedBox(width: 90.h),
                 CustomImageView(
-                  imagePath: ImageConstant.imgNavMore,
-                  height: 200.h,
-                  width: 200.h,
-                )
+                  imagePath: ImageConstant.imgHomePage,
+                  height: 175.h,
+                  width: 175.h,
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -243,7 +237,7 @@ class HomepageInitialState extends State<HomepageInitial> {
   }
 
   // navigates to the historyScreen when the action is triggred
-  onTapTxtSeeallone(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.historyScreen);
-  }
+  // onTapTxtSeeallone(BuildContext context) {
+  //   Navigator.pushNamed(context, AppRoutes.historyScreen);
+  // }
 }

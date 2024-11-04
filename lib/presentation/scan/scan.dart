@@ -19,15 +19,16 @@ class ScanScreen extends StatelessWidget {
           width: double.maxFinite,
           height: SizeUtils.height,
           decoration: BoxDecoration(
-              color: theme.colorScheme.primary,
+              color: Colors.transparent,
               image: DecorationImage(
-                  image: AssetImage(ImageConstant.imgScan), fit: BoxFit.fill)),
+                  image: AssetImage(ImageConstant.imgNavHome),
+                  fit: BoxFit.fill)),
           child: Container(
             margin: EdgeInsets.only(top: 56.h),
             padding: EdgeInsets.symmetric(horizontal: 22.h, vertical: 56.h),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [Spacer(), _buildGalleryColumn(context)],
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [const Spacer(), _buildGalleryColumn(context)],
             ),
           ),
         ),
@@ -58,56 +59,31 @@ class ScanScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomImageView(
-                      imagePath: ImageConstant.imgTelevision,
-                      height: 20.h,
-                      width: 22.h,
-                      margin: EdgeInsets.only(left: 8.h),
-                    ),
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                    Text(
-                      "Gallery",
-                      style: CustomTextStyles.labelMediumOnPrimary,
-                    )
-                  ],
+                CustomImageView(
+                  imagePath: ImageConstant.imgGalleryScan,
+                  height: 41.h,
+                  width: 39.h,
+                  margin: EdgeInsets.only(left: 8.h),
                 ),
+                Spacer(),
                 CustomIconButton(
                   height: 50.h,
                   width: 50.h,
                   padding: EdgeInsets.all(10.h),
                   decoration: IconButtonStyleHelper.outlineOnPrimary,
                   child: CustomImageView(
-                    imagePath: ImageConstant.imgGroup24,
+                    imagePath: ImageConstant.imgScanCam,
                   ),
                 ),
                 Spacer(),
-                Padding(
-                  padding: EdgeInsets.only(right: 6.h),
-                  child: Column(
-                    children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgFlipCameraIos,
-                        height: 24.h,
-                        width: 24.h,
-                      ),
-                      SizedBox(
-                        height: 4.h,
-                      ),
-                      Text(
-                        "Flip",
-                        style: CustomTextStyles.labelMediumOnPrimary,
-                      )
-                    ],
-                  ),
+                CustomImageView(
+                  imagePath: ImageConstant.imgFlip,
+                  height: 24.h,
+                  width: 24.h,
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

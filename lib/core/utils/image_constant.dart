@@ -7,6 +7,17 @@ class ImageConstant {
   static String imgNavHome = '$imagePath/home.svg';
   static String imgNavMore = '$imagePath/more.svg';
   static String imgUser = '$imagePath/user.svg';
-
-  static var img;
+  static String imgGoodMood = '$imagePath/goodIcon.svg';
+  static String imgAngryMood = '$imagePath/angryIcon.svg';
+  static String imgSadMood = '$imagePath/cryIcon.svg';
+  static String imgCalmMood = '$imagePath/calmIcon.svg';
+  static String imgHomePage = '$imagePath/homePageImage.svg';
+  static String imgLogoVexora = '$imagePath/LogoVexora.svg';
+  static String imgClock = '$imagePath/clock.svg';
+  static String imgHeadps = '$imagePath/headps.svg';
+  static String imgList = '$imagePath/listPlay.jpg';
+  static String imgCamera = '$imagePath/camera.svg';
+  static String imgScanCam = '$imagePath/scanCam.svg';
+  static String imgGalleryScan = '$imagePath/galleryScan.svg';
+  static String imgFlip = '$imagePath/flipScan.svg';
 }
