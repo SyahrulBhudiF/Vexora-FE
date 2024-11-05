@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           theme: theme, // Define your theme here
           title: 'Vexora',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.history,
+          initialRoute: AppRoutes.playlist,
           routes: AppRoutes.routes,
           // home: HomeScreen(),
         );
