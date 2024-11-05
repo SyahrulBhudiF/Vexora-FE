@@ -244,6 +244,6 @@ class HomepageInitialState extends State<HomepageInitial> {
 
   // navigates to the historyScreen when the action is triggred
   onTapTxtSeeallone(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.historyScreen);
+   // Navigator.pushNamed(context, AppRoutes.historyScreen);
   }
 }
