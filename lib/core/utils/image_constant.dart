@@ -20,4 +20,10 @@ class ImageConstant {
   static String arrowDown = '$imagePath/arrow_down.svg';
   static String camera = '$imagePath/camera.svg';
   static String time = '$imagePath/time.png';
+  static String bigLogo = '$imagePath/big_logo.svg';
+  static String playlist = '$imagePath/playlist.png';
+  static String octionIcon = '$imagePath/oction_icon.svg';
+
+
+
 }
