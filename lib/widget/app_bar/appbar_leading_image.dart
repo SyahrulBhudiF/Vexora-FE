@@ -9,7 +9,7 @@ class AppbarLeadingImage extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final double? height;
   final double? width;
-
+  
   AppbarLeadingImage({
     Key? key,
     this.imagePath,
