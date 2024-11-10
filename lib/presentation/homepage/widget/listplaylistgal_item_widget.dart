@@ -11,7 +11,7 @@ class ListplaylistgalItemWidget extends StatelessWidget {
       child: Column(
         children: [
           CustomImageView(
-            imagePath: ImageConstant.imgUser,
+            imagePath: ImageConstant.imgList,
             height: 120.h,
             width: 120.h,
             radius: BorderRadius.circular(4.h),

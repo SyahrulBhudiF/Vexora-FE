@@ -4,7 +4,7 @@ import '../core/app_export.dart';
 extension IconButtonStyleHelper on CustomIconButton {
   static BoxDecoration get outlineOnPrimary => BoxDecoration(
         color: theme.colorScheme.primary,
-        borderRadius: BorderRadius.circular(24.h),
+        borderRadius: BorderRadius.circular(50.h),
         border: Border.all(
           color: theme.colorScheme.primary,
           width: 1.h,
@@ -19,14 +19,14 @@ extension IconButtonStyleHelper on CustomIconButton {
 
 class CustomIconButton extends StatelessWidget {
   const CustomIconButton(
-    {super.key,
-    this.alignment,
-    this.height,
-    this.width,
-    this.decoration,
-    this.padding,
-    this.onTap,
-    this.child});
+      {super.key,
+      this.alignment,
+      this.height,
+      this.width,
+      this.decoration,
+      this.padding,
+      this.onTap,
+      this.child});
 
   final AlignmentGeometry? alignment;
   final double? height;
@@ -41,23 +41,22 @@ class CustomIconButton extends StatelessWidget {
     return alignment != null
         ? Align(
             alignment: alignment ?? Alignment.center, child: iconButtonWidget)
-        : iconButtonWidget;     
+        : iconButtonWidget;
   }
 
   Widget get iconButtonWidget => SizedBox(
-    height: height ?? 0,
-    width: width ?? 0,
-    child: DecoratedBox(
-      decoration: decoration ??
-        BoxDecoration(
-          color: theme.colorScheme.primary,
-          borderRadius: BorderRadius.circular(34.h),
+      height: height ?? 0,
+      width: width ?? 0,
+      child: DecoratedBox(
+        decoration: decoration ??
+            BoxDecoration(
+              color: theme.colorScheme.primary,
+              borderRadius: BorderRadius.circular(34.h),
+            ),
+        child: IconButton(
+          padding: padding ?? EdgeInsets.zero,
+          onPressed: onTap,
+          icon: child ?? Container(),
         ),
-      child: IconButton(
-        padding: padding ?? EdgeInsets.zero,
-        onPressed: onTap,
-        icon: child ?? Container(),
-      ),
-        ) 
-    );
+      ));
 }

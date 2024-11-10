@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../core/app_export.dart';
-import '../core/theme/custom_button_style.dart';
 
 class CustomFloatingButton extends StatelessWidget {
   CustomFloatingButton(
@@ -38,14 +37,19 @@ class CustomFloatingButton extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(36.h)),
         child: Container(
           alignment: Alignment.center,
-          width: width ?? 0,
-          height: height ?? 0,
+          width: width ?? 56.0, // Set a minimum width
+          height: height ?? 56.0, // Set a minimum height
           decoration: decoration ??
               BoxDecoration(
                 color: theme.colorScheme.primary,
                 borderRadius: BorderRadius.circular(36.h),
               ),
-          child: child,
+          child: CustomImageView(
+            imagePath: ImageConstant.imgCamera,
+            width: 20.h,
+            height: 20.h,
+            fit: BoxFit.contain, // Ensure the image fits well
+          ),
         ),
       );
 }
