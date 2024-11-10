@@ -16,13 +16,14 @@ class HomepageInitialState extends State<HomepageInitial> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        color: theme.colorScheme.primary,
         height: 898.h,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Container(
               width: double.maxFinite,
-              padding: EdgeInsets.symmetric(vertical: 26.h),
+              padding: EdgeInsets.symmetric(vertical: 20.h),
               decoration: BoxDecoration(
                   color: theme.colorScheme.onPrimary,
                   borderRadius: BorderRadiusStyle.customBorderTL40),
@@ -32,7 +33,7 @@ class HomepageInitialState extends State<HomepageInitial> {
                 children: [
                   SizedBox(height: 8.h),
                   _buildTopMoodSection(context),
-                  SizedBox(height: 28.h),
+                  SizedBox(height: 20.h),
                   _buildYourPlaylistSection(context),
                 ],
               ),
@@ -143,7 +144,7 @@ class HomepageInitialState extends State<HomepageInitial> {
             ),
           ),
           SizedBox(
-            height: 55.h,
+            height: 20.h,
           )
         ],
       ),
@@ -164,69 +165,25 @@ class HomepageInitialState extends State<HomepageInitial> {
               alignment: Alignment.center,
               child: SizedBox(
                 width: 180.h,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment
-                      .start, // Pastikan semua children berada di bagian atas
-                  children: [
-                    SizedBox(
-                      height: 46.h,
-                      width: 50.h,
-                      child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          CustomImageView(
-                            imagePath: ImageConstant.imgUser,
-                            height: 40.h,
-                            width: 34.h,
-                            radius: BorderRadius.circular(8.h),
-                            alignment: Alignment.centerLeft,
-                          ),
-                          CustomImageView(
-                            imagePath: ImageConstant.imgNavHome,
-                            height: 42.h,
-                            width: 42.h,
-                          ),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              height: 12.h,
-                              width: 12.h,
-                              margin: EdgeInsets.only(left: 14.h, bottom: 8.h),
-                              decoration: BoxDecoration(
-                                color: theme.colorScheme.primary,
-                                borderRadius: BorderRadius.circular(6.h),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    CustomImageView(
-                      imagePath: ImageConstant.imgLogoVexora,
-                      height: 40.h,
-                      width: 40.h,
-                    ),
-                  ],
+                child: CustomImageView(
+                  imagePath: ImageConstant.imgLogoVexora,
+                  height: 40.h,
+                  width: 40.h,
                 ),
               ),
             ),
             Row(
               children: [
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 1.h),
-                    child: Text(
-                      "Hello, Rizky",
-                      style: CustomTextStyles.titleLargeSemiBold,
-                    ),
-                  ),
+                Text(
+                  "Hello, Rizky",
+                  style: CustomTextStyles.titleLargeSemiBold,
                 ),
-                SizedBox(width: 90.h),
+                SizedBox(width: 80.h),
+                Padding(padding: EdgeInsets.only(top: 250.h)),
                 CustomImageView(
                   imagePath: ImageConstant.imgHomePage,
-                  height: 175.h,
-                  width: 175.h,
+                  height: 180.h,
+                  width: 180.h,
                 ),
               ],
             ),

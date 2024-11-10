@@ -1,125 +1,77 @@
 import 'package:flutter/material.dart';
-import '../core/app_export.dart';
+import 'package:vexora_fe/presentation/homepage/homepage_initial.dart';
+import 'package:vexora_fe/presentation/scan/scan.dart';
+import 'package:vexora_fe/widget/custom_floating_button.dart';
 
-enum BottomBarEnum { Home, More }
+// class BottomNavigationBarApp extends StatelessWidget {
+//   const BottomNavigationBarApp({super.key});
 
-class CustomBottomAppBar extends StatefulWidget {
-  CustomBottomAppBar({this.onChanged});
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: BottomNavigationBarNew(),
+//     );
+//   }
+// }
 
-  Function(BottomBarEnum)? onChanged;
+class BottomNavigationBarNew extends StatefulWidget {
+  BottomNavigationBarNew({super.key});
+
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
-  CustomButtomAppBarState createState() => CustomButtomAppBarState();
+  State<BottomNavigationBarNew> createState() => _BottomNavigationBarNew();
 }
 
-class CustomButtomAppBarState extends State<CustomBottomAppBar> {
-  List<BottomMenuModel> bottomMenuList = [
-    BottomMenuModel(
-        icon: ImageConstant.imgNavHome,
-        activeIcon: ImageConstant.imgNavHome,
-        title: "Home",
-        type: BottomBarEnum.Home,
-        isSelected: true),
-    BottomMenuModel(
-        icon: ImageConstant.imgNavMore,
-        activeIcon: ImageConstant.imgNavMore,
-        title: "More",
-        type: BottomBarEnum.More)
+class _BottomNavigationBarNew extends State<BottomNavigationBarNew> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  List<Widget> _widgetOptions = <Widget>[
+    HomepageInitial(),
+    Text(
+      'Index 1: More',
+      style: optionStyle,
+    ),
   ];
-  @override
-  Widget build(BuildContext context) {
-    return BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        child: SizedBox(
-          height: 102.h,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(bottomMenuList.length, (index) {
-                return InkWell(
-                  onTap: () {
-                    for (var element in bottomMenuList) {
-                      element.isSelected = false;
-                    }
-                    bottomMenuList[index].isSelected = true;
-                    widget.onChanged?.call(bottomMenuList[index].type);
-                    setState(() {});
-                  },
-                  child: bottomMenuList[index].isSelected
-                      ? Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomImageView(
-                              imagePath: bottomMenuList[index].activeIcon,
-                              height: 24.h,
-                              width: 24.h,
-                              color: Color(0XFF362C62),
-                            ),
-                            SizedBox(height: 4.h),
-                            Text(bottomMenuList[index].title ?? "",
-                                style: CustomTextStyles.labelMediumSemiBold
-                                    .copyWith(
-                                  color: Color(0XFF362C62),
-                                ))
-                          ],
-                        )
-                      : Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomImageView(
-                              imagePath: bottomMenuList[index].icon,
-                              height: 24.h,
-                              width: 24.h,
-                              color: Color(0XFF362C62),
-                            ),
-                            SizedBox(height: 4.h),
-                            Text(
-                              bottomMenuList[index].title ?? "",
-                              style: theme.textTheme.labelMedium!.copyWith(
-                                color: Color(0XFF362C62),
-                              ),
-                            )
-                          ],
-                        ),
-                );
-              })),
-        ));
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
-}
 
-class BottomMenuModel {
-  BottomMenuModel({
-    required this.icon,
-    required this.activeIcon,
-    this.title,
-    required this.type,
-    this.isSelected = false,
-  });
-
-  String icon;
-  String activeIcon;
-  String? title;
-  BottomBarEnum type;
-  bool isSelected;
-}
-
-class DefaultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Color(0xffffffff),
-      padding: EdgeInsets.all(10),
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Please replace the respective Widget here',
-                style: TextStyle(fontSize: 18)),
-          ],
-        ),
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.more_horiz),
+            label: 'More',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.deepPurple,
+        onTap: _onItemTapped,
+      ),
+      floatingActionButton: CustomFloatingButton(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ScanScreen()),
+          ); // This should now work
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -20,4 +20,7 @@ class ImageConstant {
   static String imgScanCam = '$imagePath/scanCam.svg';
   static String imgGalleryScan = '$imagePath/galleryScan.svg';
   static String imgFlip = '$imagePath/flipScan.svg';
+  static String imgCheckScan = '$imagePath/newCheck.svg';
+  static String imgCloseScan = '$imagePath/newClose.svg';
+  static String imgarrowLeft = '$imagePath/arrowLeft.svg';
 }
