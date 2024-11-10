@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'package:vexora_fe/widget/app_bar/appbar_title.dart';
 import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
-import '../../widget/custom_buttom_app_bar.dart';
 import 'package:vexora_fe/widget/custom_floating_button.dart';
 
 // ignore: must_be_immutable
@@ -27,10 +24,10 @@ class MoreScreen extends StatelessWidget {
             children: [_buildProfileColumn(context)],
           ),
         ),
-        bottomNavigationBar: SizedBox(
-          width: double.maxFinite,
-          child: _buildBottomNavigationBar(context),
-        ),
+        // bottomNavigationBar: SizedBox(
+        //   width: double.maxFinite,
+        //   child: _buildBottomNavigationBar(context),
+        // ),
         floatingActionButton: CustomFloatingButton(
           height: 74,
           width: 74,
@@ -66,7 +63,7 @@ class MoreScreen extends StatelessWidget {
             width: double.maxFinite,
             child: _buildHistoryRow(
               context,
-              logoutIcon: ImageConstant.imgAccountCircle,
+              logoutIcon: ImageConstant.accountCircle,
               historyText: "Profile",
             ),
           ),
@@ -80,7 +77,7 @@ class MoreScreen extends StatelessWidget {
             width: double.maxFinite,
             child: _buildHistoryRow(
               context,
-              logoutIcon: ImageConstant.imgLogout24dp5f6,
+              logoutIcon: ImageConstant.logout,
               historyText: "History",
             ),
           ),
@@ -94,7 +91,7 @@ class MoreScreen extends StatelessWidget {
             width: double.maxFinite,
             child: _buildHistoryRow(
               context,
-              logoutIcon: ImageConstant.imgPassword24dp5,
+              logoutIcon: ImageConstant.password,
               historyText: "ChangePassword",
             ),
           ),
@@ -108,7 +105,7 @@ class MoreScreen extends StatelessWidget {
             width: double.maxFinite,
             child: _buildHistoryRow(
               context,
-              logoutIcon: ImageConstant.imgLogout24dp5f6,
+              logoutIcon: ImageConstant.logout,
               historyText: "Logout",
             ),
           ),
@@ -117,17 +114,17 @@ class MoreScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      child: CustomBottomAppBar(
-        onChanged: (BottomBarEnum type) {
-          Navigator.pushNamed(
-              navigatorKey.currentContext!, getCurrentRoute(type));
-        },
-      ),
-    );
-  }
+  // Widget _buildBottomNavigationBar(BuildContext context) {
+  //   return SizedBox(
+  //     width: double.maxFinite,
+  //     child: CustomBottomAppBar(
+  //       onChanged: (BottomBarEnum type) {
+  //         Navigator.pushNamed(
+  //             navigatorKey.currentContext!, getCurrentRoute(type));
+  //       },
+  //     ),
+  //   );
+  // }
 
   Widget _buildHistoryRow(
     BuildContext context, {
@@ -153,7 +150,7 @@ class MoreScreen extends StatelessWidget {
           ),
           const Spacer(),
           CustomImageView(
-            imagePath: ImageConstant.imgArrowRight,
+            imagePath: ImageConstant.arrorRight,
             height: 22.h,
             width: 26.h,
           )
@@ -161,14 +158,14 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
-    String getCurrentRoute(BottomBarEnum type) {
-      switch (type) {
-        case BottomBarEnum.Home:
-          return AppRoutes.homepageInitialPage;
-        case BottomBarEnum.More:
-          return "/";
-        default:
-          return "/";
-      }
-    }
+    // String getCurrentRoute(BottomBarEnum type) {
+    //   switch (type) {
+    //     case BottomBarEnum.Home:
+    //       return AppRoutes.homepageInitialPage;
+    //     case BottomBarEnum.More:
+    //       return "/";
+    //     default:
+    //       return "/";
+    //   }
+    // }
 }

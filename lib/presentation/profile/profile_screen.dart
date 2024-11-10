@@ -3,7 +3,7 @@ import 'package:vexora_fe/core/app_export.dart';
 import 'package:vexora_fe/widget/app_bar/appbar_leading_image.dart';
 import 'package:vexora_fe/widget/app_bar/appbar_title.dart';
 import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
-import 'package:vexora_fe/widget/custom_buttom_app_bar.dart';
+// import 'package:vexora_fe/widget/custom_buttom_app_bar.dart';
 import 'package:vexora_fe/widget/custom_elevated_button.dart';
 import 'package:vexora_fe/widget/custom_floating_button.dart';
 import 'package:vexora_fe/widget/custom_icon_button.dart';
@@ -47,13 +47,13 @@ class ProfileScreen extends StatelessWidget {
                       color: theme.colorScheme.primary,
                       width: 1.h,
                     ),
-                    borderRadius: BorderRadiusStyle.circleBorder42,
+                    borderRadius: BorderRadiusStyle.customBorder42,
                   ),
                   child: Container(
                     height: 84.h,
                     width: 86.h,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadiusStyle.circleBorder42,
+                      borderRadius: BorderRadiusStyle.customBorder42,
                       border: Border.all(
                         color: theme.colorScheme.primary,
                         width: 1.h,
@@ -63,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         CustomImageView(
-                          imagePath: ImageConstant.imgUnsplashNsbl2cfwnme,
+                          imagePath: ImageConstant.imgUser,
                           height: 80.h,
                           width: 80.h,
                           radius: BorderRadius.circular(
@@ -79,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
                             decoration: IconButtonStyleHelper.fillPrimary,
                             alignment: Alignment.bottomRight,
                             child: CustomImageView(
-                              imagePath: ImageConstant.imgAddPhoto24d,
+                              imagePath: ImageConstant.addPhoto,
                             ),
                           ),
                         )
@@ -95,10 +95,10 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: SizedBox(
-          width: double.maxFinite,
-          child: _buildBottomNavigation(context),
-        ),
+        // bottomNavigationBar: SizedBox(
+        //   width: double.maxFinite,
+        //   child: _buildBottomNavigation(context),
+        // ),
         floatingActionButton: CustomFloatingButton(
           height: 74,
           width: 74,
@@ -119,7 +119,7 @@ class ProfileScreen extends StatelessWidget {
       height: 46.h,
       leadingWidth: 44.h,
       leading: AppbarLeadingImage(
-        imagePath: ImageConstant.imgArrowLeft,
+        imagePath: ImageConstant.arrowLeft,
         height: 20.h,
         width: 20.h,
         margin: EdgeInsets.only(left: 24.h),
@@ -217,29 +217,29 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigation(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      child: CustomBottomAppBar(
-        onChanged: (BottomBarEnum type) {
-          Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type)
-          );
-        },
-      ),
-    );
-  }
+  // Widget _buildBottomNavigation(BuildContext context) {
+  //   return SizedBox(
+  //     width: double.maxFinite,
+  //     child: BottomNavigationBarNew(
+  //       onChanged: (BottomBarEnum type) {
+  //         Navigator.pushNamed(
+  //           navigatorKey.currentContext!, getCurrentRoute(type)
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Home:
-        return AppRoutes.homepageInitial;
-      case BottomBarEnum.More:
-        return "/";
-      default:
-        return "/";
-    }
-  }
+  // String getCurrentRoute(BottomBarEnum type) {
+  //   switch (type) {
+  //     case BottomBarEnum.Home:
+  //       return AppRoutes.homepageInitial;
+  //     case BottomBarEnum.More:
+  //       return "/";
+  //     default:
+  //       return "/";
+  //   }
+  // }
 
   onTapArrowleftone(BuildContext context) {
     Navigator.pop(context);

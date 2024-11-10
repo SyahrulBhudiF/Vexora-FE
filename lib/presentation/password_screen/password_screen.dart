@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'package:vexora_fe/widget/app_bar/appbar_leading_image.dart';
 import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
-import 'package:vexora_fe/widget/custom_buttom_app_bar.dart';
 import 'package:vexora_fe/widget/custom_elevated_button.dart';
 import 'package:vexora_fe/widget/custom_floating_button.dart';
 import 'package:vexora_fe/widget/custom_text_form_field.dart';
@@ -54,10 +53,10 @@ class PasswordScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: SizedBox(
-          width: double.maxFinite,
-          child: _buildBottomNavigationBar(context),
-        ),
+        // bottomNavigationBar: SizedBox(
+        //   width: double.maxFinite,
+        //   child: _buildBottomNavigationBar(context),
+        // ),
         floatingActionButton: CustomFloatingButton(
           height: 74,
           width: 74,
@@ -78,7 +77,7 @@ class PasswordScreen extends StatelessWidget {
       height: 44.h,
       leadingWidth: 44.h,
       leading: AppbarLeadingImage(
-        imagePath: ImageConstant.imgArrowLeft,
+        imagePath: ImageConstant.arrowLeft,
         height: 20.h,
         width: 20.h,
         margin: EdgeInsets.only(left: 24.h),
@@ -176,29 +175,29 @@ class PasswordScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      child: CustomBottomAppBar(
-        onChanged: (BottomBarEnum type) {
-          Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type)
-          );
-        },
-      ),
-    );
-  }
+  // Widget _buildBottomNavigationBar(BuildContext context) {
+  //   return SizedBox(
+  //     width: double.maxFinite,
+  //     child: CustomBottomAppBar(
+  //       onChanged: (BottomBarEnum type) {
+  //         Navigator.pushNamed(
+  //           navigatorKey.currentContext!, getCurrentRoute(type)
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Home:
-        return AppRoutes.homepageInitial;
-      case BottomBarEnum.More:
-        return "/";
-      default:
-        return "/";
-    }
-  }
+  // String getCurrentRoute(BottomBarEnum type) {
+  //   switch (type) {
+  //     case BottomBarEnum.Home:
+  //       return AppRoutes.homepageInitial;
+  //     case BottomBarEnum.More:
+  //       return "/";
+  //     default:
+  //       return "/";
+  //   }
+  // }
 
   onTapArrowleftone(BuildContext context) {
     Navigator.pop(context);
