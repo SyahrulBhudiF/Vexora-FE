@@ -197,4 +197,8 @@ class HomepageInitialState extends State<HomepageInitial> {
   // onTapTxtSeeallone(BuildContext context) {
   //   Navigator.pushNamed(context, AppRoutes.historyScreen);
   // }
+
+//   onTapTxtSeeallone(BuildContext context) {
+//    // Navigator.pushNamed(context, AppRoutes.historyScreen);
+//   }
 }
