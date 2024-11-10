@@ -16,7 +16,7 @@ import 'package:vexora_fe/widget/custom_floating_button.dart';
 // }
 
 class BottomNavigationBarNew extends StatefulWidget {
-  BottomNavigationBarNew({super.key});
+  BottomNavigationBarNew({super.key, required Null Function(dynamic type) onChanged});
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 

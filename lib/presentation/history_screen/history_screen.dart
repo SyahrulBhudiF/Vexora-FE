@@ -56,10 +56,10 @@ class HistoryScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: SizedBox(
-          width: double.maxFinite,
-          child: _buildBottomNavigation(context),
-        ),
+        // bottomNavigationBar: SizedBox(
+        //   width: double.maxFinite,
+        //   child: _buildBottomNavigation(context),
+        // ),
         floatingActionButton: CustomFloatingButton(
           height: 74,
           width: 74,
@@ -106,29 +106,29 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigation(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      child: CustomBottomAppBar(
-        onChanged: (BottomBarEnum type) {
-          Navigator.pushNamed(
-            navigatorKey.currentContext!,
-            getCurrentRoute(type),
-          );
-        },
-      ),
-    );
-  }
+  // Widget _buildBottomNavigation(BuildContext context) {
+  //   return SizedBox(
+  //     width: double.maxFinite,
+  //     child: CustomBottomAppBar(
+  //       onChanged: (BottomBarEnum type) {
+  //         Navigator.pushNamed(
+  //           navigatorKey.currentContext!,
+  //           getCurrentRoute(type),
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 
-  /// Handling route based on bottom click actions
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Home:
-        return AppRoutes.homepage;
-      case BottomBarEnum.More:
-        return "/";
-      default:
-        return "/";
-    }
-  }
+  // /// Handling route based on bottom click actions
+  // String getCurrentRoute(BottomBarEnum type) {
+  //   switch (type) {
+  //     case BottomBarEnum.Home:
+  //       return AppRoutes.homepage;
+  //     case BottomBarEnum.More:
+  //       return "/";
+  //     default:
+  //       return "/";
+  //   }
+  // }
 }

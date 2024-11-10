@@ -39,4 +39,10 @@ class ImageConstant {
   static String bigLogo = '$imagePath/big_logo.svg';
   static String playlist = '$imagePath/playlist.png';
   static String octionIcon = '$imagePath/oction_icon.svg';
+  static String addPhoto = '$imagePath/add_photo.svg';
+  static String accountCircle = '$imagePath/accountCircle.svg';
+  static String history = '$imagePath/history.svg';
+  static String password = '$imagePath/password.svg';
+  static String logout = '$imagePath/logout.svg';
+  static String arrorRight = '$imagePath/arrorRight.svg';
 }
