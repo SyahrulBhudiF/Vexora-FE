@@ -11,7 +11,6 @@ class HistoryScreen extends StatelessWidget {
   HistoryScreen({Key? key}) : super(key: key);
 
   List<String> dropdownItemList = ["Item One", "Item Two", "Item Three"];
-   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +37,7 @@ class HistoryScreen extends StatelessWidget {
                 prefix: Container(
                   margin: EdgeInsets.fromLTRB(16.h, 6.h, 4.h, 6.h),
                   child: CustomImageView(
-                    imagePath: ImageConstant
-                        .calendarIcon,
+                    imagePath: ImageConstant.calendarIcon,
                     height: 20.h,
                     color: Colors.white,
                     width: 20.h,
@@ -60,17 +58,17 @@ class HistoryScreen extends StatelessWidget {
         //   width: double.maxFinite,
         //   child: _buildBottomNavigation(context),
         // ),
-        floatingActionButton: CustomFloatingButton(
-          height: 74,
-          width: 74,
-          backgroundColor: theme.colorScheme.primary,
-          child: CustomImageView(
-            imagePath: ImageConstant.camera,
-            height: 37.0.h,
-            width: 37.0.h,
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: CustomFloatingButton(
+        //   height: 74,
+        //   width: 74,
+        //   backgroundColor: theme.colorScheme.primary,
+        //   child: CustomImageView(
+        //     imagePath: ImageConstant.camera,
+        //     height: 37.0.h,
+        //     width: 37.0.h,
+        //   ),
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
@@ -83,6 +81,9 @@ class HistoryScreen extends StatelessWidget {
         color: Colors.black,
         imagePath: ImageConstant.arrowLeft,
         margin: EdgeInsets.only(left: 24.h, top: 20.h),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }

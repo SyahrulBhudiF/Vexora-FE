@@ -3,6 +3,7 @@ import 'package:vexora_fe/widget/custom_elevated_button.dart';
 import '../../core/app_export.dart';
 import '../../widget/app_bar/appbar_leading_image.dart';
 import '../../widget/app_bar/custom_app_bar.dart';
+import 'package:flutter/gestures.dart';
 import '../../widget/custom_text_form_field.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class LoginScreen extends StatelessWidget {
 
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordtwoController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  // GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: appTheme.deepPurple400,
         appBar: _buildAppBar(context),
         body: Form(
-          key: formKey,
+          // key: formKey,
           child: SizedBox(
             width: double.maxFinite,
             child: SingleChildScrollView(
@@ -39,9 +40,7 @@ class LoginScreen extends StatelessWidget {
                           Container(
                             width: double.maxFinite,
                             padding: EdgeInsets.symmetric(
-                                horizontal: 22.h, 
-                                vertical: 6.h
-                            ),
+                                horizontal: 22.h, vertical: 6.h),
                             decoration: BoxDecoration(
                               color: appTheme.gray50,
                               borderRadius: BorderRadiusStyle.customBorderTL32,
@@ -80,7 +79,8 @@ class LoginScreen extends StatelessWidget {
                                 SizedBox(height: 60.h),
                                 CustomElevatedButton(
                                   text: "Login Account",
-                                  buttonStyle: CustomButtonStyles.fillDeepPurple,
+                                  buttonStyle:
+                                      CustomButtonStyles.fillDeepPurple,
                                 ),
                                 SizedBox(height: 8.h),
                                 Align(
@@ -94,10 +94,14 @@ class LoginScreen extends StatelessWidget {
                                               .titleSmallBlack900_1,
                                         ),
                                         TextSpan(
-                                          text: "Sign Up",
-                                          style: CustomTextStyles
-                                              .titleSmallBlack900Bold,
-                                        )
+                                            text: "Sign Up",
+                                            style: CustomTextStyles
+                                                .titleSmallBlack900Bold,
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.pushNamed(context,
+                                                    AppRoutes.register);
+                                              })
                                       ],
                                     ),
                                     textAlign: TextAlign.left,
@@ -139,7 +143,7 @@ class LoginScreen extends StatelessWidget {
   /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-      height: 55.h,
+      height: 50.h,
       leadingWidth: 48.h,
       leading: AppbarLeadingImage(
         imagePath: ImageConstant.arrowLeft,
@@ -225,8 +229,7 @@ class LoginScreen extends StatelessWidget {
             suffix: Container(
               margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
               child: CustomImageView(
-                imagePath: ImageConstant
-                    .visiblePassword,
+                imagePath: ImageConstant.visiblePassword,
                 height: 24.h,
                 width: 24.h,
                 fit: BoxFit.contain,

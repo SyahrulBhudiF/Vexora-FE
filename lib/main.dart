@@ -6,7 +6,6 @@ import 'package:vexora_fe/core/app_export.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-
   // WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   return runApp(const MyApp());
@@ -23,11 +22,10 @@ class MyApp extends StatelessWidget {
           theme: theme,
           title: 'Vexora',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.homepageInitial,
+          initialRoute: AppRoutes.splash,
           routes: AppRoutes.routes,
         );
       },
     );
   }
 }
-

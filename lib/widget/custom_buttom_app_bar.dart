@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/presentation/history_screen/history_screen.dart';
 import 'package:vexora_fe/presentation/homepage/homepage_initial.dart';
+import 'package:vexora_fe/presentation/more_screen/more_screen.dart';
 import 'package:vexora_fe/presentation/scan/scan.dart';
 import 'package:vexora_fe/widget/custom_floating_button.dart';
 
@@ -16,9 +18,7 @@ import 'package:vexora_fe/widget/custom_floating_button.dart';
 // }
 
 class BottomNavigationBarNew extends StatefulWidget {
-  BottomNavigationBarNew({super.key, required Null Function(dynamic type) onChanged});
-
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  BottomNavigationBarNew({super.key});
 
   @override
   State<BottomNavigationBarNew> createState() => _BottomNavigationBarNew();
@@ -30,10 +30,7 @@ class _BottomNavigationBarNew extends State<BottomNavigationBarNew> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List<Widget> _widgetOptions = <Widget>[
     HomepageInitial(),
-    Text(
-      'Index 1: More',
-      style: optionStyle,
-    ),
+    MoreScreen(),
   ];
 
   void _onItemTapped(int index) {

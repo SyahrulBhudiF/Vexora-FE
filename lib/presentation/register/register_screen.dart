@@ -118,6 +118,9 @@ class RegisterScreen extends StatelessWidget {
                   height: 24.h,
                   width: 24.h,
                   margin: EdgeInsets.only(top: 20.h),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                 ),
                 Expanded(
                   child: Align(
@@ -133,8 +136,7 @@ class RegisterScreen extends StatelessWidget {
                               alignment: Alignment.bottomRight,
                               children: [
                                 CustomImageView(
-                                  imagePath:
-                                      ImageConstant.smallLogo,
+                                  imagePath: ImageConstant.smallLogo,
                                   height: 40.h,
                                   width: 34.h,
                                   radius: BorderRadius.circular(8.h),
@@ -209,8 +211,7 @@ class RegisterScreen extends StatelessWidget {
         suffix: Container(
           margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
           child: CustomImageView(
-            imagePath:
-                ImageConstant.visiblePassword,
+            imagePath: ImageConstant.visiblePassword,
             height: 24.h,
             width: 24.h,
             fit: BoxFit.contain,
@@ -287,7 +288,7 @@ class RegisterScreen extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 6.h),
       buttonStyle: CustomButtonStyles.fillPrimary,
       onPressed: () {
-        // Tambahkan aksi saat tombol ditekan
+        Navigator.pushNamed(context, AppRoutes.homepageInitial);
       },
     );
   }

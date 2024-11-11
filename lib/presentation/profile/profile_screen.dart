@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vexora_fe/core/app_export.dart';
-import 'package:vexora_fe/widget/app_bar/appbar_leading_image.dart';
+
 import 'package:vexora_fe/widget/app_bar/appbar_title.dart';
 import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
-// import 'package:vexora_fe/widget/custom_buttom_app_bar.dart';
+
 import 'package:vexora_fe/widget/custom_elevated_button.dart';
-import 'package:vexora_fe/widget/custom_floating_button.dart';
 import 'package:vexora_fe/widget/custom_icon_button.dart';
 import 'package:vexora_fe/widget/custom_text_form_field.dart';
 
@@ -16,18 +15,15 @@ class ProfileScreen extends StatelessWidget {
   TextEditingController nameInputController = TextEditingController();
   TextEditingController emailInputController = TextEditingController();
   TextEditingController usernameInputController = TextEditingController();
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: theme.colorScheme.primary,
-        resizeToAvoidBottomInset: false,
+        backgroundColor: theme.colorScheme.onPrimary,
+        // resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
         body: Form(
-          key: _formKey,
           child: Container(
             width: double.maxFinite,
             padding: EdgeInsets.only(
@@ -65,24 +61,23 @@ class ProfileScreen extends StatelessWidget {
                         CustomImageView(
                           imagePath: ImageConstant.imgUser,
                           height: 80.h,
-                          width: 80.h,
-                          radius: BorderRadius.circular(
-                            40.h,
-                          ),
+                          width: 80.h, // width: 80.h,
+                          radius: BorderRadius.circular(40.h),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 4.h),
+                        Positioned(
+                          top: 60.h,
+                          right: 0,
                           child: CustomIconButton(
                             height: 20.h,
                             width: 20.h,
                             padding: EdgeInsets.all(4.h),
                             decoration: IconButtonStyleHelper.fillPrimary,
-                            alignment: Alignment.bottomRight,
+                            alignment: Alignment.center,
                             child: CustomImageView(
                               imagePath: ImageConstant.addPhoto,
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -95,35 +90,21 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-        // bottomNavigationBar: SizedBox(
-        //   width: double.maxFinite,
-        //   child: _buildBottomNavigation(context),
-        // ),
-        floatingActionButton: CustomFloatingButton(
-          height: 74,
-          width: 74,
-          backgroundColor: theme.colorScheme.primary,
-          child: CustomImageView(
-            imagePath: ImageConstant.imgCamera,
-            height: 37.0.h,
-            width: 37.0.h,
-        ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    ),
     );
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-      height: 46.h,
-      leadingWidth: 44.h,
-      leading: AppbarLeadingImage(
+      height: 55.h,
+      leadingWidth: 48.h,
+      leading: CustomImageView(
+        color: Colors.black,
         imagePath: ImageConstant.arrowLeft,
-        height: 20.h,
-        width: 20.h,
-        margin: EdgeInsets.only(left: 24.h),
-        onTap: () {},
+        margin: EdgeInsets.only(left: 24.h, top: 20.h),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
       centerTitle: true,
       title: AppbarTitle(
@@ -132,12 +113,12 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-
   Widget _buildNameInput(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: 4.h),
       child: CustomTextFormField(
         controller: nameInputController,
+        fillColor: Colors.white,
         hintText: "Enter your name",
         contentPadding: EdgeInsets.symmetric(
           horizontal: 12.h,
@@ -152,6 +133,7 @@ class ProfileScreen extends StatelessWidget {
       padding: EdgeInsets.only(right: 4.h),
       child: CustomTextFormField(
         controller: emailInputController,
+        fillColor: Colors.white,
         hintText: "Enter your email",
         textInputType: TextInputType.emailAddress,
         contentPadding: EdgeInsets.symmetric(
@@ -167,6 +149,7 @@ class ProfileScreen extends StatelessWidget {
       padding: EdgeInsets.only(right: 4.h),
       child: CustomTextFormField(
         controller: usernameInputController,
+        fillColor: Colors.white,
         hintText: "Enter your username",
         textInputAction: TextInputAction.done,
         contentPadding: EdgeInsets.symmetric(
@@ -184,23 +167,23 @@ class ProfileScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text (
+          Text(
             "Name",
-            style: theme.textTheme. titleMedium,
+            style: theme.textTheme.titleMedium,
           ),
           SizedBox(height: 6.h),
           _buildNameInput(context),
           SizedBox(height: 18.h),
           Text(
             "Email",
-            style: theme. textTheme.titleMedium,
+            style: theme.textTheme.titleMedium,
           ),
           SizedBox(height: 6.h),
           _buildEmailInput(context),
           SizedBox(height: 18.h),
           Text(
             "Username",
-            style: theme. textTheme. titleMedium,
+            style: theme.textTheme.titleMedium,
           ),
           SizedBox(height: 8.h),
           _buildUsernameInput(context)
@@ -241,7 +224,7 @@ class ProfileScreen extends StatelessWidget {
   //   }
   // }
 
-  onTapArrowleftone(BuildContext context) {
-    Navigator.pop(context);
-  }
+  // onTapArrowleftone(BuildContext context) {
+  //   Navigator.pop(context);
+  // }
 }
