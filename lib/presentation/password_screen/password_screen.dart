@@ -10,21 +10,20 @@ import 'package:vexora_fe/widget/custom_text_form_field.dart';
 class PasswordScreen extends StatelessWidget {
   PasswordScreen({Key? key}) : super(key: key);
 
-  TextEditingController previousPasswordInputController = TextEditingController();
+  TextEditingController previousPasswordInputController =
+      TextEditingController();
   TextEditingController newPasswordInputController = TextEditingController();
-  TextEditingController confirmPasswordInputController = TextEditingController();
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController confirmPasswordInputController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: theme.colorScheme.primary,
+        backgroundColor: theme.colorScheme.onPrimary,
         resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
         body: Form(
-          key: _formKey,
           child: Container(
             width: double.maxFinite,
             padding: EdgeInsets.symmetric(horizontal: 18.h),
@@ -53,35 +52,21 @@ class PasswordScreen extends StatelessWidget {
             ),
           ),
         ),
-        // bottomNavigationBar: SizedBox(
-        //   width: double.maxFinite,
-        //   child: _buildBottomNavigationBar(context),
-        // ),
-        floatingActionButton: CustomFloatingButton(
-          height: 74,
-          width: 74,
-          backgroundColor: theme.colorScheme.primary,
-          child: CustomImageView(
-            imagePath: ImageConstant.imgCamera,
-            height: 37.0.h,
-            width: 37.0.h,
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-      height: 44.h,
-      leadingWidth: 44.h,
-      leading: AppbarLeadingImage(
+      height: 55.h,
+      leadingWidth: 48.h,
+      leading: CustomImageView(
+        color: Colors.black,
         imagePath: ImageConstant.arrowLeft,
-        height: 20.h,
-        width: 20.h,
-        margin: EdgeInsets.only(left: 24.h),
-        onTap: () {},
+        margin: EdgeInsets.only(left: 24.h, top: 20.h),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }
@@ -91,6 +76,7 @@ class PasswordScreen extends StatelessWidget {
       padding: EdgeInsets.only(right: 4.h),
       child: CustomTextFormField(
         controller: previousPasswordInputController,
+        fillColor: Colors.white,
         hintText: "Enter your previous password",
         textInputType: TextInputType.visiblePassword,
         obscureText: true,
@@ -107,6 +93,7 @@ class PasswordScreen extends StatelessWidget {
       padding: EdgeInsets.only(right: 4.h),
       child: CustomTextFormField(
         controller: newPasswordInputController,
+        fillColor: Colors.white,
         hintText: "Enter your new password",
         textInputType: TextInputType.visiblePassword,
         obscureText: true,
@@ -123,6 +110,7 @@ class PasswordScreen extends StatelessWidget {
       padding: EdgeInsets.only(right: 4.h),
       child: CustomTextFormField(
         controller: confirmPasswordInputController,
+        fillColor: Colors.white,
         hintText: "Confirm your new password",
         textInputAction: TextInputAction.done,
         textInputType: TextInputType.visiblePassword,

@@ -7,8 +7,10 @@ class ListplaylistItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material( // Added Material widget here
-      color: Colors.transparent, // Set transparent if you don't need a background color
+    return Material(
+      // Added Material widget here
+      color: Colors
+          .transparent, // Set transparent if you don't need a background color
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -22,8 +24,8 @@ class ListplaylistItemWidget extends StatelessWidget {
             padding: EdgeInsets.only(left: 20.h),
             child: Text(
               "Playlist Galau",
-              style: CustomTextStyles.titleMediumSemiBold.copyWith(
-              color: theme.colorScheme.onPrimary),
+              style: CustomTextStyles.titleMediumSemiBold
+                  .copyWith(color: theme.colorScheme.onPrimary),
             ),
           ),
           Spacer(),

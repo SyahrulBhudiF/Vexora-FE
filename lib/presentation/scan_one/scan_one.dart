@@ -72,13 +72,17 @@ class ScanOneScreen extends StatelessWidget {
                 },
               )),
           CustomIconButton(
-              height: 68.h,
-              width: 68.h,
-              padding: EdgeInsets.all(10.h),
-              decoration: IconButtonStyleHelper.none,
-              child: CustomImageView(
-                imagePath: ImageConstant.imgCheckScan,
-              ))
+            height: 68.h,
+            width: 68.h,
+            padding: EdgeInsets.all(10.h),
+            decoration: IconButtonStyleHelper.none,
+            child: CustomImageView(
+              imagePath: ImageConstant.imgCheckScan,
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.result);
+              },
+            ),
+          ),
         ],
       ),
     );

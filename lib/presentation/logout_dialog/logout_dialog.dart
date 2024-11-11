@@ -19,7 +19,7 @@ class LogoutDialog extends StatelessWidget {
             vertical: 26.h,
           ),
           decoration: BoxDecoration(
-            color: theme.colorScheme.primary,
+            color: theme.colorScheme.onPrimary,
             borderRadius: BorderRadiusStyle.roundedBorder26,
             border: Border.all(
               color: appTheme.blueGray100,
@@ -52,6 +52,9 @@ class LogoutDialog extends StatelessWidget {
                       text: "Kembali",
                       buttonStyle: CustomButtonStyles.outlineGray,
                       buttonTextStyle: theme.textTheme.bodyLarge!,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     CustomOutlinedButton(
                       width: 64.h,
@@ -59,6 +62,9 @@ class LogoutDialog extends StatelessWidget {
                       margin: EdgeInsets.only(left: 16.h),
                       buttonStyle: CustomButtonStyles.outlineBlueGray,
                       buttonTextStyle: CustomTextStyles.bodyLargeGray100,
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoutes.login);
+                      },
                     )
                   ],
                 ),

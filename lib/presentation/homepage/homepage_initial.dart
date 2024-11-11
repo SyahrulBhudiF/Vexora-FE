@@ -81,7 +81,9 @@ class HomepageInitialState extends State<HomepageInitial> {
                   style: theme.textTheme.titleMedium,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRoutes.history);
+                  },
                   child: Text(
                     "See all",
                     style: CustomTextStyles.bodySmallPrimary,
