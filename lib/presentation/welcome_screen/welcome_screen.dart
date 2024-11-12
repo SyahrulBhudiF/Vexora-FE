@@ -76,7 +76,7 @@ class WelcomeScreen extends StatelessWidget {
                     text: "Get started",
                     margin: EdgeInsets.only(right: 2.h),
                     onPressed: () {
-                      Navigator.pushNamed(context, AppRoutes.login);
+                      Navigator.pushNamed(context, AppRoutes.register);
                     },
                   ),
                   SizedBox(height: 12.h),

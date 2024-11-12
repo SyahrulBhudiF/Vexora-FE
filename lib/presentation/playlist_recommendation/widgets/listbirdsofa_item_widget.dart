@@ -35,7 +35,7 @@ class ListplaylistItemWidget extends StatelessWidget {
             padding: EdgeInsets.all(12.h),
             decoration: IconButtonStyleHelper.none,
             child: CustomImageView(
-              imagePath: ImageConstant.octionIcon,
+              imagePath: ImageConstant.octionPlaylist,
             ),
           ),
         ],

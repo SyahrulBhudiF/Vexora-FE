@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/presentation/history_screen/widget/history_list_month.dart';
 import '../../core/app_export.dart';
-import '../../widget/app_bar/appbar_leading_image.dart';
+
 import '../../widget/app_bar/custom_app_bar.dart';
-import '../../widget/custom_buttom_app_bar.dart';
-import '../../widget/custom_drop_down.dart';
-import '../../widget/custom_floating_button.dart';
 import 'widget/historylist_item_widget.dart';
 
 class HistoryScreen extends StatelessWidget {
   HistoryScreen({Key? key}) : super(key: key);
 
-  List<String> dropdownItemList = ["Item One", "Item Two", "Item Three"];
+  List<String> dropdownItemList = ["January", "February", "March", "April"];
 
   @override
   Widget build(BuildContext context) {
@@ -29,46 +27,34 @@ class HistoryScreen extends StatelessWidget {
                 style: CustomTextStyles.titleMediumSemiBold,
               ),
               SizedBox(height: 32.h),
-              CustomDropDown(
-                width: 122.h,
-                hintText: "April",
+              Align(
                 alignment: Alignment.centerLeft,
-                items: dropdownItemList,
-                prefix: Container(
-                  margin: EdgeInsets.fromLTRB(16.h, 6.h, 4.h, 6.h),
-                  child: CustomImageView(
-                    imagePath: ImageConstant.calendarIcon,
-                    height: 20.h,
-                    color: Colors.white,
-                    width: 20.h,
-                    fit: BoxFit.contain,
+                child: CustomDropDownWithMonthPicker(
+                  width: 150.h,
+                  hintText: "April",
+                  alignment: Alignment.centerLeft,
+                  items: dropdownItemList,
+                  prefix: Container(
+                    margin: EdgeInsets.fromLTRB(10.h, 6.h, 10.h, 6.h),
+                    child: CustomImageView(
+                      imagePath: ImageConstant.calendarIcon,
+                      height: 20.h,
+                      color: theme.colorScheme.onPrimary,
+                      width: 20.h,
+                      fit: BoxFit.contain,
+                    ),
                   ),
+                  prefixConstraint: BoxConstraints(
+                    maxHeight: 36.h,
+                  ),
+                  contentPadding: EdgeInsets.fromLTRB(0.h, 0.h, 0.h, 0.h),
                 ),
-                prefixConstraint: BoxConstraints(
-                  maxHeight: 36.h,
-                ),
-                contentPadding: EdgeInsets.fromLTRB(16.h, 6.h, 12.h, 6.h),
               ),
               SizedBox(height: 16.h),
               _buildHistoryList(context),
             ],
           ),
         ),
-        // bottomNavigationBar: SizedBox(
-        //   width: double.maxFinite,
-        //   child: _buildBottomNavigation(context),
-        // ),
-        // floatingActionButton: CustomFloatingButton(
-        //   height: 74,
-        //   width: 74,
-        //   backgroundColor: theme.colorScheme.primary,
-        //   child: CustomImageView(
-        //     imagePath: ImageConstant.camera,
-        //     height: 37.0.h,
-        //     width: 37.0.h,
-        //   ),
-        // ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
@@ -106,30 +92,4 @@ class HistoryScreen extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _buildBottomNavigation(BuildContext context) {
-  //   return SizedBox(
-  //     width: double.maxFinite,
-  //     child: CustomBottomAppBar(
-  //       onChanged: (BottomBarEnum type) {
-  //         Navigator.pushNamed(
-  //           navigatorKey.currentContext!,
-  //           getCurrentRoute(type),
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
-
-  // /// Handling route based on bottom click actions
-  // String getCurrentRoute(BottomBarEnum type) {
-  //   switch (type) {
-  //     case BottomBarEnum.Home:
-  //       return AppRoutes.homepage;
-  //     case BottomBarEnum.More:
-  //       return "/";
-  //     default:
-  //       return "/";
-  //   }
-  // }
 }
