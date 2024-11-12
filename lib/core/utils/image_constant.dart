@@ -45,4 +45,7 @@ class ImageConstant {
   static String password = '$imagePath/password.svg';
   static String logout = '$imagePath/logout.svg';
   static String arrorRight = '$imagePath/arrorRight.svg';
+  static String octionPlaylist = '$imagePath/octionPlaylist.svg';
+  static String profileUser = '$imagePath/profileUser.svg';
+  static String photoAdd = '$imagePath/photoAdd.svg';
 }

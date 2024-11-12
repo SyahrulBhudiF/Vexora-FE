@@ -3,12 +3,13 @@ import '../../core/app_export.dart';
 import 'widgets/listbirdsofa_item_widget.dart';
 
 class PlaylistRecommendation extends StatelessWidget {
-  const PlaylistRecommendation({Key? key}) : super(key: key);
+  const PlaylistRecommendation({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: theme.colorScheme.primary, // Mengatur warna latar belakang menjadi warna utama
+      backgroundColor: theme.colorScheme
+          .primary, // Mengatur warna latar belakang menjadi warna utama
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         elevation: 0,
@@ -40,8 +41,8 @@ class PlaylistRecommendation extends StatelessWidget {
           decoration: BoxDecoration(
             color: appTheme.gray30003.withOpacity(0.29),
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(50.h), 
-              topLeft: Radius.circular(50.h), 
+              topRight: Radius.circular(50.h),
+              topLeft: Radius.circular(50.h),
             ),
           ),
           child: Column(

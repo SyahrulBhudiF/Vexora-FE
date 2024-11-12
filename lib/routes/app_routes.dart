@@ -42,7 +42,7 @@ class AppRoutes {
     register: (context) => RegisterScreen(),
     history: (context) => HistoryScreen(),
     splash: (context) => SplashScreen(),
-    playlist: (context) => PlaylistRecommendation(),
+    playlist: (context) => const PlaylistRecommendation(),
     result: (context) => ResultScreen(),
     profile: (context) => ProfileScreen(),
     password: (context) => PasswordScreen(),

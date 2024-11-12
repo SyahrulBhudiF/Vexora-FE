@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../core/theme/custom_button_style.dart';
@@ -283,13 +284,43 @@ class RegisterScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildRegisterButton(BuildContext context) {
-    return CustomElevatedButton(
-      text: "Register",
-      margin: EdgeInsets.symmetric(horizontal: 6.h),
-      buttonStyle: CustomButtonStyles.fillPrimary,
-      onPressed: () {
-        Navigator.pushNamed(context, AppRoutes.homepageInitial);
-      },
+    return Align(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustomElevatedButton(
+            text: "Register",
+            margin: EdgeInsets.symmetric(horizontal: 6.h),
+            buttonStyle: CustomButtonStyles.fillPrimary,
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.homepageInitial);
+            },
+          ),
+          SizedBox(
+              height:
+                  16.0), // Tambahkan jarak antara CustomElevatedButton dan RichText jika diperlukan
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "Already have an account? ",
+                  style: CustomTextStyles.titleSmallBlack900_1,
+                ),
+                TextSpan(
+                  text: "Login",
+                  style: CustomTextStyles.titleSmallBlack900Bold,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.pushNamed(context, AppRoutes.login);
+                    },
+                ),
+              ],
+            ),
+            textAlign: TextAlign.left,
+          ),
+        ],
+      ),
     );
   }
 }

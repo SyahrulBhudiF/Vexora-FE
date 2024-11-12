@@ -81,6 +81,10 @@ class LoginScreen extends StatelessWidget {
                                   text: "Login Account",
                                   buttonStyle:
                                       CustomButtonStyles.fillDeepPurple,
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, AppRoutes.homepageInitial);
+                                  },
                                 ),
                                 SizedBox(height: 8.h),
                                 Align(
@@ -148,6 +152,9 @@ class LoginScreen extends StatelessWidget {
       leading: AppbarLeadingImage(
         imagePath: ImageConstant.arrowLeft,
         margin: EdgeInsets.only(left: 24.h, top: 20.h),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }

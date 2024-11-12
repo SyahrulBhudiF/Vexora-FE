@@ -3,7 +3,7 @@ import 'package:vexora_fe/core/app_export.dart';
 import 'package:vexora_fe/widget/custom_outlined_button.dart';
 
 class LogoutDialog extends StatelessWidget {
-  const LogoutDialog({Key? key}) : super(key: key);
+  const LogoutDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class LogoutDialog extends StatelessWidget {
       children: [
         Container(
           width: double.maxFinite,
-          margin: EdgeInsets.only(right: 6.h),
+          margin: EdgeInsets.only(right: 15.h, left: 15.h),
           padding: EdgeInsets.symmetric(
             horizontal: 30.h,
             vertical: 26.h,
