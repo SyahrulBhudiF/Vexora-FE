@@ -1,3 +1,5 @@
+import 'package:vexora_fe/data/models/Music/music_model.dart';
+
 class History {
   final String uuid;
   final DateTime createdAt;
@@ -5,6 +7,7 @@ class History {
   final String mood;
   final String playlistName;
   final String path;
+  final List<Music> musics;
 
   History({
     required this.uuid,
@@ -13,16 +16,18 @@ class History {
     required this.mood,
     required this.playlistName,
     required this.path,
+    required this.musics,
   });
 
   factory History.fromJson(Map<String, dynamic> json) {
     return History(
-      uuid: json['uuid'],
-      createdAt: DateTime.parse(json['created_at']),
+      uuid: json['id'],
       userUuid: json['user_uuid'],
       mood: json['mood'],
       playlistName: json['playlist_name'],
       path: json['path'],
+      createdAt: DateTime.parse(json['created_at']),
+      musics: List<Music>.from(json['musics'].map((x) => Music.fromJson(x))),
     );
   }
 
@@ -34,6 +39,7 @@ class History {
       'mood': mood,
       'playlist_name': playlistName,
       'path': path,
+      'musics': musics.map((x) => x.toJson()).toList(),
     };
   }
 }

@@ -19,13 +19,13 @@ class Music {
 
   factory Music.fromJson(Map<String, dynamic> json) {
     return Music(
-      uuid: json['uuid'],
-      createdAt: DateTime.parse(json['created_at']),
-      historyUuid: json['history_uuid'],
+      uuid: json['id'],
+      historyUuid: json['history_id'],
       musicName: json['music_name'],
       path: json['path'],
       thumbnail: json['thumbnail'],
       artist: json['artist'],
+      createdAt: DateTime.parse(json['created_at']),
     );
   }
 
