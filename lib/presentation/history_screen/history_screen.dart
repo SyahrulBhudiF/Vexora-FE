@@ -6,9 +6,9 @@ import '../../widget/app_bar/custom_app_bar.dart';
 import 'widget/historylist_item_widget.dart';
 
 class HistoryScreen extends StatelessWidget {
-  HistoryScreen({Key? key}) : super(key: key);
+  HistoryScreen({super.key});
 
-  List<String> dropdownItemList = ["January", "February", "March", "April"];
+  final List<String> dropdownItemList = ["January", "February", "March", "April"];
 
   @override
   Widget build(BuildContext context) {

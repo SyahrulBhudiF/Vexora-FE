@@ -1,12 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
-import '../../core/theme/custom_button_style.dart';
 import '../../widget/custom_elevated_button.dart';
 import '../../widget/custom_text_form_field.dart';
 
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+  RegisterScreen({super.key});
 
   final TextEditingController nameInputController = TextEditingController();
   final TextEditingController emailInputController = TextEditingController();
@@ -25,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   height: 870.h,
                   child: Stack(
                     alignment: Alignment.center,
@@ -44,7 +43,7 @@ class RegisterScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             _buildArrowNavigation(context),
-                            Spacer(flex: 2),
+                            const Spacer(flex: 2),
                             Container(
                               width: double.infinity,
                               padding: EdgeInsets.symmetric(

@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../widget/app_bar/appbar_subtitle.dart';
 import '../../widget/app_bar/custom_app_bar.dart';
-import '../../widget/custom_buttom_app_bar.dart';
 import '../../widget/custom_elevated_button.dart';
-import '../../widget/custom_floating_button.dart';
 
 class ResultScreen extends StatelessWidget {
-  ResultScreen({Key? key}) : super(key: key);
+  const ResultScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

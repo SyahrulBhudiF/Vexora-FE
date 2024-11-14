@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:vexora_fe/core/utils/size_utils.dart';
 import 'package:vexora_fe/presentation/scan_one/scan_one.dart';
 import 'package:vexora_fe/widget/app_bar/appbar_leading_image.dart';
 import '../../core/app_export.dart';
@@ -10,7 +9,7 @@ import '../../widget/app_bar/custom_app_bar.dart';
 import '../../widget/custom_icon_button.dart';
 
 class ScanScreen extends StatefulWidget {
-  const ScanScreen({Key? key}) : super(key: key);
+  const ScanScreen({super.key});
 
   @override
   _ScanScreenState createState() => _ScanScreenState();
@@ -112,7 +111,7 @@ class _ScanScreenState extends State<ScanScreen> {
                 ? Positioned.fill(
                     child: CameraPreview(_controller),
                   )
-                : Center(child: CircularProgressIndicator()),
+                : const Center(child: CircularProgressIndicator()),
             // Bottom Bar
             Positioned(
               bottom: 80,
@@ -137,7 +136,7 @@ class _ScanScreenState extends State<ScanScreen> {
                         width: 20.h,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     CustomIconButton(
                       height: 70.h,
                       width: 70.h,
@@ -148,7 +147,7 @@ class _ScanScreenState extends State<ScanScreen> {
                       ),
                       onTap: () => _captureImage(),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: _flipCamera,
                       child: CustomImageView(

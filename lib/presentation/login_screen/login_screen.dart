@@ -7,10 +7,10 @@ import 'package:flutter/gestures.dart';
 import '../../widget/custom_text_form_field.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({super.key});
 
-  TextEditingController userNameController = TextEditingController();
-  TextEditingController passwordtwoController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController passwordtwoController = TextEditingController();
   // GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override

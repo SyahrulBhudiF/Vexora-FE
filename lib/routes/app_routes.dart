@@ -7,7 +7,6 @@ import 'package:vexora_fe/presentation/scan/scan.dart';
 import 'package:vexora_fe/presentation/scan_one/scan_one.dart';
 import 'package:vexora_fe/widget/custom_buttom_app_bar.dart';
 import '../presentation/history_screen/history_screen.dart';
-import '../presentation/homepage/homepage.dart';
 import '../presentation/login_screen/login_screen.dart';
 import '../presentation/playlist_recommendation/playlist_recommendation.dart';
 import '../presentation/register/register_screen.dart';
@@ -36,16 +35,16 @@ class AppRoutes {
     scanOne: (context) => const ScanOneScreen(
           imagePath: '',
         ),
-    homepageInitial: (context) => BottomNavigationBarNew(),
+    homepageInitial: (context) => const BottomNavigationBarNew(),
     welcome: (context) => const WelcomeScreen(),
     login: (context) => LoginScreen(),
     register: (context) => RegisterScreen(),
     history: (context) => HistoryScreen(),
-    splash: (context) => SplashScreen(),
+    splash: (context) => const SplashScreen(),
     playlist: (context) => const PlaylistRecommendation(),
     result: (context) => ResultScreen(),
     profile: (context) => ProfileScreen(),
     password: (context) => PasswordScreen(),
-    logout: (context) => LogoutDialog(),
+    logout: (context) => const LogoutDialog(),
   };
 }

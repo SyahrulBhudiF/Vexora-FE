@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'package:vexora_fe/widget/app_bar/appbar_title.dart';
 import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
-import 'package:vexora_fe/widget/custom_floating_button.dart';
 
 // ignore: must_be_immutable
 class MoreScreen extends StatelessWidget {
-  MoreScreen({Key? key}) : super(key: key);
+  const MoreScreen({super.key});
 
   // GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 

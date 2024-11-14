@@ -3,7 +3,7 @@ import 'package:vexora_fe/core/app_export.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(
-      {Key? key,
+      {super.key,
       this.alignment,
       this.width,
       this.boxDecoration,
@@ -28,9 +28,8 @@ class CustomTextFormField extends StatelessWidget {
       this.borderDecoration,
       this.fillColor,
       this.filled = true,
-      this.validator})
-      : super(key: key);
-  
+      this.validator});
+
   final Alignment? alignment;
   final double? width;
   final BoxDecoration? boxDecoration;
@@ -70,7 +69,7 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         decoration: boxDecoration,
         child: TextFormField(
-          scrollPadding: 
+          scrollPadding:
               EdgeInsets.only(bottom: MediaQuery.of(context). viewInsets.bottom),
               controller: controller,
               focusNode: focusNode,

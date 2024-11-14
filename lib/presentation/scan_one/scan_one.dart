@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:vexora_fe/core/utils/size_utils.dart';
 import '../../core/app_export.dart';
 import '../../widget/app_bar/appbar_subtitle_one.dart';
 import '../../widget/app_bar/custom_app_bar.dart';
@@ -9,7 +8,7 @@ import '../../widget/custom_icon_button.dart';
 class ScanOneScreen extends StatelessWidget {
   final String imagePath;
 
-  const ScanOneScreen({Key? key, required this.imagePath}) : super(key: key);
+  const ScanOneScreen({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class ScanOneScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   _buildIconButtonRow(context),
                 ],
               ),

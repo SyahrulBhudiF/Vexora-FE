@@ -3,7 +3,7 @@ import 'package:vexora_fe/widget/custom_outlined_button.dart';
 import '../../core/app_export.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8.h),
                   Container(
-                    decoration: BoxDecoration(),
+                    decoration: const BoxDecoration(),
                     child: Text(
                       "Everything for your mood, Everything for your music just here at all !",
                       textAlign: TextAlign.center,

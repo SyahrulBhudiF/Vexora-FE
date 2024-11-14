@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vexora_fe/core/theme/theme_helper.dart';
-import 'package:vexora_fe/core/utils/size_utils.dart';
-import './routes/app_routes.dart';
 import 'package:vexora_fe/core/app_export.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
