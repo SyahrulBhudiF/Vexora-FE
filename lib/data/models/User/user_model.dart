@@ -21,27 +21,27 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      uuid: json['uuid'],
-      createdAt: DateTime.parse(json['created_at']),
-      username: json['username'],
-      name: json['name'],
-      email: json['email'],
-      password: json['password'],
+      uuid: json['id'],
       profilePicture: json['profile_picture'],
       fileId: json['file_id'],
+      name: json['name'],
+      email: json['email'],
+      username: json['username'],
+      createdAt: DateTime.parse(json['created_at']),
+      password: json['password'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'uuid': uuid,
-      'created_at': createdAt.toIso8601String(),
-      'username': username,
-      'name': name,
-      'email': email,
-      'password': password,
+      'id': uuid,
       'profile_picture': profilePicture,
       'file_id': fileId,
+      'name': name,
+      'email': email,
+      'username': username,
+      'created_at': createdAt.toIso8601String(),
+      'password': password,
     };
   }
 }
