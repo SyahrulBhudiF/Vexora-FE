@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class RegisterDto {
   final String name;
   final String email;

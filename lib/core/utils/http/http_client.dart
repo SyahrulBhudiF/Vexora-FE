@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:vexora_fe/core/utils/storage/local_storage.dart'; // Adjust the path as necessary
+import 'package:vexora_fe/core/utils/storage/local_storage.dart';
 
-class DisHttpClient {
+class VexoraHttpClient {
   static const String _baseUrl = 'http://localhost:5555/api/v1';
   static final Dio _dio = Dio(BaseOptions(baseUrl: _baseUrl));
 
@@ -86,7 +86,7 @@ class DisHttpClient {
 
   // Retrieve headers including token
   static Future<Map<String, String>> _getHeaders() async {
-    final token = await DisLocalStorage().readData<String>('access_token');
+    final token = await VexoraLocalStorage().readData<String>('access_token');
     return {
       'Content-Type': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
