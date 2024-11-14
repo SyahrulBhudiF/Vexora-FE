@@ -8,7 +8,7 @@ import 'package:vexora_fe/widget/custom_elevated_button.dart';
 import 'package:vexora_fe/widget/custom_text_form_field.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: Form(
           child: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -91,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Container(
                               height: 30.0,
                               width: 30.0,
-                              padding: EdgeInsets.all(4.0),
+                              padding: const EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
                                   color: theme.colorScheme.primary,
                                   shape: BoxShape.circle),
@@ -105,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
                 _buildProfileForm(context),
                 SizedBox(
                   height: 68.h,
@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       leading: CustomImageView(
         color: Colors.black,
         imagePath: ImageConstant.arrowLeft,
-        margin: EdgeInsets.only(left: 24.0, top: 20.0),
+        margin: const EdgeInsets.only(left: 24.0, top: 20.0),
         onTap: () {
           Navigator.pop(context);
         },
@@ -140,12 +140,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildNameInput(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: 4.0),
+      padding: const EdgeInsets.only(right: 4.0),
       child: CustomTextFormField(
         controller: nameInputController,
         fillColor: Colors.white,
         hintText: "Enter your name",
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: 12.0,
           vertical: 16.0,
         ),
@@ -155,13 +155,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildEmailInput(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: 4.0),
+      padding: const EdgeInsets.only(right: 4.0),
       child: CustomTextFormField(
         controller: emailInputController,
         fillColor: Colors.white,
         hintText: "Enter your email",
         textInputType: TextInputType.emailAddress,
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: 12.0,
           vertical: 16.0,
         ),
@@ -171,13 +171,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildUsernameInput(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: 4.0),
+      padding: const EdgeInsets.only(right: 4.0),
       child: CustomTextFormField(
         controller: usernameInputController,
         fillColor: Colors.white,
         hintText: "Enter your username",
         textInputAction: TextInputAction.done,
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: 12.0,
           vertical: 16.0,
         ),
@@ -188,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildProfileForm(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      margin: EdgeInsets.only(left: 6.0),
+      margin: const EdgeInsets.only(left: 6.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -196,21 +196,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             "Name",
             style: theme.textTheme.titleMedium,
           ),
-          SizedBox(height: 6.0),
+          const SizedBox(height: 6.0),
           _buildNameInput(context),
-          SizedBox(height: 18.0),
+          const SizedBox(height: 18.0),
           Text(
             "Email",
             style: theme.textTheme.titleMedium,
           ),
-          SizedBox(height: 6.0),
+          const SizedBox(height: 6.0),
           _buildEmailInput(context),
-          SizedBox(height: 18.0),
+          const SizedBox(height: 18.0),
           Text(
             "Username",
             style: theme.textTheme.titleMedium,
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           _buildUsernameInput(context),
         ],
       ),
@@ -220,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildSaveButton(BuildContext context) {
     return CustomElevatedButton(
       text: "Save",
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
+      margin: const EdgeInsets.symmetric(horizontal: 5.0),
       buttonStyle: CustomButtonStyles.fillPrimary,
     );
   }

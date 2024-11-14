@@ -33,7 +33,7 @@ class CustomImageView extends StatelessWidget {
   final BoxBorder? border;
 
   const CustomImageView({
-    Key? key,
+    super.key,
     required this.imagePath,
     this.height,
     this.width,
@@ -45,7 +45,7 @@ class CustomImageView extends StatelessWidget {
     this.margin,
     this.radius,
     this.border,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

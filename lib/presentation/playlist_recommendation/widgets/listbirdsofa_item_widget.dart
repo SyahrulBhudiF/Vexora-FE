@@ -3,7 +3,7 @@ import '../../../core/app_export.dart';
 import '../../../widget/custom_icon_button.dart'; // Adjust this import path accordingly
 
 class ListplaylistItemWidget extends StatelessWidget {
-  const ListplaylistItemWidget({Key? key}) : super(key: key);
+  const ListplaylistItemWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ListplaylistItemWidget extends StatelessWidget {
                   .copyWith(color: theme.colorScheme.onPrimary),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           CustomIconButton(
             height: 60.h,
             width: 60.h,

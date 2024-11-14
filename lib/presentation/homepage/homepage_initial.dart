@@ -5,7 +5,7 @@ import 'widget/listplaylistgal_item_widget.dart';
 import 'widget/listsad_one_item_widget.dart';
 
 class HomepageInitial extends StatefulWidget {
-  HomepageInitial({Key? key}) : super(key: key);
+  const HomepageInitial({super.key});
 
   @override
   HomepageInitialState createState() => HomepageInitialState();

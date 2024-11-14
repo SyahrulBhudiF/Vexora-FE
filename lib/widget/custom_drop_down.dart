@@ -3,7 +3,7 @@ import 'package:vexora_fe/core/app_export.dart';
 
 class CustomDropDown extends StatelessWidget {
   const CustomDropDown({
-    Key? key,
+    super.key,
     this.alignment,
     this.width,
     this.boxDecoration,
@@ -23,7 +23,7 @@ class CustomDropDown extends StatelessWidget {
     this.filled = true,
     this.validator,
     this.onChanged, // Ubah 'onchanged' menjadi 'onChanged' untuk konsistensi
-  }) : super(key: key);
+  });
 
   final Alignment? alignment;
   final double? width;
