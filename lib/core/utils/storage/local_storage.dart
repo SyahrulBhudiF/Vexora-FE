@@ -1,14 +1,14 @@
 import 'local_storage_cubit.dart';
 
-class DisLocalStorage {
-  static final DisLocalStorage _instance = DisLocalStorage._internal();
+class VexoraLocalStorage {
+  static final VexoraLocalStorage _instance = VexoraLocalStorage._internal();
   final LocalStorageCubit _cubit = LocalStorageCubit();
 
-  factory DisLocalStorage() {
+  factory VexoraLocalStorage() {
     return _instance;
   }
 
-  DisLocalStorage._internal();
+  VexoraLocalStorage._internal();
 
   // Generic method to save data
   Future<void> saveData<T>(String key, T value) async {
