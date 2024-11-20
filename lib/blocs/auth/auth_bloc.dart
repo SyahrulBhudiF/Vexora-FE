@@ -17,29 +17,50 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         _logger.info("Start register");
         final response = await authController.register(RegisterDto(
-          username: event.username,
-          email: event.email,
-          name: event.name,
-          password: event.password,
+          username: event.registerDto.username,
+          email: event.registerDto.email,
+          name: event.registerDto.name,
+          password: event.registerDto.password,
         ));
         _logger.info("Response: $response");
-        emit(const AuthSuccess(message: "User registered successfully"));
+        response.fold(
+          (l) => emit(AuthFailure(message: l)),
+          (r) => emit(AuthSuccess(user: r)),
+        );
+      } catch (e) {
+        _logger.severe("Error: $e");
+        emit(AuthFailure(message: e.toString()));
+      }
+    });
+    on<AuthLoginEvent>((event, emit) async {
+      _logger.info("Login event: $event");
+      emit(AuthLoading());
+      try {
+        final response = await authController.login(LoginDto(
+          username: event.loginDto.username,
+          password: event.loginDto.password,
+        ));
+        _logger.info("Response: $response");
+        response.fold(
+          (l) => emit(AuthFailure(message: l)),
+          (r) => emit(AuthSuccess(user: r)),
+        );
       } catch (e) {
         _logger.severe("Error: $e");
         emit(AuthFailure(message: e.toString()));
       }
     });
 
-    on<AuthLoginEvent>((event, emit) async {
-      _logger.info("Login event: $event");
+    on<AuthLogoutEvent>((event, emit) async {
+      _logger.info("Logout event: $event");
       emit(AuthLoading());
       try {
-        final response = await authController.login(LoginDto(
-          username: event.username,
-          password: event.password,
-        ));
+        final response = await authController.logout();
         _logger.info("Response: $response");
-        emit(const AuthSuccess(message: "Login successful"));
+        response.fold(
+          (l) => emit(AuthFailure(message: l)),
+          (r) => emit(const AuthLogoutSuccess()),
+        );
       } catch (e) {
         _logger.severe("Error: $e");
         emit(AuthFailure(message: e.toString()));

@@ -2,14 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:vexora_fe/core/utils/storage/local_storage.dart';
 
 class VexoraHttpClient {
-  static const String _baseUrl = 'http://localhost:5555/api/v1';
+  static const String _baseUrl = 'http://192.168.64.88:5555/api/v1';
   static final Dio _dio = Dio(BaseOptions(baseUrl: _baseUrl));
 
   // GET request
   static Future<Map<String, dynamic>> get(String endpoint) async {
     final headers = await _getHeaders();
     try {
-      final response = await _dio.get(endpoint, options: Options(headers: headers));
+      final response =
+          await _dio.get(endpoint, options: Options(headers: headers));
       return _handleResponse(response);
     } catch (e) {
       return _handleError(e);
@@ -17,10 +18,12 @@ class VexoraHttpClient {
   }
 
   // POST request
-  static Future<Map<String, dynamic>> post(String endpoint, dynamic body) async {
+  static Future<Map<String, dynamic>> post(
+      String endpoint, dynamic body) async {
     final headers = await _getHeaders();
     try {
-      final response = await _dio.post(endpoint, data: body, options: Options(headers: headers));
+      final response = await _dio.post(endpoint,
+          data: body, options: Options(headers: headers));
       return _handleResponse(response);
     } catch (e) {
       return _handleError(e);
@@ -31,7 +34,8 @@ class VexoraHttpClient {
   static Future<Map<String, dynamic>> put(String endpoint, dynamic body) async {
     final headers = await _getHeaders();
     try {
-      final response = await _dio.put(endpoint, data: body, options: Options(headers: headers));
+      final response = await _dio.put(endpoint,
+          data: body, options: Options(headers: headers));
       return _handleResponse(response);
     } catch (e) {
       return _handleError(e);
@@ -42,7 +46,8 @@ class VexoraHttpClient {
   static Future<Map<String, dynamic>> delete(String endpoint) async {
     final headers = await _getHeaders();
     try {
-      final response = await _dio.delete(endpoint, options: Options(headers: headers));
+      final response =
+          await _dio.delete(endpoint, options: Options(headers: headers));
       return _handleResponse(response);
     } catch (e) {
       return _handleError(e);
@@ -50,10 +55,12 @@ class VexoraHttpClient {
   }
 
   // PATCH request
-  static Future<Map<String, dynamic>> patch(String endpoint, dynamic body) async {
+  static Future<Map<String, dynamic>> patch(
+      String endpoint, dynamic body) async {
     final headers = await _getHeaders();
     try {
-      final response = await _dio.patch(endpoint, data: body, options: Options(headers: headers));
+      final response = await _dio.patch(endpoint,
+          data: body, options: Options(headers: headers));
       return _handleResponse(response);
     } catch (e) {
       return _handleError(e);
@@ -61,7 +68,8 @@ class VexoraHttpClient {
   }
 
   // Multipart request
-  static Future<Map<String, dynamic>> multipart(String endpoint, Map<String, String> files, Map<String, String> fields) async {
+  static Future<Map<String, dynamic>> multipart(String endpoint,
+      Map<String, String> files, Map<String, String> fields) async {
     final headers = await _getHeaders();
     final formData = FormData();
 
@@ -77,7 +85,8 @@ class VexoraHttpClient {
     });
 
     try {
-      final response = await _dio.post(endpoint, data: formData, options: Options(headers: headers));
+      final response = await _dio.post(endpoint,
+          data: formData, options: Options(headers: headers));
       return _handleResponse(response);
     } catch (e) {
       return _handleError(e);

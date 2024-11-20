@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:vexora_fe/data/models/User/user_model.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -12,12 +13,19 @@ class AuthInitial extends AuthState {}
 class AuthLoading extends AuthState {}
 
 class AuthSuccess extends AuthState {
-  final String message;
+  final User user;
 
-  const AuthSuccess({required this.message});
+  const AuthSuccess({required this.user});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [user];
+}
+
+class AuthLogoutSuccess extends AuthState {
+  const AuthLogoutSuccess();
+
+  @override
+  List<Object> get props => [];
 }
 
 class AuthFailure extends AuthState {

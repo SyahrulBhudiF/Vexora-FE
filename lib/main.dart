@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
+import 'package:vexora_fe/controller/auth_controller.dart';
 import 'package:vexora_fe/core/app_export.dart';
 
 void main() {
@@ -14,12 +16,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return MaterialApp(
-          theme: theme,
-          title: 'Vexora',
-          debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.splash,
-          routes: AppRoutes.routes,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => AuthBloc(authController: AuthController()),
+            ),
+          ],
+          child: MaterialApp(
+            theme: theme,
+            title: 'Vexora',
+            debugShowCheckedModeBanner: false,
+            initialRoute: AppRoutes.splash,
+            routes: AppRoutes.routes,
+          ),
         );
       },
     );

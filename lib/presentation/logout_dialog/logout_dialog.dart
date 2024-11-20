@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'package:vexora_fe/widget/custom_outlined_button.dart';
+
+import '../../blocs/auth/auth_event.dart';
+import '../../blocs/auth/auth_state.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
@@ -56,14 +60,29 @@ class LogoutDialog extends StatelessWidget {
                         Navigator.pop(context);
                       },
                     ),
-                    CustomOutlinedButton(
-                      width: 64.h,
-                      text: "Yakin",
-                      margin: EdgeInsets.only(left: 16.h),
-                      buttonStyle: CustomButtonStyles.outlineBlueGray,
-                      buttonTextStyle: CustomTextStyles.bodyLargeGray100,
-                      onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.login);
+                    BlocConsumer<AuthBloc, AuthState>(
+                      listener: (context, state) {
+                        if (state is AuthLogoutSuccess) {
+                          Navigator.pushNamed(context, AppRoutes.login);
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is AuthLoading) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        return CustomOutlinedButton(
+                          width: 64.h,
+                          text: "Yakin",
+                          margin: EdgeInsets.only(left: 16.h),
+                          buttonStyle: CustomButtonStyles.outlineBlueGray,
+                          buttonTextStyle: CustomTextStyles.bodyLargeGray100,
+                          onPressed: () {
+                            context
+                                .read<AuthBloc>()
+                                .add(const AuthLogoutEvent());
+                          },
+                        );
                       },
                     )
                   ],
