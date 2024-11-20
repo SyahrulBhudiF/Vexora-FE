@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
+import 'package:vexora_fe/blocs/auth/auth_state.dart';
 import '../../core/app_export.dart';
 import 'widget/listhappy_one_item_widget.dart';
 import 'widget/listplaylistgal_item_widget.dart';
@@ -15,32 +17,47 @@ class HomepageInitialState extends State<HomepageInitial> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        color: theme.colorScheme.primary,
-        height: 898.h,
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Container(
-              width: double.maxFinite,
-              padding: EdgeInsets.symmetric(vertical: 20.h),
-              decoration: BoxDecoration(
-                  color: theme.colorScheme.onPrimary,
-                  borderRadius: BorderRadiusStyle.customBorderTL40),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is AuthSuccess) {
+            return Container(
+              color: theme.colorScheme.primary,
+              height: 898.h,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
                 children: [
-                  SizedBox(height: 8.h),
-                  _buildTopMoodSection(context),
-                  SizedBox(height: 20.h),
-                  _buildYourPlaylistSection(context),
+                  Container(
+                    padding: EdgeInsets.only(top: 200.h, left: 30.h),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Hello, " + state.user.username.toString(),
+                          style: CustomTextStyles.titleLargeSemiBold),
+                    ),
+                  ),
+                  Container(
+                    width: double.maxFinite,
+                    padding: EdgeInsets.symmetric(vertical: 20.h),
+                    decoration: BoxDecoration(
+                        color: theme.colorScheme.onPrimary,
+                        borderRadius: BorderRadiusStyle.customBorderTL40),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 8.h),
+                        _buildTopMoodSection(context),
+                        SizedBox(height: 20.h),
+                        _buildYourPlaylistSection(context),
+                      ],
+                    ),
+                  ),
+                  _buildWelcomeSection(context),
                 ],
               ),
-            ),
-            _buildWelcomeSection(context),
-          ],
-        ),
+            );
+          }
+          return Container();
+        },
       ),
     );
   }
@@ -160,47 +177,31 @@ class HomepageInitialState extends State<HomepageInitial> {
       child: Container(
         width: double.maxFinite,
         margin: EdgeInsets.only(top: 38.h, left: 26.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 180.h,
-                child: CustomImageView(
-                  imagePath: ImageConstant.imgLogoVexora,
-                  height: 40.h,
-                  width: 40.h,
-                ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Align(
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: 180.h,
+              child: CustomImageView(
+                imagePath: ImageConstant.imgLogoVexora,
+                height: 40.h,
+                width: 40.h,
               ),
             ),
-            Row(
-              children: [
-                Text(
-                  "Hello, Rizky",
-                  style: CustomTextStyles.titleLargeSemiBold,
-                ),
-                SizedBox(width: 80.h),
-                Padding(padding: EdgeInsets.only(top: 250.h)),
-                CustomImageView(
-                  imagePath: ImageConstant.imgHomePage,
-                  height: 180.h,
-                  width: 180.h,
-                ),
-              ],
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 20.h),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: CustomImageView(
+                imagePath: ImageConstant.imgHomePage,
+                height: 180.h,
+                width: 180.h,
+              ),
             ),
-          ],
-        ),
+          )
+        ]),
       ),
     );
   }
-
-  // navigates to the historyScreen when the action is triggred
-  // onTapTxtSeeallone(BuildContext context) {
-  //   Navigator.pushNamed(context, AppRoutes.historyScreen);
-  // }
-
-//   onTapTxtSeeallone(BuildContext context) {
-//    // Navigator.pushNamed(context, AppRoutes.historyScreen);
-//   }
 }

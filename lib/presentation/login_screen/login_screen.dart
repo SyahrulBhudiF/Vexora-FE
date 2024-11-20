@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
+import 'package:vexora_fe/blocs/auth/auth_event.dart';
+import 'package:vexora_fe/blocs/auth/auth_state.dart';
+import 'package:vexora_fe/data/models/dto/Request/login_dto.dart';
 import 'package:vexora_fe/widget/custom_elevated_button.dart';
 import '../../core/app_export.dart';
 import '../../widget/app_bar/appbar_leading_image.dart';
@@ -77,13 +81,44 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 60.h),
-                                CustomElevatedButton(
-                                  text: "Login Account",
-                                  buttonStyle:
-                                      CustomButtonStyles.fillDeepPurple,
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, AppRoutes.homepageInitial);
+                                BlocConsumer<AuthBloc, AuthState>(
+                                  listener: (context, state) {
+                                    if (state is AuthSuccess) {
+                                      Navigator.pushNamed(
+                                          context, AppRoutes.homepageInitial);
+                                    }
+
+                                    if (state is AuthFailure) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(state.message),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    if (state is AuthLoading) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                    return CustomElevatedButton(
+                                      text: "Login Account",
+                                      buttonStyle:
+                                          CustomButtonStyles.fillDeepPurple,
+                                      onPressed: () {
+                                        context.read<AuthBloc>().add(
+                                              AuthLoginEvent(
+                                                  loginDto: LoginDto(
+                                                      username:
+                                                          userNameController
+                                                              .text,
+                                                      password:
+                                                          passwordtwoController
+                                                              .text)),
+                                            );
+                                      },
+                                    );
                                   },
                                 ),
                                 SizedBox(height: 8.h),
@@ -153,7 +188,7 @@ class LoginScreen extends StatelessWidget {
         imagePath: ImageConstant.arrowLeft,
         margin: EdgeInsets.only(left: 24.h, top: 20.h),
         onTap: () {
-          Navigator.pop(context);
+          Navigator.pushNamed(context, AppRoutes.register);
         },
       ),
     );

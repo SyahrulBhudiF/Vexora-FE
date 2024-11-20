@@ -52,6 +52,9 @@ dependencies:
   dio: ^5.0.0
   logging: ^1.0.2
   hydrated_bloc: ^9.1.5
+  dartz: ^0.10.1
+  http: ^1.2.2
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:

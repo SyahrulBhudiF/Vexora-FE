@@ -1,27 +1,27 @@
 class User {
-  final String uuid;
-  final DateTime createdAt;
-  final String username;
-  final String name;
-  final String email;
-  final String password;
-  final String profilePicture;
-  final String fileId;
+  String? uuid;
+  DateTime? createdAt;
+  String? username;
+  String? name;
+  String? email;
+  String? password;
+  String? profilePicture;
+  String? fileId;
 
   User({
-    required this.uuid,
-    required this.createdAt,
-    required this.username,
-    required this.name,
-    required this.email,
-    required this.password,
-    required this.profilePicture,
-    required this.fileId,
+    this.uuid,
+    this.createdAt,
+    this.username,
+    this.name,
+    this.email,
+    this.password,
+    this.profilePicture,
+    this.fileId,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      uuid: json['id'],
+      uuid: json['uuid'],
       profilePicture: json['profile_picture'],
       fileId: json['file_id'],
       name: json['name'],
@@ -40,7 +40,7 @@ class User {
       'name': name,
       'email': email,
       'username': username,
-      'created_at': createdAt.toIso8601String(),
+      'created_at': createdAt?.toIso8601String(),
       'password': password,
     };
   }

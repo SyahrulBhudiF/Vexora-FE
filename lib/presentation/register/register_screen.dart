@@ -1,6 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
+import 'package:vexora_fe/blocs/auth/auth_event.dart';
+import 'package:vexora_fe/blocs/auth/auth_state.dart';
 import '../../core/app_export.dart';
+import '../../data/models/dto/Request/register_dto.dart';
 import '../../widget/custom_elevated_button.dart';
 import '../../widget/custom_text_form_field.dart';
 
@@ -288,15 +292,49 @@ class RegisterScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CustomElevatedButton(
-            text: "Register",
-            margin: EdgeInsets.symmetric(horizontal: 6.h),
-            buttonStyle: CustomButtonStyles.fillPrimary,
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.homepageInitial);
+          BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is AuthSuccess) {
+                Navigator.pushNamed(context, AppRoutes.login);
+              }
+
+              if (state is AuthFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                  ),
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is AuthLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              return CustomElevatedButton(
+                text: "Register",
+                margin: EdgeInsets.symmetric(horizontal: 6.h),
+                buttonStyle: CustomButtonStyles.fillPrimary,
+                onPressed: () {
+                  print(nameInputController.text);
+                  print(emailInputController.text);
+                  print(usernameInputController.text);
+                  print(passwordInputController.text);
+                  context.read<AuthBloc>().add(
+                        AuthRegisterEvent(
+                          registerDto: RegisterDto(
+                            name: nameInputController.text,
+                            email: emailInputController.text,
+                            username: usernameInputController.text,
+                            password: passwordInputController.text,
+                          ),
+                        ),
+                      );
+                },
+              );
             },
           ),
-          SizedBox(
+          const SizedBox(
               height:
                   16.0), // Tambahkan jarak antara CustomElevatedButton dan RichText jika diperlukan
           RichText(
