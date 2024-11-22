@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vexora_fe/controller/auth_controller.dart';
-import 'package:vexora_fe/data/models/dto/Request/login_dto.dart';
-import 'package:vexora_fe/data/models/dto/Request/register_dto.dart';
 import 'package:vexora_fe/blocs/auth/auth_event.dart';
 import 'package:vexora_fe/blocs/auth/auth_state.dart';
 import 'package:logging/logging.dart';
@@ -16,12 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         _logger.info("Start register");
-        final response = await authController.register(RegisterDto(
-          username: event.registerDto.username,
-          email: event.registerDto.email,
-          name: event.registerDto.name,
-          password: event.registerDto.password,
-        ));
+        final response = await authController.register(event.registerDto);
         _logger.info("Response: $response");
         response.fold(
           (l) => emit(AuthFailure(message: l)),
@@ -32,18 +25,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthFailure(message: e.toString()));
       }
     });
+
     on<AuthLoginEvent>((event, emit) async {
       _logger.info("Login event: $event");
       emit(AuthLoading());
       try {
-        final response = await authController.login(LoginDto(
-          username: event.loginDto.username,
-          password: event.loginDto.password,
-        ));
+        final response = await authController.login(event.loginDto);
         _logger.info("Response: $response");
         response.fold(
-          (l) => emit(AuthFailure(message: l)),
-          (r) => emit(AuthSuccess(user: r)),
+          (l) {
+            _logger.info("Login failed with message: $l");
+            emit(AuthFailure(message: l));
+          },
+          (r) {
+            _logger.info(
+                "Login successful, emitting AuthSuccess state with user: $r");
+            emit(AuthSuccess(user: r));
+          },
         );
       } catch (e) {
         _logger.severe("Error: $e");
@@ -60,6 +58,38 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         response.fold(
           (l) => emit(AuthFailure(message: l)),
           (r) => emit(const AuthLogoutSuccess()),
+        );
+      } catch (e) {
+        _logger.severe("Error: $e");
+        emit(AuthFailure(message: e.toString()));
+      }
+    });
+
+    on<AuthSendOtpEvent>((event, emit) async {
+      _logger.info("Send OTP event: ${event.email}");
+      emit(AuthLoading());
+      try {
+        final response = await authController.sendOtp(event.email);
+        _logger.info("Response: $response");
+        response.fold(
+          (l) => emit(AuthFailure(message: l)),
+          (r) => emit(AuthOtpSent()),
+        );
+      } catch (e) {
+        _logger.severe("Error: $e");
+        emit(AuthFailure(message: e.toString()));
+      }
+    });
+
+    on<AuthVerifyOtpEvent>((event, emit) async {
+      _logger.info("Verify OTP event: ${event.verifyOtpDto.email}");
+      emit(AuthLoading());
+      try {
+        final response = await authController.verifyOtp(event.verifyOtpDto);
+        _logger.info("Response: $response");
+        response.fold(
+          (l) => emit(AuthFailure(message: l)),
+          (r) => emit(const AuthOtpVerified()),
         );
       } catch (e) {
         _logger.severe("Error: $e");

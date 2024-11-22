@@ -28,8 +28,8 @@ class _BottomNavigationBarNew extends State<BottomNavigationBarNew> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
-    HomepageInitial(),
-    MoreScreen(),
+    const HomepageInitial(),
+    const MoreScreen(),
   ];
 
   void _onItemTapped(int index) {

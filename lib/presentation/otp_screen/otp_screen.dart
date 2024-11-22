@@ -1,30 +1,38 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/auth/auth_event.dart';
 import 'package:vexora_fe/blocs/auth/auth_state.dart';
 import '../../core/app_export.dart';
-import '../../data/models/dto/Request/register_dto.dart';
+import '../../data/models/dto/Request/verifyOtp_dto.dart';
 import '../../widget/custom_elevated_button.dart';
 import '../../widget/custom_text_form_field.dart';
 
-class RegisterScreen extends StatelessWidget {
-  RegisterScreen({super.key});
+class OtpScreen extends StatelessWidget {
+  OtpScreen({super.key});
 
-  final TextEditingController nameInputController = TextEditingController();
+  final TextEditingController otpInputController = TextEditingController();
   final TextEditingController emailInputController = TextEditingController();
-  final TextEditingController usernameInputController = TextEditingController();
-  final TextEditingController passwordInputController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+
+    // If arguments is null, handle it by providing a default value or showing an error
+    if (arguments == null || arguments is! Map) {
+      // You can either throw an error, or provide a default empty Map or other value
+      throw Exception("OTP screen requires arguments.");
+    }
+
+    // Now safely cast the arguments
+    final Map<String, dynamic> args = arguments as Map<String, dynamic>;
+
+    // Retrieve the email from arguments
+    final String email = args['email'];
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
           height: SizeUtils.height,
           child: Form(
-            key: _formKey,
             child: SizedBox(
               width: double.infinity,
               child: SingleChildScrollView(
@@ -64,30 +72,15 @@ class RegisterScreen extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.only(left: 10.h),
                                     child: Text(
-                                      "Register Account",
+                                      "Verifikasi Kode OTP",
                                       style: theme.textTheme.headlineSmall,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 6.h),
-                                    child: Text(
-                                      "Hello!",
-                                      style:
-                                          CustomTextStyles.titleLargeBlack900,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 6.h),
-                                    child: Text(
-                                      "Create an account to continue",
-                                      style:
-                                          CustomTextStyles.titleSmallBlack900,
-                                    ),
-                                  ),
                                   SizedBox(height: 18.h),
-                                  _buildRegistrationForm(context),
+                                  _buildOtpForm(context, email),
+                                  SizedBox(height: 18.h),
                                   SizedBox(height: 54.h),
-                                  _buildRegisterButton(context),
+                                  _buildOtpButton(context),
                                   SizedBox(height: 24.h),
                                 ],
                               ),
@@ -168,75 +161,32 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
-  Widget _buildNameInput(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 4.h),
-      child: CustomTextFormField(
-        fillColor: Colors.white,
-        controller: nameInputController,
-        hintText: "Enter your name",
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 12.h,
-          vertical: 16.h,
-        ),
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildUsernameInput(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 4.h),
-      child: CustomTextFormField(
-        fillColor: Colors.white,
-        controller: usernameInputController,
-        hintText: "Enter your username",
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 12.h,
-          vertical: 16.h,
-        ),
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildPasswordInput(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 4.h),
-      child: CustomTextFormField(
-        fillColor: Colors.white,
-        controller: passwordInputController,
-        hintText: "Enter your password",
-        textInputAction: TextInputAction.done,
-        textInputType: TextInputType.visiblePassword,
-        obscureText: true,
-        contentPadding: EdgeInsets.fromLTRB(12.h, 16.h, 30.h, 16.h),
-        suffix: Container(
-          margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
-          child: CustomImageView(
-            imagePath: ImageConstant.visiblePassword,
-            height: 24.h,
-            width: 24.h,
-            fit: BoxFit.contain,
-          ),
-        ),
-        suffixConstraints: BoxConstraints(
-          maxHeight: 56.h,
-        ),
-      ),
-    );
-  }
-
-  /// Section Widget
+  // /// Section Widget
+  // Widget _buildOtpInput(BuildContext context) {
+  //   return
+  // }
   Widget _buildEmailInput(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: 4.h),
       child: CustomTextFormField(
         fillColor: Colors.white,
         controller: emailInputController,
-        hintText: "Enter your email",
-        textInputType: TextInputType.emailAddress,
+        hintText: "Enter your Email",
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 12.h,
+          vertical: 16.h,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOtpInput(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(right: 4.h),
+      child: CustomTextFormField(
+        fillColor: Colors.white,
+        controller: otpInputController,
+        hintText: "Enter Otp Code",
         contentPadding: EdgeInsets.symmetric(
           horizontal: 12.h,
           vertical: 16.h,
@@ -246,7 +196,7 @@ class RegisterScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildRegistrationForm(BuildContext context) {
+  Widget _buildOtpForm(BuildContext context, String email) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(left: 6.h),
@@ -254,39 +204,36 @@ class RegisterScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Name",
-            style: theme.textTheme.titleMedium,
-          ),
-          SizedBox(height: 6.h),
-          _buildNameInput(context),
-          SizedBox(height: 14.h),
-          Text(
-            "Email",
+            "Masukkan Email",
             style: theme.textTheme.titleMedium,
           ),
           SizedBox(height: 6.h),
           _buildEmailInput(context),
           SizedBox(height: 14.h),
           Text(
-            "Username",
+            "Masukkan Kode OTP",
             style: theme.textTheme.titleMedium,
           ),
           SizedBox(height: 6.h),
-          _buildUsernameInput(context),
+          _buildOtpInput(context),
           SizedBox(height: 14.h),
-          Text(
-            "Password",
-            style: theme.textTheme.titleMedium,
+          GestureDetector(
+            onTap: () {
+              context.read<AuthBloc>().add(AuthSendOtpEvent(email));
+            },
+            child: Text(
+              "Kirim Ulang Kode Otp",
+              style: theme.textTheme.titleMedium,
+            ),
           ),
-          SizedBox(height: 8.h),
-          _buildPasswordInput(context),
+          SizedBox(height: 14.h),
         ],
       ),
     );
   }
 
   /// Section Widget
-  Widget _buildRegisterButton(BuildContext context) {
+  Widget _buildOtpButton(BuildContext context) {
     return Align(
       alignment: Alignment.center,
       child: Column(
@@ -294,15 +241,8 @@ class RegisterScreen extends StatelessWidget {
         children: [
           BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is AuthSuccess) {
-                context
-                    .read<AuthBloc>()
-                    .add(AuthSendOtpEvent(state.user.email!));
-                Navigator.pushNamed(
-                  context,
-                  AppRoutes.otpCode,
-                  arguments: {'email': emailInputController.text},
-                );
+              if (state is AuthOtpVerified) {
+                Navigator.pushNamed(context, AppRoutes.login);
               }
 
               if (state is AuthFailure) {
@@ -319,49 +259,21 @@ class RegisterScreen extends StatelessWidget {
               }
 
               return CustomElevatedButton(
-                text: "Register",
+                text: "Send",
                 margin: EdgeInsets.symmetric(horizontal: 6.h),
                 buttonStyle: CustomButtonStyles.fillPrimary,
                 onPressed: () {
-                  print(nameInputController.text);
-                  print(emailInputController.text);
-                  print(usernameInputController.text);
-                  print(passwordInputController.text);
                   context.read<AuthBloc>().add(
-                        AuthRegisterEvent(
-                          registerDto: RegisterDto(
-                            name: nameInputController.text,
+                        AuthVerifyOtpEvent(
+                          verifyOtpDto: VerifyOtpDto(
                             email: emailInputController.text,
-                            username: usernameInputController.text,
-                            password: passwordInputController.text,
+                            otp: otpInputController.text,
                           ),
                         ),
                       );
                 },
               );
             },
-          ),
-          const SizedBox(
-              height:
-                  16.0), // Tambahkan jarak antara CustomElevatedButton dan RichText jika diperlukan
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: "Already have an account? ",
-                  style: CustomTextStyles.titleSmallBlack900_1,
-                ),
-                TextSpan(
-                  text: "Login",
-                  style: CustomTextStyles.titleSmallBlack900Bold,
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Navigator.pushNamed(context, AppRoutes.login);
-                    },
-                ),
-              ],
-            ),
-            textAlign: TextAlign.left,
           ),
         ],
       ),

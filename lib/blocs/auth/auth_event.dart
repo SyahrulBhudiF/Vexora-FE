@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:vexora_fe/data/models/dto/Request/login_dto.dart';
 import 'package:vexora_fe/data/models/dto/Request/register_dto.dart';
 
+import '../../data/models/dto/Request/verifyOtp_dto.dart';
+
 abstract class AuthEvent extends Equatable {
   const AuthEvent();
 
@@ -25,8 +27,6 @@ class AuthRegisterEvent extends AuthEvent {
 
 class AuthLoginEvent extends AuthEvent {
   final LoginDto loginDto;
-  // final String username;
-  // final String password;
 
   const AuthLoginEvent({required this.loginDto});
 
@@ -39,4 +39,22 @@ class AuthLogoutEvent extends AuthEvent {
 
   @override
   List<Object> get props => [];
+}
+
+class AuthSendOtpEvent extends AuthEvent {
+  final String email;
+
+  const AuthSendOtpEvent(this.email);
+
+  @override
+  List<Object> get props => [email];
+}
+
+class AuthVerifyOtpEvent extends AuthEvent {
+  final VerifyOtpDto verifyOtpDto;
+
+  const AuthVerifyOtpEvent({required this.verifyOtpDto});
+
+  @override
+  List<Object> get props => [verifyOtpDto.email, verifyOtpDto.otp];
 }
