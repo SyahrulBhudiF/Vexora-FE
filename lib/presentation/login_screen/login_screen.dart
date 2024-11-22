@@ -8,13 +8,14 @@ import '../../core/app_export.dart';
 import '../../widget/app_bar/appbar_leading_image.dart';
 import '../../widget/app_bar/custom_app_bar.dart';
 import 'package:flutter/gestures.dart';
+import '../../widget/custom_buttom_app_bar.dart';
 import '../../widget/custom_text_form_field.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final TextEditingController userNameController = TextEditingController();
-  final TextEditingController passwordtwoController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   // GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -84,10 +85,13 @@ class LoginScreen extends StatelessWidget {
                                 BlocConsumer<AuthBloc, AuthState>(
                                   listener: (context, state) {
                                     if (state is AuthSuccess) {
-                                      Navigator.pushNamed(
-                                          context, AppRoutes.homepageInitial);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BottomNavigationBarNew()),
+                                      );
                                     }
-
                                     if (state is AuthFailure) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
@@ -107,15 +111,16 @@ class LoginScreen extends StatelessWidget {
                                       buttonStyle:
                                           CustomButtonStyles.fillDeepPurple,
                                       onPressed: () {
+                                        print('Login button pressed');
                                         context.read<AuthBloc>().add(
                                               AuthLoginEvent(
-                                                  loginDto: LoginDto(
-                                                      username:
-                                                          userNameController
-                                                              .text,
-                                                      password:
-                                                          passwordtwoController
-                                                              .text)),
+                                                loginDto: LoginDto(
+                                                  username:
+                                                      userNameController.text,
+                                                  password:
+                                                      passwordController.text,
+                                                ),
+                                              ),
                                             );
                                       },
                                     );
@@ -263,7 +268,7 @@ class LoginScreen extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           CustomTextFormField(
-            controller: passwordtwoController,
+            controller: passwordController,
             fillColor: Colors.white,
             hintText: "Enter your password",
             textInputAction: TextInputAction.done,

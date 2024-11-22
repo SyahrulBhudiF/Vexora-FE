@@ -1,19 +1,18 @@
 import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vexora_fe/core/utils/http/http_client.dart';
-import 'package:vexora_fe/core/utils/storage/local_storage.dart';
 import 'package:vexora_fe/data/models/User/user_model.dart';
 import 'package:vexora_fe/data/models/dto/Request/login_dto.dart';
 import 'package:vexora_fe/data/models/dto/Request/register_dto.dart';
 import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;
 
+import '../data/models/dto/Request/verifyOtp_dto.dart';
+
 class AuthController {
   final Logger _logger = Logger('AuthController');
-  static const String _baseUrl = 'http://192.168.64.88:5555/api/v1';
+  static const String _baseUrl = 'http://192.168.64.7:5555/api/v1';
 
   Future<Either<String, User>> register(RegisterDto request) async {
     try {
@@ -24,15 +23,6 @@ class AuthController {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(request.toJson()),
       );
-      // .timeout(const Duration(seconds: 15)); // Adding a timeout
-
-      // print(response.statusCode);
-      // print(response.body);
-      // _logger.info('Response status: ${response.statusCode}');
-      // _logger.info('Response body: ${response.body}');
-
-      // print(User.fromJson(jsonDecode(response.body)['data']));
-
       if (response.statusCode == 200) {
         return Right(User.fromJson(jsonDecode(response.body)['data']));
       } else {
@@ -124,6 +114,44 @@ class AuthController {
     } catch (e) {
       _logger.severe("Failed to login user: $e");
       return Left('Failed to login user: $e');
+    }
+  }
+
+  Future<Either<String, bool>> sendOtp(String email) async {
+    try {
+      final url = Uri.parse('$_baseUrl/send-otp');
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email}),
+      );
+      if (response.statusCode == 200) {
+        return Right(true);
+      } else {
+        return Left(jsonDecode(response.body)['message']);
+      }
+    } catch (e) {
+      _logger.severe("Error: $e");
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, bool>> verifyOtp(VerifyOtpDto verifyOtpDto) async {
+    try {
+      final url = Uri.parse('$_baseUrl/verify-email');
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(verifyOtpDto.toJson()),
+      );
+      if (response.statusCode == 200) {
+        return Right(true);
+      } else {
+        return Left(jsonDecode(response.body)['message']);
+      }
+    } catch (e) {
+      _logger.severe("Error: $e");
+      return Left(e.toString());
     }
   }
 }

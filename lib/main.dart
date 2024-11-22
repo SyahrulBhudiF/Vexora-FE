@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/controller/auth_controller.dart';
 import 'package:vexora_fe/core/app_export.dart';
+import 'blocs/UserProfile/userProfile_bloc.dart';
+import 'controller/userProfile_controller.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +21,14 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => AuthBloc(authController: AuthController()),
+              create: (context) => AuthBloc(
+                authController: AuthController(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => UserProfileBloc(
+                userProfileController: UserProfileController(),
+              ),
             ),
           ],
           child: MaterialApp(

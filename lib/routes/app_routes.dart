@@ -8,13 +8,14 @@ import 'package:vexora_fe/presentation/scan_one/scan_one.dart';
 import 'package:vexora_fe/widget/custom_buttom_app_bar.dart';
 import '../presentation/history_screen/history_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
+import '../presentation/otp_screen/otp_screen.dart';
 import '../presentation/playlist_recommendation/playlist_recommendation.dart';
 import '../presentation/register/register_screen.dart';
 import '../presentation/splash_screen/splash_screen.dart';
 import '../presentation/welcome_screen/welcome_screen.dart';
 
 class AppRoutes {
-  static const String homepageInitial = "/home_page_initial";
+  static const String homepageInitial = "/homepage_initial";
   // static const String homepage = "/homepage";
   static const String scan = "/scan";
   static const String scanOne = "/scanOne";
@@ -29,6 +30,7 @@ class AppRoutes {
   static const String profile = "/profile";
   static const String password = "/password";
   static const String logout = "/logout";
+  static const String otpCode = "/otp_code";
 
   static Map<String, WidgetBuilder> routes = {
     scan: (context) => const ScanScreen(),
@@ -46,5 +48,6 @@ class AppRoutes {
     profile: (context) => ProfileScreen(),
     password: (context) => PasswordScreen(),
     logout: (context) => const LogoutDialog(),
+    otpCode: (context) => OtpScreen(),
   };
 }

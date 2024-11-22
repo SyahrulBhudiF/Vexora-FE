@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/blocs/UserProfile/userProfile_event.dart';
 import 'package:vexora_fe/core/app_export.dart';
+import 'package:vexora_fe/data/models/User/user_model.dart';
 import 'package:vexora_fe/widget/app_bar/appbar_title.dart';
 import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
 
-// ignore: must_be_immutable
+import '../../blocs/UserProfile/userProfile_bloc.dart';
+import '../../blocs/UserProfile/userProfile_state.dart';
+
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
-
-  // GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -36,115 +38,170 @@ class MoreScreen extends StatelessWidget {
   }
 
   Widget _buildProfileColumn(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      margin: EdgeInsets.only(left: 4.h),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, AppRoutes.profile);
-            },
-            child: SizedBox(
-              width: double.maxFinite,
-              child: _buildHistoryRow(
-                context,
-                logoutIcon: ImageConstant.accountCircle,
-                historyText: "Profile",
+    return BlocListener<UserProfileBloc, UserProfileState>(
+      listener: (context, state) {
+        if (state is UserProfileLoaded) {
+          Navigator.pushNamed(context, AppRoutes.profile);
+        }
+      },
+      child: Container(
+        width: double.maxFinite,
+        margin: EdgeInsets.only(left: 4.h),
+        child: Column(
+          children: [
+            GestureDetector(
+              onTap: () {
+                context.read<UserProfileBloc>().add(FetchUserProfile());
+              },
+              child: SizedBox(
+                width: double.maxFinite,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CustomImageView(
+                      imagePath: ImageConstant.accountCircle,
+                      height: 22.h,
+                      width: 26.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.h),
+                      child: Text(
+                        "Profile",
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: appTheme.black900,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    CustomImageView(
+                      imagePath: ImageConstant.arrorRight,
+                      height: 22.h,
+                      width: 26.h,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 12.h),
-          const SizedBox(
-            width: double.maxFinite,
-            child: Divider(),
-          ),
-          SizedBox(height: 12.h),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, AppRoutes.history);
-            },
-            child: SizedBox(
+            SizedBox(height: 12.h),
+            const SizedBox(
               width: double.maxFinite,
-              child: _buildHistoryRow(
-                context,
-                logoutIcon: ImageConstant.logout,
-                historyText: "History",
+              child: Divider(),
+            ),
+            SizedBox(height: 12.h),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.history);
+              },
+              child: SizedBox(
+                width: double.maxFinite,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CustomImageView(
+                      imagePath: ImageConstant.logout,
+                      height: 22.h,
+                      width: 26.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.h),
+                      child: Text(
+                        "History",
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: appTheme.black900,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    CustomImageView(
+                      imagePath: ImageConstant.arrorRight,
+                      height: 22.h,
+                      width: 26.h,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 12.h),
-          const SizedBox(
-            width: double.maxFinite,
-            child: Divider(),
-          ),
-          SizedBox(height: 12.h),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, AppRoutes.password);
-            },
-            child: SizedBox(
+            SizedBox(height: 12.h),
+            const SizedBox(
               width: double.maxFinite,
-              child: _buildHistoryRow(
-                context,
-                logoutIcon: ImageConstant.password,
-                historyText: "ChangePassword",
+              child: Divider(),
+            ),
+            SizedBox(height: 12.h),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.password);
+              },
+              child: SizedBox(
+                width: double.maxFinite,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CustomImageView(
+                      imagePath: ImageConstant.password,
+                      height: 22.h,
+                      width: 26.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.h),
+                      child: Text(
+                        "ChangePassword",
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: appTheme.black900,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    CustomImageView(
+                      imagePath: ImageConstant.arrorRight,
+                      height: 22.h,
+                      width: 26.h,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 12.h),
-          const SizedBox(
-            width: double.maxFinite,
-            child: Divider(),
-          ),
-          SizedBox(height: 12.h),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, AppRoutes.logout);
-            },
-            child: SizedBox(
+            SizedBox(height: 12.h),
+            const SizedBox(
               width: double.maxFinite,
-              child: _buildHistoryRow(
-                context,
-                logoutIcon: ImageConstant.logout,
-                historyText: "Logout",
+              child: Divider(),
+            ),
+            SizedBox(height: 12.h),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.logout);
+              },
+              child: SizedBox(
+                width: double.maxFinite,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CustomImageView(
+                      imagePath: ImageConstant.logout,
+                      height: 22.h,
+                      width: 26.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.h),
+                      child: Text(
+                        "Logout",
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: appTheme.black900,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    CustomImageView(
+                      imagePath: ImageConstant.arrorRight,
+                      height: 22.h,
+                      width: 26.h,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    );
-  }
-
-  Widget _buildHistoryRow(
-    BuildContext context, {
-    required String historyText,
-    required String logoutIcon,
-  }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomImageView(
-          imagePath: logoutIcon,
-          height: 22.h,
-          width: 26.h,
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 16.h),
-          child: Text(
-            historyText,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              color: appTheme.black900,
-            ),
-          ),
-        ),
-        const Spacer(),
-        CustomImageView(
-          imagePath: ImageConstant.arrorRight,
-          height: 22.h,
-          width: 26.h,
-        )
-      ],
     );
   }
 }

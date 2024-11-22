@@ -36,3 +36,17 @@ class AuthFailure extends AuthState {
   @override
   List<Object> get props => [message];
 }
+
+class AuthOtpSent extends AuthState {
+  const AuthOtpSent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class AuthOtpVerified extends AuthState {
+  const AuthOtpVerified();
+
+  @override
+  List<Object> get props => [];
+}
