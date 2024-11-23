@@ -161,30 +161,6 @@ class PasswordScreen extends StatelessWidget {
     );
   }
 
-  // Widget _buildBottomNavigationBar(BuildContext context) {
-  //   return SizedBox(
-  //     width: double.maxFinite,
-  //     child: CustomBottomAppBar(
-  //       onChanged: (BottomBarEnum type) {
-  //         Navigator.pushNamed(
-  //           navigatorKey.currentContext!, getCurrentRoute(type)
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
-
-  // String getCurrentRoute(BottomBarEnum type) {
-  //   switch (type) {
-  //     case BottomBarEnum.Home:
-  //       return AppRoutes.homepageInitial;
-  //     case BottomBarEnum.More:
-  //       return "/";
-  //     default:
-  //       return "/";
-  //   }
-  // }
-
   onTapArrowleftone(BuildContext context) {
     Navigator.pop(context);
   }
