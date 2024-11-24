@@ -13,27 +13,19 @@ import 'package:vexora_fe/widget/custom_text_form_field.dart';
 class PasswordScreen extends StatelessWidget {
   PasswordScreen({super.key});
 
-  final TextEditingController previousPasswordInputController = TextEditingController();
-  final TextEditingController newPasswordInputController = TextEditingController();
-  final TextEditingController confirmPasswordInputController = TextEditingController();
+  final TextEditingController previousPasswordInputController =
+      TextEditingController();
+  final TextEditingController newPasswordInputController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PasswordBloc(
-        passwordController: ChangePasswordController(),
-      ),
-      child: Builder(
-        builder: (context) {
-          return SafeArea(
-            child: Scaffold(
-              backgroundColor: theme.colorScheme.onPrimary,
-              resizeToAvoidBottomInset: false,
-              appBar: _buildAppBar(context),
-              body: _buildPasswordBody(context),
-            ),
-          );
-        },
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: theme.colorScheme.onPrimary,
+        resizeToAvoidBottomInset: false,
+        appBar: _buildAppBar(context),
+        body: _buildPasswordBody(context),
       ),
     );
   }
@@ -54,50 +46,32 @@ class PasswordScreen extends StatelessWidget {
   }
 
   Widget _buildPasswordBody(BuildContext context) {
-    return BlocListener<PasswordBloc, PasswordState>(
-      listener: (context, state) {
-        if (state is PasswordLoading) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Processing...')),
-          );
-        } else if (state is PasswordSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-          Navigator.pop(context);
-        } else if (state is PasswordFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-        }
-      },
-      child: Form(
-        child: Container(
-          width: double.maxFinite,
-          padding: EdgeInsets.symmetric(horizontal: 18.h),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                "Change your password",
-                style: CustomTextStyles.titleMediumSemiBold,
+    return Form(
+      child: Container(
+        width: double.maxFinite,
+        padding: EdgeInsets.symmetric(horizontal: 18.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              "Change your password",
+              style: CustomTextStyles.titleMediumSemiBold,
+            ),
+            SizedBox(
+              width: 236.h,
+              child: Text(
+                "Enter a new password below to change your password",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodySmall,
               ),
-              SizedBox(
-                width: 236.h,
-                child: Text(
-                  "Enter a new password below to change your password",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodySmall,
-                ),
-              ),
-              SizedBox(height: 28.h),
-              _buildPasswordFieldSection(context),
-              SizedBox(height: 68.h),
-              _buildSaveButton(context),
-            ],
-          ),
+            ),
+            SizedBox(height: 28.h),
+            _buildPasswordFieldSection(context),
+            SizedBox(height: 68.h),
+            _buildSaveButton(context),
+          ],
         ),
       ),
     );
@@ -123,13 +97,6 @@ class PasswordScreen extends StatelessWidget {
           ),
           SizedBox(height: 6.h),
           _buildNewPasswordInput(context),
-          SizedBox(height: 18.h),
-          Text(
-            "Confirm Password",
-            style: theme.textTheme.titleMedium,
-          ),
-          SizedBox(height: 8.h),
-          _buildConfirmPasswordInput(context)
         ],
       ),
     );
@@ -169,49 +136,39 @@ class PasswordScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildConfirmPasswordInput(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 4.h),
-      child: CustomTextFormField(
-        controller: confirmPasswordInputController,
-        fillColor: Colors.white,
-        hintText: "Confirm your new password",
-        textInputType: TextInputType.visiblePassword,
-        obscureText: true,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 12.h,
-          vertical: 16.h,
-        ),
-      ),
-    );
-  }
-
   Widget _buildSaveButton(BuildContext context) {
-    return CustomElevatedButton(
-      text: "Save",
-      margin: EdgeInsets.symmetric(horizontal: 6.h),
-      buttonStyle: CustomButtonStyles.fillPrimary,
-      onPressed: () {
-        final previousPassword = previousPasswordInputController.text;
-        final newPassword = newPasswordInputController.text;
-        final confirmPassword = confirmPasswordInputController.text;
-
-        if (newPassword != confirmPassword) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('New passwords do not match!')),
-          );
-          return;
+    return BlocConsumer<PasswordBloc, PasswordState>(
+      listener: (context, state) {
+        if (state is PasswordSuccess) {
+          context.read<PasswordBloc>().add(ChangePasswordEvent(
+              changePasswordDto: (state as PasswordSuccess).changePasswordDto));
         }
-
-        // Trigger Bloc Event
-        context.read<PasswordBloc>().add(
-              ChangePasswordEvent(
-                changePasswordDto: ChangePasswordDto(
-                  current_password: previousPassword,
-                  new_password: newPassword,
-                ),
-              ),
-            );
+        if (state is PasswordFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        if (state is PasswordLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return CustomElevatedButton(
+          text: "Save",
+          margin: EdgeInsets.symmetric(horizontal: 6.h),
+          buttonStyle: CustomButtonStyles.fillPrimary,
+          onPressed: () {
+            context.read<PasswordBloc>().add(
+                  ChangePasswordEvent(
+                    changePasswordDto: ChangePasswordDto(
+                        current_password: previousPasswordInputController.text,
+                        new_password: newPasswordInputController.text),
+                  ),
+                );
+          },
+        );
       },
     );
   }

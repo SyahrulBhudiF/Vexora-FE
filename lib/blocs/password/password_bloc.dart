@@ -19,7 +19,8 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
     _logger.info("ChangePassword event: $event");
     emit(PasswordLoading());
     try {
-      final response = await passwordController.changePassword(event.changePasswordDto);
+      final response =
+          await passwordController.changePassword(event.changePasswordDto);
 
       response.fold(
         (failure) {
@@ -28,7 +29,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
         },
         (successMessage) {
           _logger.info("Password change success: $successMessage");
-          emit(PasswordSuccess(message: successMessage));
+          emit(PasswordSuccess(changePasswordDto: event.changePasswordDto));
         },
       );
     } catch (e) {

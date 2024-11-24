@@ -323,10 +323,6 @@ class RegisterScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 6.h),
                 buttonStyle: CustomButtonStyles.fillPrimary,
                 onPressed: () {
-                  print(nameInputController.text);
-                  print(emailInputController.text);
-                  print(usernameInputController.text);
-                  print(passwordInputController.text);
                   context.read<AuthBloc>().add(
                         AuthRegisterEvent(
                           registerDto: RegisterDto(
