@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vexora_fe/blocs/UserProfile/userProfile_event.dart';
 import 'package:vexora_fe/core/app_export.dart';
-import 'package:vexora_fe/data/models/User/user_model.dart';
 import 'package:vexora_fe/widget/app_bar/appbar_title.dart';
 import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
 

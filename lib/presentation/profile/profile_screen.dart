@@ -3,7 +3,6 @@ import 'package:vexora_fe/blocs/UserProfile/userProfile_bloc.dart';
 import 'package:vexora_fe/blocs/UserProfile/userProfile_state.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:vexora_fe/data/models/User/user_model.dart';
 import 'package:vexora_fe/data/models/dto/Request/userProfileUpdate_dto.dart';
 import 'dart:io';
 import 'package:vexora_fe/widget/app_bar/appbar_title.dart';
