@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-// import 'package:vexora_fe/data/models/User/user_model.dart';
 
 abstract class PasswordState extends Equatable {
   const PasswordState();

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/controller/auth_controller.dart';
+import 'package:vexora_fe/controller/change_password_controller.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'blocs/UserProfile/userProfile_bloc.dart';
+import 'blocs/password/password_bloc.dart';
 import 'controller/userProfile_controller.dart';
 
 void main() {
@@ -28,6 +30,11 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) => UserProfileBloc(
                 userProfileController: UserProfileController(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => PasswordBloc(
+                passwordController: ChangePasswordController(), 
               ),
             ),
           ],

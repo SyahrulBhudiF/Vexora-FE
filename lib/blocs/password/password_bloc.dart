@@ -9,11 +9,9 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
   final Logger _logger = Logger('PasswordBloc');
 
   PasswordBloc({required this.passwordController}) : super(PasswordInitial()) {
-    // Event handler for password change
     on<ChangePasswordEvent>(_onChangePassword);
   }
 
-  /// Handles the ChangePassword event.
   Future<void> _onChangePassword(
     ChangePasswordEvent event,
     Emitter<PasswordState> emit,
@@ -21,20 +19,16 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
     _logger.info("ChangePassword event: $event");
     emit(PasswordLoading());
     try {
-      // Send the change password request through the controller
       final response = await passwordController.changePassword(event.changePasswordDto);
 
       response.fold(
-      //   (l) => emit(PasswordFailure(message: l)),
-      //   (r) => emit(PasswordSuccess(user: r)),
-      // );
         (failure) {
           _logger.warning("Password change failed: $failure");
           emit(PasswordFailure(message: failure));
         },
         (successMessage) {
           _logger.info("Password change success: $successMessage");
-          emit(PasswordSuccess(message: successMessage)); // Adjust success payload if needed.
+          emit(PasswordSuccess(message: successMessage));
         },
       );
     } catch (e) {
