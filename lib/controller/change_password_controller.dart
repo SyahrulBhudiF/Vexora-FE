@@ -7,13 +7,14 @@ import 'package:http/http.dart' as http;
 
 class ChangePasswordController {
   final Logger _logger = Logger('ChangePasswordController');
-  static const String _baseUrl = 'http://192.168.0.113:5555/api/v1';
+  static const String _baseUrl = 'http://192.168.0.165:5555/api/v1';
 
   Future<Either<String, String>> changePassword(
       ChangePasswordDto request) async {
     try {
       _logger.info('changePassword');
-      final url = Uri.parse('$_baseUrl/password');
+      final url = Uri.parse('$_baseUrl/user/change-password');
+      print(url);
 
       final prefs = await SharedPreferences.getInstance();
       final authData = prefs.getString('auth_data');
@@ -28,7 +29,6 @@ class ChangePasswordController {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $accessToken',
         },
-        body: jsonEncode(request.toJson()),
       );
 
       if (response.statusCode == 200) {
@@ -48,4 +48,3 @@ class ChangePasswordController {
     }
   }
 }
-  
