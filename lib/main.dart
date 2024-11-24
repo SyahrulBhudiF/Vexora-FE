@@ -6,6 +6,9 @@ import 'package:vexora_fe/controller/change_password_controller.dart';
 import 'package:vexora_fe/controller/history_controller.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'blocs/UserProfile/userProfile_bloc.dart';
+import 'blocs/random_recommendations/randomRec_bloc.dart';
+import 'blocs/random_recommendations/randomRec_event.dart';
+import 'controller/randomRecommendations_controller.dart';
 import 'blocs/password/password_bloc.dart';
 import 'controller/userProfile_controller.dart';
 
@@ -50,7 +53,7 @@ class MyApp extends StatelessWidget {
             theme: theme,
             title: 'Vexora',
             debugShowCheckedModeBanner: false,
-            initialRoute: AppRoutes.splash,
+            initialRoute: AppRoutes.login,
             routes: AppRoutes.routes,
           ),
         );

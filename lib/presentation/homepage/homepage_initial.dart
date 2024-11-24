@@ -27,11 +27,22 @@ class HomepageInitialState extends State<HomepageInitial> {
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 200.h, left: 30.h),
+                    padding: EdgeInsets.only(top: 180.h, left: 30.h),
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text("Hello, " + state.user.username.toString(),
-                          style: CustomTextStyles.titleLargeSemiBold),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Hello, ",
+                            style: CustomTextStyles.titleLargeMedium,
+                          ),
+                          Text(
+                            state.user.username.toString(),
+                            style: CustomTextStyles.titleLargeBold,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -156,7 +167,7 @@ class HomepageInitialState extends State<HomepageInitial> {
               child: Wrap(
                 direction: Axis.horizontal,
                 spacing: 20.h,
-                children: List.generate(4, (index) {
+                children: List.generate(1, (index) {
                   return ListplaylistgalItemWidget();
                 }),
               ),
