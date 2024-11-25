@@ -9,7 +9,7 @@ import '../data/models/dto/Request/userProfileUpdate_dto.dart';
 
 class UserProfileController {
   final Logger _logger = Logger('UserProfileController');
-  static const String _baseUrl = 'http://192.168.0.113:5555/api/v1';
+  static const String _baseUrl = 'http://192.168.63.177:5555/api/v1';
 
   Future<Either<String, User>> user() async {
     try {
