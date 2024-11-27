@@ -45,7 +45,7 @@ class ListplaylistgalItemWidget extends StatelessWidget {
                             ),
                             Text(
                               "${playlist.artist}\n", // Nama artis
-                              style: CustomTextStyles.labelLargeBlack900,
+                              style: CustomTextStyles.labelLargeGray,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),

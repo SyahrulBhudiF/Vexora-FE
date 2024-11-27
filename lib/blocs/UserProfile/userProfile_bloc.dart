@@ -50,4 +50,21 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       },
     );
   }
+
+  void _onUpdateUserProfilePicture(
+      UpdateUserProfilePicture event, Emitter<UserProfileState> emit) async {
+    emit(UserProfileUpdating());
+    final Either<String, User> result =
+        await userProfileController.updateProfilePicture(event.profilePicture);
+
+    result.fold(
+      (failure) {
+        _logger.severe("Error: $failure");
+        emit(UserProfileUpdateError(message: failure));
+      },
+      (user) {
+        emit(UserProfileUpdated(user: user));
+      },
+    );
+  }
 }

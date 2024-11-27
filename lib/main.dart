@@ -41,12 +41,12 @@ class MyApp extends StatelessWidget {
               )..add(LoadPlaylistsEvent()),
             ),
             BlocProvider(
-              create: (context) => PasswordBloc(
-                passwordController: ChangePasswordController()),
+              create: (context) =>
+                  PasswordBloc(passwordController: ChangePasswordController()),
             ),
             BlocProvider(
-              create: (context) => HistoryBloc(
-                historyController: HistoryController()),
+              create: (context) =>
+                  HistoryBloc(historyController: HistoryController()),
             ),
           ],
           child: MaterialApp(

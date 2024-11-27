@@ -21,7 +21,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController nameInputController = TextEditingController();
-  TextEditingController emailInputController = TextEditingController();
   TextEditingController usernameInputController = TextEditingController();
   File? _profileImage; // Menyimpan gambar profil yang dipilih
 
@@ -187,6 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 horizontal: 12.0,
                 vertical: 16.0,
               ),
+              enabled: false, // Menonaktifkan input form
             ),
           );
         }
@@ -276,38 +276,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           margin: const EdgeInsets.symmetric(horizontal: 5.0),
           buttonStyle: CustomButtonStyles.fillPrimary,
           onPressed: () {
-            if (state is UserProfileLoaded) {
-              final email = emailInputController.text;
-
-              // Validasi email
-              if (email.isEmpty || !isValidEmail(email)) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Please enter a valid email address')),
-                );
-                return;
-              }
-
-              // Validasi gambar profil, pastikan gambar sudah dipilih
-              if (_profileImage == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Please select a profile picture')),
-                );
-                return;
-              }
-
-              final userProfileUpdateDto = UserUpdateRequestDto(
-                name: nameInputController.text,
-                email: email,
-                username: usernameInputController.text,
-                profilePicture: _profileImage!,
+            // Validasi gambar profil, pastikan gambar sudah dipilih
+            if (_profileImage == null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Please select a profile picture')),
               );
-
-              // Kirim event untuk memperbarui profil
-              context.read<UserProfileBloc>().add(
-                    UpdateUserProfile(
-                        userProfileUpdateDto: userProfileUpdateDto),
-                  );
+              return;
             }
+
+            // Buat DTO untuk memperbarui profil
+            final userProfileUpdateDto = UserUpdateRequestDto(
+              name: nameInputController.text,
+              username: usernameInputController.text,
+              profilePicture: _profileImage!,
+            );
+
+            // Kirim event untuk memperbarui profil
+            context.read<UserProfileBloc>().add(
+                  UpdateUserProfile(userProfileUpdateDto: userProfileUpdateDto),
+                );
+            // Kirim event untuk memperbarui foto profil
+            context.read<UserProfileBloc>().add(
+                  UpdateUserProfilePicture(profilePicture: _profileImage!),
+                );
           },
         );
       },
