@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vexora_fe/blocs/password/password_bloc.dart';
 import 'package:vexora_fe/blocs/password/password_event.dart';
 import 'package:vexora_fe/blocs/password/password_state.dart';
-import 'package:vexora_fe/controller/change_password_controller.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'package:vexora_fe/data/models/dto/Request/change_password_dto.dart';
 import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
@@ -140,8 +139,11 @@ class PasswordScreen extends StatelessWidget {
     return BlocConsumer<PasswordBloc, PasswordState>(
       listener: (context, state) {
         if (state is PasswordSuccess) {
-          context.read<PasswordBloc>().add(ChangePasswordEvent(
-              changePasswordDto: (state as PasswordSuccess).changePasswordDto));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
         }
         if (state is PasswordFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -163,7 +165,7 @@ class PasswordScreen extends StatelessWidget {
             context.read<PasswordBloc>().add(
                   ChangePasswordEvent(
                     changePasswordDto: ChangePasswordDto(
-                        current_password: previousPasswordInputController.text,
+                        previous_password: previousPasswordInputController.text,
                         new_password: newPasswordInputController.text),
                   ),
                 );

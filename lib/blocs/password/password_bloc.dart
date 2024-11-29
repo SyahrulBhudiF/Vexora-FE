@@ -29,7 +29,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
         },
         (successMessage) {
           _logger.info("Password change success: $successMessage");
-          emit(PasswordSuccess(changePasswordDto: event.changePasswordDto));
+          emit(PasswordSuccess(message: successMessage));
         },
       );
     } catch (e) {
