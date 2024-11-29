@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vexora_fe/data/models/User/user_model.dart';
@@ -9,7 +10,8 @@ import '../data/models/dto/Request/userProfileUpdate_dto.dart';
 
 class UserProfileController {
   final Logger _logger = Logger('UserProfileController');
-  static const String _baseUrl = 'http://192.168.63.177:5555/api/v1';
+
+  static const String _baseUrl = 'http://192.168.245.249:5555/api/v1';
 
   Future<Either<String, User>> user() async {
     try {
@@ -37,51 +39,59 @@ class UserProfileController {
   }
 
   Future<Either<String, User>> updateProfile(
-      UserUpdateRequestDto request) async {
+      UserUpdateRequestDto userProfileUpdateDto) async {
     try {
-      _logger.info('updateProfile');
-      final url = Uri.parse('$_baseUrl/user');
+      // Menggunakan endpoint /user untuk memperbarui nama dan username
+      final response = await http.put(
+        Uri.parse('$_baseUrl/user'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': userProfileUpdateDto.name,
+          'username': userProfileUpdateDto.username,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+        return Right(User.fromJson(responseBody['data']));
+      } else {
+        return Left('Failed to update user profile');
+      }
+    } catch (error) {
+      return Left(error.toString());
+    }
+  }
+
+  Future<Either<String, User>> updateProfilePicture(File profilePicture) async {
+    try {
+      // Menggunakan endpoint /user/profile-picture untuk memperbarui foto profil
+      final request = http.MultipartRequest(
+        'PUT',
+        Uri.parse('$_baseUrl/user/profile-picture'),
+      );
+
+      // Menambahkan file gambar ke request
+      request.files.add(await http.MultipartFile.fromPath(
+        'profile_picture',
+        profilePicture.path,
+      ));
+
       final prefs = await SharedPreferences.getInstance();
       final authData = prefs.getString('auth_data');
       final accessToken = jsonDecode(authData!)['access_token'];
+      request.headers['Authorization'] = 'Bearer $accessToken';
 
-      // Membuat MultipartRequest
-      var requestData = http.MultipartRequest('PUT', url)
-        ..headers['Authorization'] = "Bearer $accessToken";
+      // Mengirimkan request
+      final response = await request.send();
 
-      // Menambahkan data lainnya (name, email, username)
-      requestData.fields['name'] = request.name;
-      requestData.fields['email'] = request.email;
-      requestData.fields['username'] = request.username;
-
-      // Menambahkan file gambar
-      var profilePictureFile = await http.MultipartFile.fromPath(
-        'profile_picture', // nama field untuk gambar sesuai API
-        request.profilePicture.path,
-      );
-      requestData.files.add(profilePictureFile);
-
-      // Mengirimkan request dan menerima response
-      var response = await requestData.send();
-
-      _logger.info('Response status: ${response.statusCode}');
-
-      // Pastikan body response dibaca dengan benar
-      final responseBody = await response.stream.bytesToString();
-
-      _logger.info('Response body: $responseBody');
-
-      // Mengecek jika status kode 200
       if (response.statusCode == 200) {
-        // Jika berhasil, decode response body dan return User
+        final responseBody = await response.stream.bytesToString();
         return Right(User.fromJson(jsonDecode(responseBody)['data']));
       } else {
-        // Jika gagal, return pesan error
-        return Left(jsonDecode(responseBody)['message']);
+        return Left('Failed to update profile picture');
       }
-    } catch (e) {
-      _logger.severe("Error: $e");
-      return Left(e.toString());
+    } catch (error) {
+      return Left(error.toString());
     }
   }
 }

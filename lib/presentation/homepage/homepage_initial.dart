@@ -154,7 +154,7 @@ class HomepageInitialState extends State<HomepageInitial> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Your Playlist",
+                      "Random Music",
                       style: theme.textTheme.titleMedium,
                     ),
                   ])),

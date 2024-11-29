@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 
 class ChangePasswordController {
   final Logger _logger = Logger('ChangePasswordController');
-  static const String _baseUrl = 'http://192.168.63.177:5555/api/v1';
+
+  static const String _baseUrl = 'http://192.168.245.249:5555/api/v1';
+
 
   Future<Either<String, String>> changePassword(
       ChangePasswordDto request) async {
