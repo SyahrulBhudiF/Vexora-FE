@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vexora_fe/data/models/History/history_model.dart';
+import 'package:vexora_fe/data/models/Music/music_model.dart';
 
 class HistoryController {
   final Logger _logger = Logger('HistoryController');
@@ -13,12 +15,42 @@ class HistoryController {
     try {
       _logger.info('getHistory');
       final url = Uri.parse('$_baseUrl/history');
+      final prefs = await SharedPreferences.getInstance();
+      final authData = prefs.getString('auth_data');
+      final accessToken = jsonDecode(authData!)['access_token'];
       final response = await http.get(
         url,
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer $accessToken",
+        },
       );
       if (response.statusCode == 200) {
         return Right(History.fromJson(jsonDecode(response.body)['data']));
+      } else {
+        return Left(jsonDecode(response.body)['message']);
+      }
+    } catch (e) {
+      _logger.severe("Error: $e");
+      return Left(e.toString());
+    }
+  }
+  Future<Either<String, Music>> getMusicHistory() async {
+    try {
+      _logger.info('getHistory');
+      final url = Uri.parse('$_baseUrl/music');
+      final prefs = await SharedPreferences.getInstance();
+      final authData = prefs.getString('auth_data');
+      final accessToken = jsonDecode(authData!)['access_token'];
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer $accessToken",
+        },
+      );
+      if (response.statusCode == 200) {
+        return Right(Music.fromJson(jsonDecode(response.body)['data']));
       } else {
         return Left(jsonDecode(response.body)['message']);
       }

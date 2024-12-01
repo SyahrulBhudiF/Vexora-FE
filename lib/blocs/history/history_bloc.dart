@@ -27,6 +27,4 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       }
     });
   }
-
- 
 }

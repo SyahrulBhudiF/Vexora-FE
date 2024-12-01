@@ -48,4 +48,7 @@ class ImageConstant {
   static String octionPlaylist = '$imagePath/octionPlaylist.svg';
   static String profileUser = '$imagePath/profileUser.svg';
   static String photoAdd = '$imagePath/photoAdd.svg';
+  static String angryKuning = '$imagePath/angryKuning.svg';
+  static String sadKuning = '$imagePath/cryKuning.svg';
+  static String neutralKuning = '$imagePath/neutralKuning.svg';
 }

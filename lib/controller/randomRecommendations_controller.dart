@@ -23,12 +23,9 @@ class PlaylistController {
         'Authorization': "Bearer $accessToken",
       });
 
-      print(response.body);
-      print(response.statusCode);
-
       if (response.statusCode == 200) {
         // Mengambil data dari key 'data' karena data playlists langsung ada di sini
-        List<dynamic> data = jsonDecode(response.body)['data']['playlists'];
+        List<dynamic> data = jsonDecode(response.body)['data']['music'];
         _logger.info(
             'Data Playlist: $data'); // Debugging untuk memastikan data yang diterima
         List<PlaylistDto> playlists =

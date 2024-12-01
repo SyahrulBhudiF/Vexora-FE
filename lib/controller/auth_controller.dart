@@ -15,7 +15,6 @@ class AuthController {
 
   static const String _baseUrl = 'http://192.168.245.249:5555/api/v1';
 
-
   Future<Either<String, User>> register(RegisterDto request) async {
     try {
       _logger.info('register');
