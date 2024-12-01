@@ -10,7 +10,6 @@ class ChangePasswordController {
 
   static const String _baseUrl = 'http://192.168.245.249:5555/api/v1';
 
-
   Future<Either<String, String>> changePassword(
       ChangePasswordDto request) async {
     try {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/blocs/ScanFace/scanFace_bloc.dart';
+import 'package:vexora_fe/blocs/UserProfile/userProfile_event.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/history/history_bloc.dart';
 import 'package:vexora_fe/controller/auth_controller.dart';
@@ -10,6 +12,7 @@ import 'blocs/random_recommendations/randomRec_bloc.dart';
 import 'blocs/random_recommendations/randomRec_event.dart';
 import 'controller/randomRecommendations_controller.dart';
 import 'blocs/password/password_bloc.dart';
+import 'controller/scanFace_controller.dart';
 import 'controller/userProfile_controller.dart';
 
 void main() {
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) => UserProfileBloc(
                 userProfileController: UserProfileController(),
-              ),
+              )..add(FetchUserProfile()),
             ),
             BlocProvider(
               create: (context) => PlaylistBloc(
@@ -48,12 +51,16 @@ class MyApp extends StatelessWidget {
               create: (context) =>
                   HistoryBloc(historyController: HistoryController()),
             ),
+            BlocProvider(
+              create: (context) =>
+                  ScanFaceBloc(scanFaceController: ScanFaceController()),
+            ),
           ],
           child: MaterialApp(
             theme: theme,
             title: 'Vexora',
             debugShowCheckedModeBanner: false,
-            initialRoute: AppRoutes.splash,
+            initialRoute: AppRoutes.login,
             routes: AppRoutes.routes,
           ),
         );

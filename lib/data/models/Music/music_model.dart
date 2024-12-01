@@ -2,6 +2,7 @@ class Music {
   final String uuid;
   final DateTime createdAt;
   final String historyUuid;
+  final String id;
   final String musicName;
   final String path;
   final String thumbnail;
@@ -10,6 +11,7 @@ class Music {
   Music({
     required this.uuid,
     required this.createdAt,
+    required this.id,
     required this.historyUuid,
     required this.musicName,
     required this.path,
@@ -19,8 +21,9 @@ class Music {
 
   factory Music.fromJson(Map<String, dynamic> json) {
     return Music(
-      uuid: json['id'],
+      uuid: json['uuid'],
       historyUuid: json['history_id'],
+      id: json['id'],
       musicName: json['music_name'],
       path: json['path'],
       thumbnail: json['thumbnail'],
@@ -33,6 +36,7 @@ class Music {
     return {
       'uuid': uuid,
       'created_at': createdAt.toIso8601String(),
+      'id': id,
       'history_uuid': historyUuid,
       'music_name': musicName,
       'path': path,
