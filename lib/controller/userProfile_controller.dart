@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vexora_fe/data/models/User/user_model.dart';
 import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;
-
 import '../data/models/dto/Request/userProfileUpdate_dto.dart';
 
 class UserProfileController {
@@ -16,10 +15,15 @@ class UserProfileController {
   Future<Either<String, User>> user() async {
     try {
       _logger.info('user');
-      final url = Uri.parse('$_baseUrl/user');
+      final url = Uri.parse('$_baseUrl/user?refresh=true');
       final prefs = await SharedPreferences.getInstance();
       final authData = prefs.getString('auth_data');
-      final accessToken = jsonDecode(authData!)['access_token'];
+      print('token');
+      print(authData);
+      if (authData == null) {
+        return Left("No authentication data found");
+      }
+      final accessToken = jsonDecode(authData)['access_token'];
       final response = await http.get(
         url,
         headers: {
@@ -27,6 +31,10 @@ class UserProfileController {
           'Authorization': "Bearer $accessToken",
         },
       );
+      print('data user');
+      print(response.body);
+      print(response.statusCode);
+
       if (response.statusCode == 200) {
         return Right(User.fromJson(jsonDecode(response.body)['data']));
       } else {
@@ -38,22 +46,26 @@ class UserProfileController {
     }
   }
 
-  Future<Either<String, User>> updateProfile(
+  Future<Either<String, void>> updateProfile(
       UserUpdateRequestDto userProfileUpdateDto) async {
     try {
+      // Mendapatkan token dari shared preferences
+      final prefs = await SharedPreferences.getInstance();
+      final authData = prefs.getString('auth_data');
+      final accessToken = jsonDecode(authData!)['access_token'];
+
       // Menggunakan endpoint /user untuk memperbarui nama dan username
       final response = await http.put(
         Uri.parse('$_baseUrl/user'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'name': userProfileUpdateDto.name,
-          'username': userProfileUpdateDto.username,
-        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer $accessToken",
+        },
+        body: jsonEncode(userProfileUpdateDto.toJson()),
       );
 
       if (response.statusCode == 200) {
-        final responseBody = jsonDecode(response.body);
-        return Right(User.fromJson(responseBody['data']));
+        return Right(null);
       } else {
         return Left('Failed to update user profile');
       }
@@ -62,33 +74,30 @@ class UserProfileController {
     }
   }
 
-  Future<Either<String, User>> updateProfilePicture(File profilePicture) async {
+  Future<Either<String, User>> updateProfilePicture(File image) async {
     try {
-      // Menggunakan endpoint /user/profile-picture untuk memperbarui foto profil
-      final request = http.MultipartRequest(
-        'PUT',
-        Uri.parse('$_baseUrl/user/profile-picture'),
-      );
-
-      // Menambahkan file gambar ke request
-      request.files.add(await http.MultipartFile.fromPath(
-        'profile_picture',
-        profilePicture.path,
-      ));
+      final url = Uri.parse('$_baseUrl/user/profile-picture');
 
       final prefs = await SharedPreferences.getInstance();
       final authData = prefs.getString('auth_data');
       final accessToken = jsonDecode(authData!)['access_token'];
-      request.headers['Authorization'] = 'Bearer $accessToken';
 
-      // Mengirimkan request
+      var request = http.MultipartRequest('PUT', url)
+        ..headers['Authorization'] = 'Bearer $accessToken'
+        ..files.add(await http.MultipartFile.fromPath(
+          'image',
+          image.path,
+        ));
+
       final response = await request.send();
 
       if (response.statusCode == 200) {
-        final responseBody = await response.stream.bytesToString();
-        return Right(User.fromJson(jsonDecode(responseBody)['data']));
+        final responseBody = await http.Response.fromStream(response);
+        return Right(User.fromJson(jsonDecode(responseBody.body)['data']));
       } else {
-        return Left('Failed to update profile picture');
+        final responseBody = await http.Response.fromStream(response);
+        final errorMessage = jsonDecode(responseBody.body)['message'];
+        return Left(errorMessage ?? 'Failed to update profile picture');
       }
     } catch (error) {
       return Left(error.toString());

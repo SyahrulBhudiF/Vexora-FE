@@ -4,7 +4,6 @@ import 'package:vexora_fe/controller/history_controller.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'package:logging/logging.dart' as logging;
 
-
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   final HistoryController historyController;
   final logging.Logger _logger = logging.Logger('HistoryBloc');

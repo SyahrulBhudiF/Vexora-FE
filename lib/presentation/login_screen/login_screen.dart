@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/blocs/UserProfile/userProfile_bloc.dart';
+import 'package:vexora_fe/blocs/UserProfile/userProfile_event.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/auth/auth_event.dart';
 import 'package:vexora_fe/blocs/auth/auth_state.dart';
@@ -85,6 +87,9 @@ class LoginScreen extends StatelessWidget {
                                 BlocConsumer<AuthBloc, AuthState>(
                                   listener: (context, state) {
                                     if (state is AuthSuccess) {
+                                      context
+                                          .read<UserProfileBloc>()
+                                          .add(FetchUserProfile());
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
