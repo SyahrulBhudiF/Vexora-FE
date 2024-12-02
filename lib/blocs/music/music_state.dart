@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:vexora_fe/data/models/dto/Responses/scanFace_response.dart';
 
 import '../../data/models/Music/music_model.dart';
 
@@ -14,7 +15,7 @@ class MusicInitial extends MusicState {}
 class MusicLoading extends MusicState {}
 
 class MusicLoaded extends MusicState {
-  final Music music;
+  final List<Track> music;
 
   const MusicLoaded({required this.music});
 

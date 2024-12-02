@@ -108,6 +108,7 @@ class AuthController {
 
       // final response = await VexoraHttpClient.post('login', request.toJson());
       if (response.statusCode == 200) {
+        prefs.remove('auth_data');
         return Right(jsonDecode(response.body)['message']);
       } else {
         return Left(jsonDecode(response.body)['message']);

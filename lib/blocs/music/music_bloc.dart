@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../controller/history_controller.dart';
 import 'music_event.dart';
@@ -14,7 +16,7 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
       emit(MusicLoading()); // Emit loading state
       try {
         _logger.info("Loading music data...");
-        final response = await historyController.getMusicHistory();
+        final response = await historyController.getMusicHistory(event.musicId);
         response.fold(
           (l) {
             _logger.severe("Error loading music: $l");

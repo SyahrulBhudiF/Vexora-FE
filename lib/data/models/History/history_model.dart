@@ -14,7 +14,7 @@ class History {
   factory History.fromJson(Map<String, dynamic> json) {
     return History(
       uuid: json['uuid'],
-      user_id: json['user_id'],
+      user_id: json['user_uuid'],
       mood: json['mood'],
       createdAt: DateTime.parse(json['created_at']),
     );

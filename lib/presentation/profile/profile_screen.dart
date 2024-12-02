@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vexora_fe/blocs/UserProfile/userProfile_bloc.dart';
 import 'package:vexora_fe/blocs/UserProfile/userProfile_state.dart';
 import 'package:vexora_fe/core/app_export.dart';
@@ -23,6 +24,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController nameInputController = TextEditingController();
   TextEditingController usernameInputController = TextEditingController();
   File? _profileImage; // Menyimpan gambar profil yang dipilih
+
+  @override
+  void dispose() {
+    nameInputController.dispose();
+    usernameInputController.dispose();
+    super.dispose();
+  }
 
   final ImagePicker _picker = ImagePicker();
 
@@ -149,12 +157,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return BlocBuilder<UserProfileBloc, UserProfileState>(
       builder: (context, state) {
         if (state is UserProfileLoaded) {
+          nameInputController.text = state.user.name ?? '';
           return Padding(
             padding: const EdgeInsets.only(right: 4.0),
             child: CustomTextFormField(
-              controller: state.user.name != null
-                  ? TextEditingController(text: state.user.name!)
-                  : TextEditingController(),
+              controller: nameInputController,
               fillColor: Colors.white,
               hintText: 'Enter your name',
               contentPadding: const EdgeInsets.symmetric(
@@ -176,9 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return Padding(
             padding: const EdgeInsets.only(right: 4.0),
             child: CustomTextFormField(
-              controller: state.user.email != null
-                  ? TextEditingController(text: state.user.email!)
-                  : TextEditingController(),
+              controller: TextEditingController(text: state.user.email),
               fillColor: Colors.white,
               hintText: 'Enter your email',
               textInputType: TextInputType.emailAddress,
@@ -199,12 +204,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return BlocBuilder<UserProfileBloc, UserProfileState>(
       builder: (context, state) {
         if (state is UserProfileLoaded) {
+          usernameInputController.text = state.user.username ?? '';
           return Padding(
             padding: const EdgeInsets.only(right: 4.0),
             child: CustomTextFormField(
-              controller: state.user.username != null
-                  ? TextEditingController(text: state.user.username!)
-                  : TextEditingController(),
+              controller: usernameInputController,
               fillColor: Colors.white,
               hintText: "Enter your username",
               textInputAction: TextInputAction.done,
@@ -255,7 +259,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildSaveButton(BuildContext context) {
     return BlocConsumer<UserProfileBloc, UserProfileState>(
       listener: (context, state) {
-        if (state is UserProfileUpdated) {
+        if (state is UserProfileLoaded) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Profile updated successfully')),
           );
@@ -276,29 +280,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           margin: const EdgeInsets.symmetric(horizontal: 5.0),
           buttonStyle: CustomButtonStyles.fillPrimary,
           onPressed: () {
-            // Validasi gambar profil, pastikan gambar sudah dipilih
-            if (_profileImage == null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Please select a profile picture')),
-              );
-              return;
-            }
-
-            // Buat DTO untuk memperbarui profil
+            // if (_profileImage == null) {
+            //   ScaffoldMessenger.of(context).showSnackBar(
+            //     SnackBar(content: Text('Please select a profile picture')),
+            //   );
+            //   return;
+            // }
             final userProfileUpdateDto = UserUpdateRequestDto(
               name: nameInputController.text,
               username: usernameInputController.text,
-              profilePicture: _profileImage!,
             );
 
-            // Kirim event untuk memperbarui profil
             context.read<UserProfileBloc>().add(
                   UpdateUserProfile(userProfileUpdateDto: userProfileUpdateDto),
                 );
-            // Kirim event untuk memperbarui foto profil
-            context.read<UserProfileBloc>().add(
-                  UpdateUserProfilePicture(profilePicture: _profileImage!),
-                );
+            context
+                .read<UserProfileBloc>()
+                .add(UpdateUserProfilePicture(profilePicture: _profileImage!));
           },
         );
       },

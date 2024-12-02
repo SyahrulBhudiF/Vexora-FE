@@ -3,6 +3,9 @@ import 'package:vexora_fe/blocs/ScanFace/scanFace_bloc.dart';
 import 'package:vexora_fe/blocs/UserProfile/userProfile_event.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/history/history_bloc.dart';
+import 'package:vexora_fe/blocs/history/history_event.dart';
+import 'package:vexora_fe/blocs/history/history_state.dart';
+import 'package:vexora_fe/blocs/music/music_bloc.dart';
 import 'package:vexora_fe/controller/auth_controller.dart';
 import 'package:vexora_fe/controller/change_password_controller.dart';
 import 'package:vexora_fe/controller/history_controller.dart';
@@ -36,7 +39,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) => UserProfileBloc(
                 userProfileController: UserProfileController(),
-              )..add(FetchUserProfile()),
+              ),
             ),
             BlocProvider(
               create: (context) => PlaylistBloc(
@@ -49,11 +52,16 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) =>
-                  HistoryBloc(historyController: HistoryController()),
+                  HistoryBloc(historyController: HistoryController())
+                    ..add(HistoryGetEvent()),
             ),
             BlocProvider(
               create: (context) =>
                   ScanFaceBloc(scanFaceController: ScanFaceController()),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  MusicBloc(historyController: HistoryController()),
             ),
           ],
           child: MaterialApp(

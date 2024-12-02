@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart'; // Import paket month_picker_dialog
 import 'package:intl/intl.dart';
-import 'package:vexora_fe/core/app_export.dart'; // Library untuk formatting tanggal
 
 class CustomDropDownWithMonthPicker extends StatefulWidget {
   final double width;
   final String hintText;
   final Alignment alignment;
-  final List<String> items;
+  final List items;
   final Widget prefix;
   final BoxConstraints prefixConstraint;
   final EdgeInsets contentPadding;
+  final ValueChanged<DateTime> onMonthSelected; // Add this line
 
   const CustomDropDownWithMonthPicker({
     Key? key,
@@ -21,6 +21,7 @@ class CustomDropDownWithMonthPicker extends StatefulWidget {
     required this.prefix,
     required this.prefixConstraint,
     required this.contentPadding,
+    required this.onMonthSelected, // Add this line
   }) : super(key: key);
 
   @override
@@ -47,6 +48,7 @@ class _CustomDropDownWithMonthPickerState
           setState(() {
             selectedMonth = DateFormat('MMMM').format(picked);
           });
+          widget.onMonthSelected(picked); // Add this line
         }
       },
       child: Container(
@@ -54,7 +56,7 @@ class _CustomDropDownWithMonthPickerState
         padding: widget.contentPadding,
         alignment: widget.alignment,
         decoration: BoxDecoration(
-          color: theme.colorScheme.primary,
+          color: Colors.white,
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -65,12 +67,12 @@ class _CustomDropDownWithMonthPickerState
               child: Text(
                 selectedMonth ?? widget.hintText,
                 style: TextStyle(
-                    color: selectedMonth == null ? Colors.white : Colors.white),
+                    color: selectedMonth == null ? Colors.grey : Colors.black),
               ),
             ),
             Icon(
               Icons.arrow_drop_down,
-              color: theme.colorScheme.onPrimary,
+              color: Colors.grey,
             ),
           ],
         ),

@@ -13,13 +13,14 @@ class HistoryInitial extends HistoryState {}
 class HistoryLoading extends HistoryState {}
 
 class HistorySuccess extends HistoryState {
-  final History history;
+  final List<History> history;
 
   const HistorySuccess({required this.history});
 
   @override
   List<Object> get props => [history];
 }
+
 class HistoryFailure extends HistoryState {
   final String message;
 
@@ -27,4 +28,13 @@ class HistoryFailure extends HistoryState {
 
   @override
   List<Object> get props => [message];
+}
+
+class CountMoodState extends HistoryState {
+  final Map<String, int> moodCounts;
+
+  const CountMoodState({required this.moodCounts});
+
+  @override
+  List<Object> get props => [moodCounts];
 }

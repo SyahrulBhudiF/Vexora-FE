@@ -21,7 +21,7 @@ class ResultScreen extends StatelessWidget {
       case 'angry':
         return ImageConstant.angryKuning;
       case 'neutral':
-        return ImageConstant.neutralKuning;
+        return ImageConstant.calmKuning;
       default:
         return ImageConstant.happyIcon; // Default icon
     }
