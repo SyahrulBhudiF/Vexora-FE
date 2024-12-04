@@ -280,23 +280,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           margin: const EdgeInsets.symmetric(horizontal: 5.0),
           buttonStyle: CustomButtonStyles.fillPrimary,
           onPressed: () {
-            // if (_profileImage == null) {
-            //   ScaffoldMessenger.of(context).showSnackBar(
-            //     SnackBar(content: Text('Please select a profile picture')),
-            //   );
-            //   return;
-            // }
             final userProfileUpdateDto = UserUpdateRequestDto(
               name: nameInputController.text,
               username: usernameInputController.text,
             );
 
-            context.read<UserProfileBloc>().add(
-                  UpdateUserProfile(userProfileUpdateDto: userProfileUpdateDto),
-                );
-            context
-                .read<UserProfileBloc>()
-                .add(UpdateUserProfilePicture(profilePicture: _profileImage!));
+            context.read<UserProfileBloc>().add(UpdateUserProfile(
+                  userProfileUpdateDto: userProfileUpdateDto,
+                ));
+
+            if (_profileImage != null) {
+              context.read<UserProfileBloc>().add(UpdateUserProfilePicture(
+                    profilePicture: _profileImage!,
+                  ));
+            }
           },
         );
       },

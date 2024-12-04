@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/auth/auth_state.dart';
 import 'package:vexora_fe/blocs/history/history_bloc.dart';
-import 'package:vexora_fe/data/models/History/history_model.dart';
+import 'package:vexora_fe/blocs/topmood/topmood_bloc.dart';
+import 'package:vexora_fe/blocs/topmood/topmood_state.dart';
 import '../../blocs/history/history_state.dart';
 import '../../core/app_export.dart';
 import 'widget/listhappy_one_item_widget.dart';
@@ -91,27 +92,29 @@ class HomepageInitialState extends State<HomepageInitial> {
             ),
           ),
           SizedBox(height: 5.h),
-          // Menggunakan BlocBuilder untuk mengambil data mood
           Container(
             margin: EdgeInsets.symmetric(horizontal: 42.h),
             width: double.maxFinite,
-            child: BlocBuilder<HistoryBloc, HistoryState>(
-              builder: (context, state) {
-                if (state is HistorySuccess) {
-                  // Menghitung dan mengelompokkan mood terbanyak
-                  final moodCounts = _countMood(state.history);
-                  final topMood = moodCounts.isNotEmpty
-                      ? _getTopMood(moodCounts)
-                      : 'Good'; // Default mood is 'Good'
-
-                  // Menampilkan hanya mood dengan jumlah terbanyak
-                  return ListsadOneItemWidget(
-                    moodCounts: moodCounts,
-                    topMood: topMood,
-                  );
-                }
-                return Center(child: CircularProgressIndicator());
-              },
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: BlocBuilder<MostMoodBloc, MostMoodState>(
+                builder: (context, state) {
+                  if (state is MostMoodLoading) {
+                    return CircularProgressIndicator();
+                  } else if (state is MostMoodSuccess) {
+                    return ListsadOneItemWidget(
+                        topMood: state.mood); // Gunakan mood dari state
+                  } else if (state is MostMoodFailure) {
+                    return Text(
+                      'Failed to load top mood',
+                      style: TextStyle(color: Colors.red),
+                    );
+                  } else {
+                    return ListsadOneItemWidget(
+                        topMood: 'Loading'); // Placeholder
+                  }
+                },
+              ),
             ),
           ),
           Container(
@@ -132,7 +135,7 @@ class HomepageInitialState extends State<HomepageInitial> {
                     "See all",
                     style: CustomTextStyles.bodySmallPrimary,
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -164,40 +167,6 @@ class HomepageInitialState extends State<HomepageInitial> {
         ],
       ),
     );
-  }
-
-// Fungsi untuk menghitung mood terbanyak dari history
-  Map<String, int> _countMood(List<History> history) {
-    final moodCounts = <String, int>{
-      'Good': 0,
-      'Angry': 0,
-      'Sad': 0,
-      'Neutral': 0,
-    };
-
-    for (var item in history) {
-      switch (item.mood) {
-        case 'Good':
-          moodCounts['Good'] = moodCounts['Good']! + 1;
-          break;
-        case 'Angry':
-          moodCounts['Angry'] = moodCounts['Angry']! + 1;
-          break;
-        case 'Sad':
-          moodCounts['Sad'] = moodCounts['Sad']! + 1;
-          break;
-        case 'Neutral':
-          moodCounts['Neutral'] = moodCounts['Neutral']! + 1;
-          break;
-      }
-    }
-
-    return moodCounts;
-  }
-
-// Fungsi untuk mendapatkan mood terbanyak
-  String _getTopMood(Map<String, int> moodCounts) {
-    return moodCounts.entries.reduce((a, b) => a.value > b.value ? a : b).key;
   }
 
   // section widget

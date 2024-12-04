@@ -10,12 +10,12 @@ import '../data/models/dto/Request/userProfileUpdate_dto.dart';
 class UserProfileController {
   final Logger _logger = Logger('UserProfileController');
 
-  static const String _baseUrl = 'http://192.168.245.249:5555/api/v1';
+  static const String _baseUrl = 'http://192.168.84.249:5555/api/v1';
 
   Future<Either<String, User>> user() async {
     try {
       _logger.info('user');
-      final url = Uri.parse('$_baseUrl/user?refresh=true');
+      final url = Uri.parse('$_baseUrl/user');
       final prefs = await SharedPreferences.getInstance();
       final authData = prefs.getString('auth_data');
       print('token');
@@ -65,9 +65,9 @@ class UserProfileController {
       );
 
       if (response.statusCode == 200) {
-        return Right(null);
+        return const Right(null);
       } else {
-        return Left('Failed to update user profile');
+        return const Left('Failed to update user profile');
       }
     } catch (error) {
       return Left(error.toString());
@@ -83,6 +83,7 @@ class UserProfileController {
       final accessToken = jsonDecode(authData!)['access_token'];
 
       var request = http.MultipartRequest('PUT', url)
+        ..headers['Content-Type'] = 'application/json'
         ..headers['Authorization'] = 'Bearer $accessToken'
         ..files.add(await http.MultipartFile.fromPath(
           'image',
@@ -94,7 +95,7 @@ class UserProfileController {
       if (response.statusCode == 200) {
         final responseBody = await http.Response.fromStream(response);
         return Right(User.fromJson(jsonDecode(responseBody.body)['data']));
-      } else {
+      } else {  
         final responseBody = await http.Response.fromStream(response);
         final errorMessage = jsonDecode(responseBody.body)['message'];
         return Left(errorMessage ?? 'Failed to update profile picture');

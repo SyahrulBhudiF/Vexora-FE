@@ -9,7 +9,3 @@ abstract class HistoryEvent extends Equatable {
 class HistoryGetEvent extends HistoryEvent {
   const HistoryGetEvent();
 }
-
-class CountMoodEvent extends HistoryEvent {
-  const CountMoodEvent();
-}

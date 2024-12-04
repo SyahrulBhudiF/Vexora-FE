@@ -9,6 +9,7 @@ import 'package:vexora_fe/widget/custom_buttom_app_bar.dart';
 import '../presentation/history_screen/history_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
 import '../presentation/otp_screen/otp_screen.dart';
+import '../presentation/playlistHistory/playlist_history.dart';
 import '../presentation/playlist_recommendation/playlist_recommendation.dart';
 import '../presentation/register/register_screen.dart';
 import '../presentation/splash_screen/splash_screen.dart';
@@ -31,6 +32,7 @@ class AppRoutes {
   static const String password = "/password";
   static const String logout = "/logout";
   static const String otpCode = "/otp_code";
+  static const String playlistHistory = "/playlist_history";
 
   static Map<String, WidgetBuilder> routes = {
     scan: (context) => const ScanScreen(),
@@ -44,6 +46,7 @@ class AppRoutes {
     history: (context) => HistoryScreen(),
     splash: (context) => const SplashScreen(),
     playlist: (context) => const PlaylistRecommendation(),
+    playlistHistory: (context) => const PlaylistHistory(),
     result: (context) => ResultScreen(),
     profile: (context) => ProfileScreen(),
     password: (context) => PasswordScreen(),
