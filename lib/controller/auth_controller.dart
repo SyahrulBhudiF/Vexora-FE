@@ -13,7 +13,7 @@ import '../data/models/dto/Request/verifyOtp_dto.dart';
 class AuthController {
   final Logger _logger = Logger('AuthController');
 
-  static const String _baseUrl = 'http://192.168.245.249:5555/api/v1';
+  static const String _baseUrl = 'http://192.168.84.249:5555/api/v1';
 
   Future<Either<String, User>> register(RegisterDto request) async {
     try {

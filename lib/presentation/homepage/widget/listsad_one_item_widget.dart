@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../core/app_export.dart';
 
 class ListsadOneItemWidget extends StatelessWidget {
-  final Map<String, int> moodCounts;
-  final String topMood; // Add topMood parameter
+  final String topMood; // Hanya gunakan topMood
 
-  const ListsadOneItemWidget(
-      {Key? key, required this.moodCounts, required this.topMood})
+  const ListsadOneItemWidget({Key? key, required this.topMood})
       : super(key: key);
 
   @override
@@ -18,26 +16,26 @@ class ListsadOneItemWidget extends StatelessWidget {
         child: Row(
           children: [
             _buildMoodColumn(
-                'Good',
-                topMood == 'Good'
+                'good',
+                topMood == 'good'
                     ? ImageConstant.imgGoodMood
                     : ImageConstant.imgNewHappy),
             SizedBox(width: 12.h),
             _buildMoodColumn(
-                'Angry',
-                topMood == 'Angry'
+                'angry',
+                topMood == 'angry'
                     ? ImageConstant.angryKuning
                     : ImageConstant.imgAngryMood),
             SizedBox(width: 12.h),
             _buildMoodColumn(
-                'Sad',
-                topMood == 'Sad'
+                'sad',
+                topMood == 'sad'
                     ? ImageConstant.sadKuning
                     : ImageConstant.imgSadMood),
             SizedBox(width: 12.h),
             _buildMoodColumn(
-                'Neutral',
-                topMood == 'Neutral'
+                'neutral',
+                topMood == 'neutral'
                     ? ImageConstant.calmKuning
                     : ImageConstant.imgCalmMood),
           ],
@@ -46,7 +44,6 @@ class ListsadOneItemWidget extends StatelessWidget {
     );
   }
 
-  // Helper method to build each mood column
   Column _buildMoodColumn(String mood, String imagePath) {
     return Column(
       children: [

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vexora_fe/blocs/ScanFace/scanFace_bloc.dart';
-import 'package:vexora_fe/blocs/UserProfile/userProfile_event.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/history/history_bloc.dart';
 import 'package:vexora_fe/blocs/history/history_event.dart';
-import 'package:vexora_fe/blocs/history/history_state.dart';
 import 'package:vexora_fe/blocs/music/music_bloc.dart';
 import 'package:vexora_fe/controller/auth_controller.dart';
 import 'package:vexora_fe/controller/change_password_controller.dart';
@@ -13,6 +11,8 @@ import 'package:vexora_fe/core/app_export.dart';
 import 'blocs/UserProfile/userProfile_bloc.dart';
 import 'blocs/random_recommendations/randomRec_bloc.dart';
 import 'blocs/random_recommendations/randomRec_event.dart';
+import 'blocs/topmood/topmood_bloc.dart';
+import 'blocs/topmood/topmood_event.dart';
 import 'controller/randomRecommendations_controller.dart';
 import 'blocs/password/password_bloc.dart';
 import 'controller/scanFace_controller.dart';
@@ -62,6 +62,11 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) =>
                   MusicBloc(historyController: HistoryController()),
+            ),
+            BlocProvider(
+              create: (context) => MostMoodBloc(
+                historyController: HistoryController(),
+              )..add(GetMostMoodEvent()),
             ),
           ],
           child: MaterialApp(

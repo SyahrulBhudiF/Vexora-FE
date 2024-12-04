@@ -10,7 +10,7 @@ import 'package:vexora_fe/data/models/dto/Responses/scanFace_response.dart';
 
 class HistoryController {
   final Logger _logger = Logger('HistoryController');
-  static const String _baseUrl = 'http://192.168.245.249:5555/api/v1';
+  static const String _baseUrl = 'http://192.168.84.249:5555/api/v1';
 
   Future<Either<String, List<History>>> getHistory() async {
     try {
@@ -62,6 +62,40 @@ class HistoryController {
         final data = List<Map<String, dynamic>>.from(parsed['data']);
         final music = data.map((json) => Track.fromJson(json)).toList();
         return Right(music);
+      } else {
+        return Left(jsonDecode(response.body)['message']);
+      }
+    } catch (e) {
+      _logger.severe("Error: $e");
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, String>> getMostMood() async {
+    try {
+      _logger.info('getMostMood');
+      final url = Uri.parse('$_baseUrl/history/most-mood');
+      final prefs = await SharedPreferences.getInstance();
+      final authData = prefs.getString('auth_data');
+      final accessToken = jsonDecode(authData!)['access_token'];
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer $accessToken",
+        },
+      );
+
+      _logger.info('Response Status: ${response.statusCode}');
+      _logger.info('Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+        if (parsed['success']) {
+          return Right(parsed['data']['mood']); // Mengambil data "mood"
+        } else {
+          return Left(parsed['message']);
+        }
       } else {
         return Left(jsonDecode(response.body)['message']);
       }

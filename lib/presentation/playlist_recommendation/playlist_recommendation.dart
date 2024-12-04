@@ -32,6 +32,18 @@ class PlaylistRecommendation extends StatelessWidget {
             color: theme.colorScheme.onPrimary,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.home,
+              color: theme.colorScheme.onPrimary,
+            ),
+            onPressed: () {
+              // Tambahkan aksi yang diinginkan saat ikon home ditekan
+              Navigator.pushNamed(context, AppRoutes.homepageInitial);
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Container(
