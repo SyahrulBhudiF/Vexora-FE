@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:vexora_fe/blocs/ScanFace/scanFace_bloc.dart';
 import 'package:vexora_fe/blocs/music/music_bloc.dart';
-import 'package:vexora_fe/data/models/Music/music_model.dart';
-import '../../blocs/ScanFace/scanFace_state.dart';
+import 'package:vexora_fe/presentation/playlistHistory/list_history_lagu.dart';
 import '../../blocs/music/music_state.dart';
 import '../../core/app_export.dart';
-import '../playlist_recommendation/widgets/listbirdsofa_item_widget.dart';
 
 class PlaylistHistory extends StatelessWidget {
   const PlaylistHistory({super.key});
@@ -77,7 +74,7 @@ class PlaylistHistory extends StatelessWidget {
                           },
                           itemBuilder: (context, index) {
                             final element = state.music[index];
-                            return ListplaylistItemWidget(data: element);
+                            return Listplaylisthistory(data: element);
                           },
                         );
                       }

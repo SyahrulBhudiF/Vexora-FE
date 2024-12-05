@@ -4,18 +4,6 @@ import 'package:vexora_fe/presentation/more_screen/more_screen.dart';
 import 'package:vexora_fe/presentation/scan/scan.dart';
 import 'package:vexora_fe/widget/custom_floating_button.dart';
 
-// class BottomNavigationBarApp extends StatelessWidget {
-//   const BottomNavigationBarApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: BottomNavigationBarNew(),
-//     );
-//   }
-// }
-
 class BottomNavigationBarNew extends StatefulWidget {
   const BottomNavigationBarNew({super.key});
 
@@ -25,8 +13,6 @@ class BottomNavigationBarNew extends StatefulWidget {
 
 class _BottomNavigationBarNew extends State<BottomNavigationBarNew> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
     const HomepageInitial(),
     const MoreScreen(),
@@ -41,8 +27,9 @@ class _BottomNavigationBarNew extends State<BottomNavigationBarNew> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

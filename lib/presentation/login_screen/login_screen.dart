@@ -71,18 +71,6 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 16.h),
                                 _buildLoginForm(context),
-                                SizedBox(height: 8.h),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(right: 10.h),
-                                    child: Text(
-                                      "Forgot Password?",
-                                      style:
-                                          CustomTextStyles.titleSmallBlack900_2,
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(height: 60.h),
                                 BlocConsumer<AuthBloc, AuthState>(
                                   listener: (context, state) {
@@ -291,7 +279,9 @@ class LoginScreen extends StatelessWidget {
                     height: 24.h,
                     width: 24.h,
                     fit: BoxFit.contain,
-                    color: _isObscured ? Colors.grey : Colors.blue, // Warna dinamis
+                    color: _isObscured
+                        ? Colors.grey
+                        : Colors.blue, // Warna dinamis
                   ),
                 ),
               ),
@@ -305,7 +295,6 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildIllustrationSection(BuildContext context) {
     return Align(

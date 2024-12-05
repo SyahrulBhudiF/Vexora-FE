@@ -10,8 +10,7 @@ class PlaylistRecommendation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: theme.colorScheme
-          .primary, // Mengatur warna latar belakang menjadi warna utama
+      backgroundColor: theme.colorScheme.primary,
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         elevation: 0,
@@ -39,7 +38,6 @@ class PlaylistRecommendation extends StatelessWidget {
               color: theme.colorScheme.onPrimary,
             ),
             onPressed: () {
-              // Tambahkan aksi yang diinginkan saat ikon home ditekan
               Navigator.pushNamed(context, AppRoutes.homepageInitial);
             },
           ),
@@ -79,14 +77,12 @@ class PlaylistRecommendation extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: state.data.recommendedTracks
-                            .length, // Pastikan itemCount sesuai dengan jumlah data
+                        itemCount: state.data.recommendedTracks.length,
                         separatorBuilder: (context, index) {
                           return SizedBox(height: 34.h);
                         },
                         itemBuilder: (context, index) {
                           final element = state.data.recommendedTracks[index];
-                          print(element.name);
                           return ListplaylistItemWidget(data: element);
                         },
                       ),
