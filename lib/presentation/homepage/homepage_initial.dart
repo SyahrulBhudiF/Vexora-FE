@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/auth/auth_state.dart';
 import 'package:vexora_fe/blocs/history/history_bloc.dart';
+import 'package:vexora_fe/blocs/random_recommendations/randomRec_bloc.dart';
 import 'package:vexora_fe/blocs/topmood/topmood_bloc.dart';
 import 'package:vexora_fe/blocs/topmood/topmood_state.dart';
 import '../../blocs/history/history_event.dart';
 import '../../blocs/history/history_state.dart';
+import '../../blocs/random_recommendations/randomRec_event.dart';
 import '../../blocs/topmood/topmood_event.dart';
 import '../../core/app_export.dart';
 import 'widget/listhappy_one_item_widget.dart';
@@ -22,68 +24,73 @@ class HomepageInitial extends StatefulWidget {
 
 class HomepageInitialState extends State<HomepageInitial> {
   @override
-  void initState() {
-    super.initState();
-    // Memanggil event untuk mendapatkan history dan top mood saat inisialisasi
+  bool get wantKeepAlive => true;
+
+  Future<void> _loadData() async {
     context.read<HistoryBloc>().add(HistoryGetEvent());
     context.read<MostMoodBloc>().add(GetMostMoodEvent());
+    context.read<PlaylistBloc>().add(LoadPlaylistsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          if (state is AuthSuccess) {
-            return Container(
-              color: theme.colorScheme.primary,
-              height: 898.h,
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 270, left: 30.h),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Row(
+    return RefreshIndicator(
+      onRefresh: _loadData,
+      child: SingleChildScrollView(
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is AuthSuccess) {
+              return Container(
+                color: theme.colorScheme.primary,
+                height: 870.h,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 260, left: 30.h),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Hello, ",
+                              style: CustomTextStyles.titleLargeMedium,
+                            ),
+                            Text(
+                              state.user.username.toString(),
+                              style: CustomTextStyles.titleLargeBold,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 550.h,
+                      width: double.maxFinite,
+                      padding: EdgeInsets.symmetric(vertical: 20.h),
+                      decoration: BoxDecoration(
+                          color: theme.colorScheme.onPrimary,
+                          borderRadius: BorderRadiusStyle.customBorderTL40),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Hello, ",
-                            style: CustomTextStyles.titleLargeMedium,
-                          ),
-                          Text(
-                            state.user.username.toString(),
-                            style: CustomTextStyles.titleLargeBold,
-                          ),
+                          SizedBox(height: 8.h),
+                          _buildTopMoodSection(context),
+                          SizedBox(height: 20.h),
+                          _buildYourPlaylistSection(context),
                         ],
                       ),
                     ),
-                  ),
-                  Container(
-                    width: double.maxFinite,
-                    padding: EdgeInsets.symmetric(vertical: 20.h),
-                    decoration: BoxDecoration(
-                        color: theme.colorScheme.onPrimary,
-                        borderRadius: BorderRadiusStyle.customBorderTL40),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 8.h),
-                        _buildTopMoodSection(context),
-                        SizedBox(height: 20.h),
-                        _buildYourPlaylistSection(context),
-                      ],
-                    ),
-                  ),
-                  _buildWelcomeSection(context),
-                ],
-              ),
-            );
-          }
-          return Container();
-        },
+                    _buildWelcomeSection(context),
+                  ],
+                ),
+              );
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
@@ -211,9 +218,9 @@ class HomepageInitialState extends State<HomepageInitial> {
               ),
             ),
           ),
-          SizedBox(
-            height: 20.h,
-          )
+          // SizedBox(
+          //   height: 20.h,
+          // )
         ],
       ),
     );
@@ -239,7 +246,7 @@ class HomepageInitialState extends State<HomepageInitial> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 100.h),
+            padding: EdgeInsets.only(top: 110.h),
             child: Align(
               alignment: Alignment.topRight,
               child: CustomImageView(

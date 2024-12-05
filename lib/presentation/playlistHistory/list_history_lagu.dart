@@ -4,9 +4,9 @@ import 'package:vexora_fe/data/models/dto/Responses/scanFace_response.dart';
 import '../../../core/app_export.dart';
 import '../../../widget/custom_icon_button.dart'; // Adjust this import path accordingly
 
-class ListplaylistItemWidget extends StatelessWidget {
+class Listplaylisthistory extends StatelessWidget {
   final Track data;
-  const ListplaylistItemWidget({super.key, required this.data});
+  const Listplaylisthistory({super.key, required this.data});
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);

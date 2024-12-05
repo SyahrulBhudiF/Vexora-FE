@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vexora_fe/blocs/random_recommendations/randomRec_bloc.dart';
 import '../../../blocs/random_recommendations/random_state.dart';
 import '../../../core/app_export.dart';
@@ -8,19 +8,19 @@ import '../../../core/app_export.dart';
 class ListplaylistgalItemWidget extends StatelessWidget {
   const ListplaylistgalItemWidget({super.key});
 
-  // Future<void> _launchURL(String url) async {
-  //   final Uri uri = Uri.parse(url); // Create a Uri object
-  //   try {
-  //     if (await canLaunchUrl(uri)) {
-  //       // Check if the URL can be launched
-  //       await launchUrl(uri); // Launch the URL
-  //     } else {
-  //       print('Could not launch $url'); // Log if the URL cannot be launched
-  //     }
-  //   } catch (e) {
-  //     print('Error launching URL: $e'); // Log any exceptions
-  //   }
-  // }
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url); // Create a Uri object
+    try {
+      if (await canLaunchUrl(uri)) {
+        // Check if the URL can be launched
+        await launchUrl(uri, mode: LaunchMode.externalApplication); // Launch the URL
+      } else {
+        print('Could not launch $url'); // Log if the URL cannot be launched
+      }
+    } catch (e) {
+      print('Error launching URL: $e'); // Log any exceptions
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +38,9 @@ class ListplaylistgalItemWidget extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(left: 10.h, right: 10.h),
                       child: GestureDetector(
-                        // onTap: () {
-                        //   _launchURL("example.com");
-                        //   print(playlist.path);
-                        // }, // Buka Spotify
+                        onTap: () {
+                          _launchURL(playlist.path); // Buka URL lagu
+                        },
                         child: Column(
                           children: [
                             CustomImageView(
