@@ -8,7 +8,8 @@ import '../data/models/dto/Request/randomRecommendations_dto.dart';
 
 class PlaylistController {
   final Logger _logger = Logger('PlaylistController');
-  static const String _baseUrl = 'http://192.168.0.165:5555/api/v1';
+
+  static const String _baseUrl = 'http://192.168.84.249:5555/api/v1';
 
   Future<Either<String, List<PlaylistDto>>> getPlaylists() async {
     try {
@@ -22,12 +23,9 @@ class PlaylistController {
         'Authorization': "Bearer $accessToken",
       });
 
-      print(response.body);
-      print(response.statusCode);
-
       if (response.statusCode == 200) {
         // Mengambil data dari key 'data' karena data playlists langsung ada di sini
-        List<dynamic> data = jsonDecode(response.body)['data']['playlists'];
+        List<dynamic> data = jsonDecode(response.body)['data']['music'];
         _logger.info(
             'Data Playlist: $data'); // Debugging untuk memastikan data yang diterima
         List<PlaylistDto> playlists =

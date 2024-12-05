@@ -7,14 +7,14 @@ import 'package:http/http.dart' as http;
 
 class ChangePasswordController {
   final Logger _logger = Logger('ChangePasswordController');
-  static const String _baseUrl = 'http://192.168.0.165:5555/api/v1';
+
+  static const String _baseUrl = 'http://192.168.84.249:5555/api/v1';
 
   Future<Either<String, String>> changePassword(
       ChangePasswordDto request) async {
     try {
       _logger.info('changePassword');
       final url = Uri.parse('$_baseUrl/user/change-password');
-      print(url);
 
       final prefs = await SharedPreferences.getInstance();
       final authData = prefs.getString('auth_data');
@@ -29,18 +29,27 @@ class ChangePasswordController {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $accessToken',
         },
+        body: jsonEncode(request.toJson()),
       );
 
+      _logger.info('Response status: ${response.statusCode}');
+      _logger.info('Response body: ${response.body}');
+
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        if (data['success'] == true) {
+        final data =
+            response.body.isNotEmpty ? jsonDecode(response.body) : null;
+        if (data != null && data['success'] == true) {
           return Right(data['message']);
         } else {
-          return Left(data['message']);
+          return Left(
+              data != null ? data['message'] : 'Unexpected error occurred.');
         }
       } else {
-        final data = jsonDecode(response.body);
-        return Left(data['message']);
+        final data =
+            response.body.isNotEmpty ? jsonDecode(response.body) : null;
+        return Left(data != null
+            ? data['message']
+            : 'Failed to change password. Server returned status code ${response.statusCode}.');
       }
     } catch (e) {
       _logger.severe("Error: $e");

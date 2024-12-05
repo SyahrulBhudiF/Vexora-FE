@@ -8,6 +8,20 @@ import '../../../core/app_export.dart';
 class ListplaylistgalItemWidget extends StatelessWidget {
   const ListplaylistgalItemWidget({super.key});
 
+  // Future<void> _launchURL(String url) async {
+  //   final Uri uri = Uri.parse(url); // Create a Uri object
+  //   try {
+  //     if (await canLaunchUrl(uri)) {
+  //       // Check if the URL can be launched
+  //       await launchUrl(uri); // Launch the URL
+  //     } else {
+  //       print('Could not launch $url'); // Log if the URL cannot be launched
+  //     }
+  //   } catch (e) {
+  //     print('Error launching URL: $e'); // Log any exceptions
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PlaylistBloc, PlaylistState>(
@@ -24,9 +38,9 @@ class ListplaylistgalItemWidget extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(left: 10.h, right: 10.h),
                       child: GestureDetector(
-                        // onTap: () async {
+                        // onTap: () {
+                        //   _launchURL("example.com");
                         //   print(playlist.path);
-                        //   await launch(playlist.path);
                         // }, // Buka Spotify
                         child: Column(
                           children: [
@@ -45,7 +59,7 @@ class ListplaylistgalItemWidget extends StatelessWidget {
                             ),
                             Text(
                               "${playlist.artist}\n", // Nama artis
-                              style: CustomTextStyles.labelLargeBlack900,
+                              style: CustomTextStyles.labelLargeGray,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),

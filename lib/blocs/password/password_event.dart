@@ -15,7 +15,7 @@ class ChangePasswordEvent extends PasswordEvent {
 
   @override
   List<Object> get props => [
-        changePasswordDto.current_password,
+        changePasswordDto.previous_password,
         changePasswordDto.new_password,
       ];
 }

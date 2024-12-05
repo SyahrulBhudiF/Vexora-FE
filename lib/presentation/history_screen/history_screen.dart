@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; // Import flutter_bloc for BlocBuilder
+import 'package:vexora_fe/blocs/history/history_bloc.dart';
 import 'package:vexora_fe/presentation/history_screen/widget/history_list_month.dart';
+import '../../blocs/history/history_state.dart';
 import '../../core/app_export.dart';
-
 import '../../widget/app_bar/custom_app_bar.dart';
-import 'widget/historylist_item_widget.dart';
+import '../homepage/widget/listhappy_one_item_widget.dart';
 
 class HistoryScreen extends StatelessWidget {
   HistoryScreen({super.key});
 
-  final List<String> dropdownItemList = ["January", "February", "March", "April"];
+  final List<String> dropdownItemList = [
+    "January",
+    "February",
+    "March",
+    "April"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +58,9 @@ class HistoryScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16.h),
-              _buildHistoryList(context),
+              Expanded(
+                child: _buildHistoryList(context),
+              ),
             ],
           ),
         ),
@@ -75,21 +84,27 @@ class HistoryScreen extends StatelessWidget {
   }
 
   Widget _buildHistoryList(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-        padding: EdgeInsets.zero,
-        physics: BouncingScrollPhysics(),
-        shrinkWrap: true,
-        separatorBuilder: (context, index) {
-          return SizedBox(
-            height: 16.h,
+    return BlocBuilder<HistoryBloc, HistoryState>(
+      builder: (context, state) {
+        if (state is HistorySuccess) {
+          return ListView.separated(
+            padding: EdgeInsets.zero,
+            physics: BouncingScrollPhysics(),
+            shrinkWrap: true,
+            separatorBuilder: (context, index) {
+              return SizedBox(
+                height: 16.h,
+              );
+            },
+            itemCount: state.history.length,
+            itemBuilder: (context, index) {
+              final history = state.history[index];
+              return ListhappyOneItemWidget(history: history);
+            },
           );
-        },
-        itemCount: 2,
-        itemBuilder: (context, index) {
-          return HistorylistItemWidget();
-        },
-      ),
+        }
+        return const SizedBox();
+      },
     );
   }
 }

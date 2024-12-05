@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:vexora_fe/blocs/ScanFace/scanFace_bloc.dart';
+import 'package:vexora_fe/blocs/ScanFace/scanFace_state.dart';
 import '../../core/app_export.dart';
 import '../../widget/app_bar/appbar_subtitle.dart';
 import '../../widget/app_bar/custom_app_bar.dart';
@@ -7,59 +11,105 @@ import '../../widget/custom_elevated_button.dart';
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
 
+  // Map mood to appropriate icon
+  String _getMoodIcon(String mood) {
+    switch (mood.toLowerCase()) {
+      case 'happy':
+        return ImageConstant.happyIcon;
+      case 'sad':
+        return ImageConstant.sadKuning;
+      case 'angry':
+        return ImageConstant.angryKuning;
+      case 'neutral':
+        return ImageConstant.calmKuning;
+      default:
+        return ImageConstant.happyIcon; // Default icon
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // final data = scanResult.data;
+    // final detectedMood = data.detectedMood ?? 'Unknown';
+    // final confidenceScore = data.confidenceScore ?? 0;
+
     return SafeArea(
-      child: Scaffold(
-        appBar: _buildAppBar(context),
-        body: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SizedBox(
-                height: 22.h,
-              ),
-              _buildMoodSection(context),
-              SizedBox(
-                height: 52.h,
-              ),
-              Expanded(
-                child: Container(
-                  width: double.maxFinite,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 24.h, vertical: 32.h),
-                  decoration: BoxDecoration(
-                    color: appTheme.gray30003.withOpacity(0.31),
-                    borderRadius: BorderRadiusStyle.customBorderTL32,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Tips",
-                        style: CustomTextStyles.titleLargeMedium,
+      child: BlocBuilder<ScanFaceBloc, ScanFaceState>(
+        builder: (context, state) {
+          if (state is ScanFaceSuccess) {
+            final data = state.data;
+            final detectedMood = data.detectedMood ?? 'Unknown';
+
+            return Scaffold(
+              appBar: _buildAppBar(context),
+              body: SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    SizedBox(height: 22.h),
+                    _buildMoodSection(context,
+                        mood: detectedMood,
+                        moodIcon: _getMoodIcon(detectedMood)),
+                    SizedBox(height: 52.h),
+                    Expanded(
+                      child: Container(
+                        width: double.maxFinite,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 24.h, vertical: 32.h),
+                        decoration: BoxDecoration(
+                          color: appTheme.gray30003.withOpacity(0.31),
+                          borderRadius: BorderRadiusStyle.customBorderTL32,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Tips",
+                              style: CustomTextStyles.titleLargeMedium,
+                            ),
+                            SizedBox(height: 10.h),
+                            Text(
+                              _getMoodTips(detectedMood),
+                              maxLines: 8,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.justify,
+                              style: theme.textTheme.titleSmall,
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        "Saat senang ya party",
-                        maxLines: 8,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.justify,
-                        style: theme.textTheme.titleSmall,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
+            );
+          }
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
       ),
     );
+  }
+
+  // Mood-specific tips
+  String _getMoodTips(String mood) {
+    switch (mood.toLowerCase()) {
+      case 'happy':
+        return "Saat senang, nikmati momen bahagia ini! Dengarkan musik yang membuatmu semakin bahagia dan berbagi kegembiraan dengan orang-orang terdekat.";
+      case 'sad':
+        return "Sedang merasa sedih? Dengarkan musik yang menenangkan, berbicara dengan teman, atau lakukan aktivitas yang kamu sukai untuk mengangkat mood.";
+      case 'angry':
+        return "Jika sedang marah, cobalah menenangkan diri dengan musik yang meredakan emosi. Tarik nafas perlahan dan fokus pada hal-hal positif.";
+      case 'neutral':
+        return "Mood netral adalah kesempatan untuk mengeksplorasi perasaan baru. Dengarkan musik yang dapat menginspirasi dan memotivasi.";
+      default:
+        return "Setiap mood memiliki keunikannya sendiri. Nikmati momen ini dan dengarkan musik yang sesuai dengan perasaanmu.";
+    }
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
@@ -71,7 +121,8 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMoodSection(BuildContext context) {
+  Widget _buildMoodSection(BuildContext context,
+      {required String mood, required String moodIcon}) {
     return Container(
       width: double.maxFinite,
       margin: EdgeInsets.only(left: 24.h, right: 36.h),
@@ -82,7 +133,7 @@ class ResultScreen extends StatelessWidget {
             child: Row(
               children: [
                 CustomImageView(
-                  imagePath: ImageConstant.happyIcon,
+                  imagePath: moodIcon,
                   height: 120.h,
                   width: 120.h,
                 ),
@@ -122,14 +173,15 @@ class ResultScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 2.h),
                               child: Text(
-                                "09.10 12 April 2024",
+                                DateFormat('HH.mm dd MMMM yyyy')
+                                    .format(DateTime.now()),
                                 style: CustomTextStyles.labelMediumOnPrimary_1,
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 16.h),
                               child: Text(
-                                "Happy",
+                                mood,
                                 style: CustomTextStyles.labelMediumOnPrimary_1,
                               ),
                             ),

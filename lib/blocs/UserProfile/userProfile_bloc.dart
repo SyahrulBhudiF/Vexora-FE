@@ -16,6 +16,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       : super(UserProfileInitial()) {
     on<FetchUserProfile>(_onFetchUserProfile);
     on<UpdateUserProfile>(_onUpdateUserProfile);
+    on<UpdateUserProfilePicture>(_onUpdateUserProfilePicture);
   }
 
   void _onFetchUserProfile(
@@ -36,8 +37,15 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
 
   void _onUpdateUserProfile(
       UpdateUserProfile event, Emitter<UserProfileState> emit) async {
+    User _user = User();
+
+    if (state is UserProfileLoaded) {
+      // Jika sebelumnya sudah dimuat, ambil data user yang ada
+      _user = (state as UserProfileLoaded).user;
+    }
+
     emit(UserProfileUpdating());
-    final Either<String, User> result =
+    final result =
         await userProfileController.updateProfile(event.userProfileUpdateDto);
 
     result.fold(
@@ -46,7 +54,26 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         emit(UserProfileUpdateError(message: failure));
       },
       (user) {
-        emit(UserProfileUpdated(user: user));
+        _user.username = event.userProfileUpdateDto.username;
+        _user.name = event.userProfileUpdateDto.name;
+        emit(UserProfileLoaded(user: _user));
+      },
+    );
+  }
+
+  void _onUpdateUserProfilePicture(
+      UpdateUserProfilePicture event, Emitter<UserProfileState> emit) async {
+    emit(UserProfileUpdating());
+    final Either<String, User> result =
+        await userProfileController.updateProfilePicture(event.profilePicture);
+
+    result.fold(
+      (failure) {
+        _logger.severe("Error: $failure");
+        emit(UserProfileUpdateError(message: failure));
+      },
+      (user) {
+        emit(UserProfileLoaded(user: user));
       },
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vexora_fe/blocs/ScanFace/scanFace_bloc.dart';
+import '../../blocs/ScanFace/scanFace_state.dart';
 import '../../core/app_export.dart';
 import 'widgets/listbirdsofa_item_widget.dart';
 
@@ -30,6 +32,18 @@ class PlaylistRecommendation extends StatelessWidget {
             color: theme.colorScheme.onPrimary,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.home,
+              color: theme.colorScheme.onPrimary,
+            ),
+            onPressed: () {
+              // Tambahkan aksi yang diinginkan saat ikon home ditekan
+              Navigator.pushNamed(context, AppRoutes.homepageInitial);
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Container(
@@ -57,19 +71,29 @@ class PlaylistRecommendation extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 34.h),
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.zero,
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 3,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 34.h);
-                  },
-                  itemBuilder: (context, index) {
-                    return ListplaylistItemWidget();
-                  },
-                ),
+              BlocBuilder<ScanFaceBloc, ScanFaceState>(
+                builder: (context, state) {
+                  if (state is ScanFaceSuccess) {
+                    return Expanded(
+                      child: ListView.separated(
+                        padding: EdgeInsets.zero,
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: state.data.recommendedTracks
+                            .length, // Pastikan itemCount sesuai dengan jumlah data
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: 34.h);
+                        },
+                        itemBuilder: (context, index) {
+                          final element = state.data.recommendedTracks[index];
+                          print(element.name);
+                          return ListplaylistItemWidget(data: element);
+                        },
+                      ),
+                    );
+                  }
+                  return SizedBox();
+                },
               ),
             ],
           ),

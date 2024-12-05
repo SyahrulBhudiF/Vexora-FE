@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/auth/auth_state.dart';
+import 'package:vexora_fe/blocs/history/history_bloc.dart';
+import 'package:vexora_fe/blocs/topmood/topmood_bloc.dart';
+import 'package:vexora_fe/blocs/topmood/topmood_state.dart';
+import '../../blocs/history/history_state.dart';
 import '../../core/app_export.dart';
 import 'widget/listhappy_one_item_widget.dart';
 import 'widget/listplaylistgal_item_widget.dart';
@@ -89,15 +93,30 @@ class HomepageInitialState extends State<HomepageInitial> {
           ),
           SizedBox(height: 5.h),
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 42.h),
-              width: double.maxFinite,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child:
-                    Wrap(direction: Axis.horizontal, spacing: 10.h, children: [
-                  ListsadOneItemWidget(),
-                ]),
-              )),
+            margin: EdgeInsets.symmetric(horizontal: 42.h),
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: BlocBuilder<MostMoodBloc, MostMoodState>(
+                builder: (context, state) {
+                  if (state is MostMoodLoading) {
+                    return CircularProgressIndicator();
+                  } else if (state is MostMoodSuccess) {
+                    return ListsadOneItemWidget(
+                        topMood: state.mood); // Gunakan mood dari state
+                  } else if (state is MostMoodFailure) {
+                    return Text(
+                      'Failed to load top mood',
+                      style: TextStyle(color: Colors.red),
+                    );
+                  } else {
+                    return ListsadOneItemWidget(
+                        topMood: 'Loading'); // Placeholder
+                  }
+                },
+              ),
+            ),
+          ),
           Container(
             width: double.maxFinite,
             margin: EdgeInsets.only(right: 14.h),
@@ -123,18 +142,28 @@ class HomepageInitialState extends State<HomepageInitial> {
           SizedBox(
             height: 6.h,
           ),
-          ListView.separated(
-            padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 16.h);
+          BlocBuilder<HistoryBloc, HistoryState>(
+            builder: (context, state) {
+              if (state is HistorySuccess) {
+                return ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 16.h);
+                  },
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    final history = state.history[index];
+                    return ListhappyOneItemWidget(
+                      history: history,
+                    );
+                  },
+                );
+              }
+              return SizedBox();
             },
-            itemCount: 2,
-            itemBuilder: (context, index) {
-              return ListhappyOneItemWidget();
-            },
-          )
+          ),
         ],
       ),
     );
@@ -154,7 +183,7 @@ class HomepageInitialState extends State<HomepageInitial> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Your Playlist",
+                      "Random Music",
                       style: theme.textTheme.titleMedium,
                     ),
                   ])),

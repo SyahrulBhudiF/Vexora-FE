@@ -14,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
       this.textStyle,
       this.obscureText = false,
       this.readOnly = false,
+      this.enabled = true, // Tambahkan properti enabled
       this.onTap,
       this.textInputAction = TextInputAction.next,
       this.textInputType = TextInputType.text,
@@ -40,6 +41,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextStyle? textStyle;
   final bool? obscureText;
   final bool? readOnly;
+  final bool? enabled; // Deklarasi properti enabled
   final VoidCallback? onTap;
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
@@ -84,6 +86,7 @@ class CustomTextFormField extends StatelessWidget {
               style: textStyle ?? CustomTextStyles.titleMediumBlack900,
               obscureText: obscureText!,
               readOnly: readOnly!,
+              enabled: enabled,
               onTap: () {
                 onTap?.call();
               },
@@ -94,6 +97,7 @@ class CustomTextFormField extends StatelessWidget {
               validator: validator,
         ),
       );
+
   InputDecoration get decoration => InputDecoration(
         hintText: hintText ?? "",
         hintStyle: hintStyle ?? CustomTextStyles.titleMediumGray40001,
@@ -129,11 +133,11 @@ class CustomTextFormField extends StatelessWidget {
                 OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.h),
                 ))
-              .copyWith(
-                borderSide: BorderSide(
-                  color: theme.colorScheme.primary,
-                  width: 1,
-                ),
-              ),
-  );
+            .copyWith(
+          borderSide: BorderSide(
+            color: theme.colorScheme.primary,
+            width: 1,
+          ),
+        ),
+      );
 }

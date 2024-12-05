@@ -12,7 +12,8 @@ import '../data/models/dto/Request/verifyOtp_dto.dart';
 
 class AuthController {
   final Logger _logger = Logger('AuthController');
-  static const String _baseUrl = 'http://192.168.0.165:5555/api/v1';
+
+  static const String _baseUrl = 'http://192.168.84.249:5555/api/v1';
 
   Future<Either<String, User>> register(RegisterDto request) async {
     try {
@@ -107,6 +108,7 @@ class AuthController {
 
       // final response = await VexoraHttpClient.post('login', request.toJson());
       if (response.statusCode == 200) {
+        prefs.remove('auth_data');
         return Right(jsonDecode(response.body)['message']);
       } else {
         return Left(jsonDecode(response.body)['message']);

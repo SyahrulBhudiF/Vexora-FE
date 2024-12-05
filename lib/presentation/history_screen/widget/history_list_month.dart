@@ -7,7 +7,7 @@ class CustomDropDownWithMonthPicker extends StatefulWidget {
   final double width;
   final String hintText;
   final Alignment alignment;
-  final List<String> items;
+  final List items;
   final Widget prefix;
   final BoxConstraints prefixConstraint;
   final EdgeInsets contentPadding;
@@ -30,6 +30,7 @@ class CustomDropDownWithMonthPicker extends StatefulWidget {
 
 class _CustomDropDownWithMonthPickerState
     extends State<CustomDropDownWithMonthPicker> {
+  // Corrected: Specify the type here
   String? selectedMonth;
 
   @override
@@ -50,7 +51,7 @@ class _CustomDropDownWithMonthPickerState
         }
       },
       child: Container(
-        width: widget.width,
+        width: widget.width, // Correct usage of widget here
         padding: widget.contentPadding,
         alignment: widget.alignment,
         decoration: BoxDecoration(

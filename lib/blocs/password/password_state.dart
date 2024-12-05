@@ -14,11 +14,11 @@ class PasswordInitial extends PasswordState {}
 class PasswordLoading extends PasswordState {}
 
 class PasswordSuccess extends PasswordState {
-  final ChangePasswordDto changePasswordDto;
-  const PasswordSuccess({required this.changePasswordDto});
+  final String message;
+  const PasswordSuccess({required this.message});
 
   @override
-  List<Object> get props => [changePasswordDto];
+  List<Object> get props => [message];
 }
 
 class PasswordFailure extends PasswordState {

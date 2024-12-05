@@ -50,7 +50,9 @@ class CustomImageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final child = _buildWidget();
-    return alignment != null ? Align(alignment: alignment!, child: child) : child;
+    return alignment != null
+        ? Align(alignment: alignment!, child: child)
+        : child;
   }
 
   Widget _buildWidget() {

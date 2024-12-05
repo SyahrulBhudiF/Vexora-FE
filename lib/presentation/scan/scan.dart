@@ -129,11 +129,11 @@ class _ScanScreenState extends State<ScanScreen> {
                   children: [
                     Padding(padding: EdgeInsets.only(left: 30.h)),
                     GestureDetector(
-                      onTap: _pickImageFromGallery,
                       child: CustomImageView(
                         imagePath: ImageConstant.imgGalleryScan,
                         height: 50.h,
                         width: 20.h,
+                        onTap: () => _pickImageFromGallery(),
                       ),
                     ),
                     const Spacer(),
