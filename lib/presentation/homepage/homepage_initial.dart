@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/auth/auth_state.dart';
 import 'package:vexora_fe/blocs/history/history_bloc.dart';
 import 'package:vexora_fe/blocs/topmood/topmood_bloc.dart';
 import 'package:vexora_fe/blocs/topmood/topmood_state.dart';
+import '../../blocs/history/history_event.dart';
 import '../../blocs/history/history_state.dart';
+import '../../blocs/topmood/topmood_event.dart';
 import '../../core/app_export.dart';
 import 'widget/listhappy_one_item_widget.dart';
 import 'widget/listplaylistgal_item_widget.dart';
@@ -19,6 +22,14 @@ class HomepageInitial extends StatefulWidget {
 
 class HomepageInitialState extends State<HomepageInitial> {
   @override
+  void initState() {
+    super.initState();
+    // Memanggil event untuk mendapatkan history dan top mood saat inisialisasi
+    context.read<HistoryBloc>().add(HistoryGetEvent());
+    context.read<MostMoodBloc>().add(GetMostMoodEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: BlocBuilder<AuthBloc, AuthState>(
@@ -31,7 +42,7 @@ class HomepageInitialState extends State<HomepageInitial> {
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 180.h, left: 30.h),
+                    padding: EdgeInsets.only(top: 270, left: 30.h),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Row(
@@ -145,20 +156,18 @@ class HomepageInitialState extends State<HomepageInitial> {
           BlocBuilder<HistoryBloc, HistoryState>(
             builder: (context, state) {
               if (state is HistorySuccess) {
-                return ListView.separated(
-                  padding: EdgeInsets.zero,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 16.h);
-                  },
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    final history = state.history[index];
-                    return ListhappyOneItemWidget(
-                      history: history,
-                    );
-                  },
+                if (state.history.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'Belum ada mood silahkan scan wajah dulu',
+                      style: theme.textTheme.bodyLarge
+                          ?.copyWith(color: Colors.grey),
+                    ),
+                  );
+                }
+                final history = state.history.first;
+                return ListhappyOneItemWidget(
+                  history: history,
                 );
               }
               return SizedBox();
@@ -230,7 +239,7 @@ class HomepageInitialState extends State<HomepageInitial> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 20.h),
+            padding: EdgeInsets.only(top: 100.h),
             child: Align(
               alignment: Alignment.topRight,
               child: CustomImageView(

@@ -30,4 +30,3 @@ class MostMoodBloc extends Bloc<MostMoodEvent, MostMoodState> {
     });
   }
 }
-

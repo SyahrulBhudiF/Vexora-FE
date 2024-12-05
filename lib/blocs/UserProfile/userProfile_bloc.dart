@@ -40,7 +40,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     User _user = User();
 
     if (state is UserProfileLoaded) {
-      // Jika sebelumnya sudah dimuat, ambil data user yang ada
+      // Jika sebelumnya   sudah dimuat, ambil data user yang ada
       _user = (state as UserProfileLoaded).user;
     }
 
