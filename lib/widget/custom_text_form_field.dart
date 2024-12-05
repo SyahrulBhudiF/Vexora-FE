@@ -81,7 +81,7 @@ class CustomTextFormField extends StatelessWidget {
                 }
               },
               autofocus: autofocus!,
-              style: textStyle ?? CustomTextStyles.titleMediumGray40001,
+              style: textStyle ?? CustomTextStyles.titleMediumBlack900,
               obscureText: obscureText!,
               readOnly: readOnly!,
               onTap: () {
