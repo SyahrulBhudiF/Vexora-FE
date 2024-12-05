@@ -89,7 +89,7 @@ class MoreScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CustomImageView(
-                    imagePath: ImageConstant.logout,
+                    imagePath: ImageConstant.history,
                     height: 22.h,
                     width: 26.h,
                   ),
@@ -129,8 +129,8 @@ class MoreScreen extends StatelessWidget {
                 children: [
                   CustomImageView(
                     imagePath: ImageConstant.password,
-                    height: 22.h,
-                    width: 26.h,
+                    height: 12.h,
+                    width: 16.h,
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 16.h),

@@ -72,29 +72,29 @@ class CustomTextFormField extends StatelessWidget {
         decoration: boxDecoration,
         child: TextFormField(
           scrollPadding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          controller: controller,
-          focusNode: focusNode,
-          onTapOutside: (event) {
-            if (focusNode != null) {
-              focusNode?.unfocus();
-            } else {
-              FocusManager.instance.primaryFocus?.unfocus();
-            }
-          },
-          autofocus: autofocus!,
-          style: textStyle ?? CustomTextStyles.titleMediumGray40001,
-          obscureText: obscureText!,
-          readOnly: readOnly!,
-          enabled: enabled, // Tambahkan properti enabled ke TextFormField
-          onTap: () {
-            onTap?.call();
-          },
-          textInputAction: textInputAction,
-          keyboardType: textInputType,
-          maxLines: maxLines ?? 1,
-          decoration: decoration,
-          validator: validator,
+              EdgeInsets.only(bottom: MediaQuery.of(context). viewInsets.bottom),
+              controller: controller,
+              focusNode: focusNode,
+              onTapOutside: (event) {
+                if (focusNode != null) {
+                  focusNode?.unfocus();
+                } else {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                }
+              },
+              autofocus: autofocus!,
+              style: textStyle ?? CustomTextStyles.titleMediumBlack900,
+              obscureText: obscureText!,
+              readOnly: readOnly!,
+              enabled: enabled,
+              onTap: () {
+                onTap?.call();
+              },
+              textInputAction: textInputAction,
+              keyboardType: textInputType,
+              maxLines: maxLines ?? 1,
+              decoration: decoration,
+              validator: validator,
         ),
       );
 

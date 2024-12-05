@@ -247,56 +247,65 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _buildLoginForm(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Username",
-            style: theme.textTheme.titleMedium,
-          ),
-          SizedBox(height: 4.h),
-          CustomTextFormField(
-            controller: userNameController,
-            fillColor: Colors.white,
-            hintText: "Enter your username",
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.h,
-              vertical: 16.h,
+    bool _isObscured = true; // Variabel untuk mengontrol visibilitas password
+
+    return StatefulBuilder(
+      builder: (context, setState) => SizedBox(
+        width: double.maxFinite,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Username",
+              style: theme.textTheme.titleMedium,
             ),
-          ),
-          SizedBox(height: 14.h),
-          Text(
-            "Password",
-            style: theme.textTheme.titleMedium,
-          ),
-          SizedBox(height: 8.h),
-          CustomTextFormField(
-            controller: passwordController,
-            fillColor: Colors.white,
-            hintText: "Enter your password",
-            textInputAction: TextInputAction.done,
-            textInputType: TextInputType.visiblePassword,
-            suffix: Container(
-              margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
-              child: CustomImageView(
-                imagePath: ImageConstant.visiblePassword,
-                height: 24.h,
-                width: 24.h,
-                fit: BoxFit.contain,
+            SizedBox(height: 4.h),
+            CustomTextFormField(
+              controller: userNameController,
+              fillColor: Colors.white,
+              hintText: "Enter your username",
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 12.h,
+                vertical: 16.h,
               ),
             ),
-            suffixConstraints: BoxConstraints(
-              maxHeight: 56.h,
+            SizedBox(height: 14.h),
+            Text(
+              "Password",
+              style: theme.textTheme.titleMedium,
             ),
-            obscureText: true,
-            contentPadding: EdgeInsets.fromLTRB(12.h, 16.h, 30.h, 16.h),
-          ),
-        ],
+            SizedBox(height: 8.h),
+            CustomTextFormField(
+              controller: passwordController,
+              fillColor: Colors.white,
+              hintText: "Enter your password",
+              textInputAction: TextInputAction.done,
+              textInputType: TextInputType.visiblePassword,
+              obscureText: _isObscured,
+              suffix: GestureDetector(
+                onTap: () => setState(() => _isObscured = !_isObscured),
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
+                  child: CustomImageView(
+                    imagePath: ImageConstant.visiblePassword,
+                    height: 24.h,
+                    width: 24.h,
+                    fit: BoxFit.contain,
+                    color: _isObscured ? Colors.grey : Colors.blue, // Warna dinamis
+                  ),
+                ),
+              ),
+              suffixConstraints: BoxConstraints(
+                maxHeight: 56.h,
+              ),
+              contentPadding: EdgeInsets.fromLTRB(12.h, 16.h, 30.h, 16.h),
+            ),
+          ],
+        ),
       ),
     );
   }
+
 
   Widget _buildIllustrationSection(BuildContext context) {
     return Align(

@@ -202,31 +202,40 @@ class RegisterScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildPasswordInput(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 4.h),
-      child: CustomTextFormField(
-        fillColor: Colors.white,
-        controller: passwordInputController,
-        hintText: "Enter your password",
-        textInputAction: TextInputAction.done,
-        textInputType: TextInputType.visiblePassword,
-        obscureText: true,
-        contentPadding: EdgeInsets.fromLTRB(12.h, 16.h, 30.h, 16.h),
-        suffix: Container(
-          margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
-          child: CustomImageView(
-            imagePath: ImageConstant.visiblePassword,
-            height: 24.h,
-            width: 24.h,
-            fit: BoxFit.contain,
+    bool _isObscured = true; // Variabel untuk mengontrol visibilitas password
+
+    return StatefulBuilder(
+      builder: (context, setState) => Padding(
+        padding: EdgeInsets.only(right: 4.h),
+        child: CustomTextFormField(
+          fillColor: Colors.white,
+          controller: passwordInputController,
+          hintText: "Enter your password",
+          textInputAction: TextInputAction.done,
+          textInputType: TextInputType.visiblePassword,
+          obscureText: _isObscured,
+          contentPadding: EdgeInsets.fromLTRB(12.h, 16.h, 30.h, 16.h),
+          suffix: GestureDetector(
+            onTap: () => setState(() => _isObscured = !_isObscured),
+            child: Container(
+              margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
+              child: CustomImageView(
+                imagePath: ImageConstant.visiblePassword,
+                height: 24.h,
+                width: 24.h,
+                fit: BoxFit.contain,
+                color: _isObscured ? Colors.grey : Colors.blue, // Warna dinamis
+              ),
+            ),
           ),
-        ),
-        suffixConstraints: BoxConstraints(
-          maxHeight: 56.h,
+          suffixConstraints: BoxConstraints(
+            maxHeight: 56.h,
+          ),
         ),
       ),
     );
   }
+
 
   /// Section Widget
   Widget _buildEmailInput(BuildContext context) {
