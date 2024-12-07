@@ -25,5 +25,26 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         emit(HistoryFailure(message: e.toString()));
       }
     });
+
+    on<HistoryFilterByDateEvent>((event, emit) async {
+      _logger.info("Filter by date event: $event");
+      emit(HistoryLoading());
+      try {
+        final response = await historyController.getHistory();
+        response.fold(
+          (l) => emit(HistoryFailure(message: l)),
+          (r) {
+            final filteredHistory = r.where((history) {
+              return history.createdAt.day == event.date.day &&
+                  history.createdAt.month == event.date.month;
+            }).toList();
+            emit(HistorySuccess(history: filteredHistory));
+          },
+        );
+      } catch (e) {
+        _logger.severe("Error: $e");
+        emit(HistoryFailure(message: e.toString()));
+      }
+    });
   }
 }

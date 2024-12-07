@@ -6,4 +6,11 @@ abstract class MostMoodEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetMostMoodEvent extends MostMoodEvent {}
+class GetMostMoodEvent extends MostMoodEvent {
+  final String userId;
+
+  GetMostMoodEvent(this.userId);
+
+  @override
+  List<Object?> get props => [userId];
+}

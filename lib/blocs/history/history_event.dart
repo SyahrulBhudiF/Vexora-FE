@@ -9,3 +9,12 @@ abstract class HistoryEvent extends Equatable {
 class HistoryGetEvent extends HistoryEvent {
   const HistoryGetEvent();
 }
+
+class HistoryFilterByDateEvent extends HistoryEvent {
+  final DateTime date;
+
+  const HistoryFilterByDateEvent(this.date);
+
+  @override
+  List<Object> get props => [date];
+}
