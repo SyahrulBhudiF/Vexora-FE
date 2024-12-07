@@ -22,18 +22,34 @@ class HomepageInitial extends StatefulWidget {
   HomepageInitialState createState() => HomepageInitialState();
 }
 
-class HomepageInitialState extends State<HomepageInitial> {
+class HomepageInitialState extends State<HomepageInitial>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadData(); // Load data when the widget is first created
+  }
+
   Future<void> _loadData() async {
-    context.read<HistoryBloc>().add(HistoryGetEvent());
-    context.read<MostMoodBloc>().add(GetMostMoodEvent());
-    context.read<PlaylistBloc>().add(LoadPlaylistsEvent());
+    final authState = context.read<AuthBloc>().state;
+    if (authState is AuthSuccess) {
+      final userId = authState.user.uuid;
+      if (userId != null) {
+        context.read<HistoryBloc>().add(HistoryGetEvent());
+        context.read<MostMoodBloc>().add(GetMostMoodEvent(userId));
+        context.read<PlaylistBloc>().add(LoadPlaylistsEvent());
+      } else {
+        print('Error: userId is null');
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // Ensure the mixin's functionality is retained
     return RefreshIndicator(
       onRefresh: _loadData,
       child: SingleChildScrollView(
@@ -121,10 +137,10 @@ class HomepageInitialState extends State<HomepageInitial> {
                     return CircularProgressIndicator();
                   } else if (state is MostMoodSuccess) {
                     return ListsadOneItemWidget(
-                        topMood: state.mood); // Gunakan mood dari state
+                        topMood: state.mood); // Use mood from state
                   } else if (state is MostMoodFailure) {
                     return Text(
-                      'Failed to load top mood',
+                      'Failed to load top mood: ${state.message}', // Show the error message
                       style: TextStyle(color: Colors.red),
                     );
                   } else {

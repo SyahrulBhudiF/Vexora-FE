@@ -10,6 +10,7 @@ import 'package:vexora_fe/widget/app_bar/appbar_title.dart';
 import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
 import 'package:vexora_fe/widget/custom_elevated_button.dart';
 import 'package:vexora_fe/widget/custom_text_form_field.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../blocs/UserProfile/userProfile_event.dart';
 
@@ -24,11 +25,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController nameInputController = TextEditingController();
   TextEditingController usernameInputController = TextEditingController();
   File? _profileImage; // Menyimpan gambar profil yang dipilih
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   void dispose() {
     nameInputController.dispose();
     usernameInputController.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 
@@ -46,86 +50,106 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  void _onRefresh() async {
+    // Implement your refresh logic here
+    // For example, you can dispatch an event to reload the user profile
+    context.read<UserProfileBloc>().add(FetchUserProfile());
+    _refreshController.refreshCompleted();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.colorScheme.onPrimary,
         appBar: _buildAppBar(context),
-        body: SingleChildScrollView(
-          child: Form(
-            child: Container(
-              width: double.maxFinite,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: Container(
-                      height: 84.0,
-                      width: 84.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(42.0),
-                        border: Border.all(
-                          color: theme.colorScheme.primary,
-                          width: 1.0,
-                        ),
+        body: SmartRefresher(
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          child: SingleChildScrollView(
+            child: Form(
+              child: Container(
+                width: double.maxFinite,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 24.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          _profileImage != null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  child: Image.file(
-                                    _profileImage!,
-                                    fit: BoxFit.cover,
-                                    height: 80.0,
-                                    width: 80.0,
+                      child: Container(
+                        height: 84.0,
+                        width: 84.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(42.0),
+                          border: Border.all(
+                            color: theme.colorScheme.primary,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            _profileImage != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(40.0),
+                                    child: Image.file(
+                                      _profileImage!,
+                                      fit: BoxFit.cover,
+                                      height: 80.0,
+                                      width: 80.0,
+                                    ),
+                                  )
+                                : BlocBuilder<UserProfileBloc,
+                                    UserProfileState>(
+                                    builder: (context, state) {
+                                      if (state is UserProfileLoaded) {
+                                        return CustomImageView(
+                                          imagePath: state.user.profilePicture,
+                                          fit: BoxFit.cover,
+                                          height: 80.0,
+                                          width: 80.0,
+                                          radius: BorderRadius.circular(40.0),
+                                        );
+                                      }
+                                      return Container();
+                                    },
                                   ),
-                                )
-                              : CustomImageView(
-                                  imagePath: ImageConstant.playlist,
-                                  height: 80.0,
-                                  width: 80.0,
-                                  radius: BorderRadius.circular(40.0),
-                                ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: GestureDetector(
-                              onTap:
-                                  _pickImage, // Menambahkan aksi untuk memilih gambar
-                              child: Container(
-                                height: 30.0,
-                                width: 30.0,
-                                padding: const EdgeInsets.all(4.0),
-                                decoration: BoxDecoration(
-                                    color: theme.colorScheme.primary,
-                                    shape: BoxShape.circle),
-                                child: CustomImageView(
-                                  imagePath: ImageConstant.addPhoto,
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap:
+                                    _pickImage, // Menambahkan aksi untuk memilih gambar
+                                child: Container(
+                                  height: 30.0,
+                                  width: 30.0,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                      color: theme.colorScheme.primary,
+                                      shape: BoxShape.circle),
+                                  child: CustomImageView(
+                                    imagePath: ImageConstant.addPhoto,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 30.0),
-                  _buildProfileForm(context),
-                  SizedBox(
-                    height: 68.h,
-                  ),
-                  _buildSaveButton(context),
-                ],
+                    const SizedBox(height: 30.0),
+                    _buildProfileForm(context),
+                    SizedBox(
+                      height: 68.h,
+                    ),
+                    _buildSaveButton(context),
+                  ],
+                ),
               ),
             ),
           ),
@@ -285,9 +309,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               username: usernameInputController.text,
             );
 
-            context.read<UserProfileBloc>().add(UpdateUserProfile(
-                  userProfileUpdateDto: userProfileUpdateDto,
-                ));
+            print(nameInputController.text);
+            print(usernameInputController.text);
+
+            // if (nameInputController.text.isNotEmpty &&
+            //     usernameInputController.text.isNotEmpty) {
+              context.read<UserProfileBloc>().add(UpdateUserProfile(
+                    userProfileUpdateDto: userProfileUpdateDto,
+                  ));
+            // }
 
             if (_profileImage != null) {
               context.read<UserProfileBloc>().add(UpdateUserProfilePicture(

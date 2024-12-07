@@ -1,29 +1,26 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:logging/logging.dart';
-import 'package:vexora_fe/controller/userProfile_controller.dart';
 import 'package:vexora_fe/data/models/User/user_model.dart';
+import 'package:vexora_fe/data/models/dto/Request/userProfileUpdate_dto.dart';
+import 'package:vexora_fe/blocs/UserProfile/userProfile_event.dart';
+import 'package:vexora_fe/blocs/UserProfile/userProfile_state.dart';
+import 'package:logging/logging.dart';
 
-// Import event dan state
-import 'userProfile_event.dart';
-import 'userProfile_state.dart';
+import '../../controller/userProfile_controller.dart';
 
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   final UserProfileController userProfileController;
   final Logger _logger = Logger('UserProfileBloc');
 
-  UserProfileBloc({required this.userProfileController})
-      : super(UserProfileInitial()) {
+  UserProfileBloc({required this.userProfileController}) : super(UserProfileInitial()) {
     on<FetchUserProfile>(_onFetchUserProfile);
     on<UpdateUserProfile>(_onUpdateUserProfile);
     on<UpdateUserProfilePicture>(_onUpdateUserProfilePicture);
   }
 
-  void _onFetchUserProfile(
-      FetchUserProfile event, Emitter<UserProfileState> emit) async {
+  Future<void> _onFetchUserProfile(FetchUserProfile event, Emitter<UserProfileState> emit) async {
     emit(UserProfileLoading());
-    final Either<String, User> result = await userProfileController.user();
-
+    final result = await userProfileController.user();
     result.fold(
       (failure) {
         _logger.severe("Error: $failure");
@@ -35,18 +32,16 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     );
   }
 
-  void _onUpdateUserProfile(
-      UpdateUserProfile event, Emitter<UserProfileState> emit) async {
+  Future<void> _onUpdateUserProfile(UpdateUserProfile event, Emitter<UserProfileState> emit) async {
     User _user = User();
 
     if (state is UserProfileLoaded) {
-      // Jika sebelumnya   sudah dimuat, ambil data user yang ada
+      // Jika sebelumnya sudah dimuat, ambil data user yang ada
       _user = (state as UserProfileLoaded).user;
     }
 
     emit(UserProfileUpdating());
-    final result =
-        await userProfileController.updateProfile(event.userProfileUpdateDto);
+    final result = await userProfileController.updateProfile(event.userProfileUpdateDto);
 
     result.fold(
       (failure) {
@@ -61,19 +56,34 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     );
   }
 
-  void _onUpdateUserProfilePicture(
-      UpdateUserProfilePicture event, Emitter<UserProfileState> emit) async {
+  Future<void> _onUpdateUserProfilePicture(UpdateUserProfilePicture event, Emitter<UserProfileState> emit) async {
+    User _user = User();
+
+    if (state is UserProfileLoaded) {
+      // Jika sebelumnya sudah dimuat, ambil data user yang ada
+      _user = (state as UserProfileLoaded).user;
+    }
+
     emit(UserProfileUpdating());
-    final Either<String, User> result =
-        await userProfileController.updateProfilePicture(event.profilePicture);
+    final result = await userProfileController.updateProfilePicture(event.profilePicture);
 
     result.fold(
       (failure) {
         _logger.severe("Error: $failure");
         emit(UserProfileUpdateError(message: failure));
       },
-      (user) {
-        emit(UserProfileLoaded(user: user));
+      (success) async {
+        // Fetch the latest user data after updating the profile picture
+        final userResult = await userProfileController.user();
+        userResult.fold(
+          (failure) {
+            _logger.severe("Error: $failure");
+            emit(UserProfileUpdateError(message: failure));
+          },
+          (user) {
+            emit(UserProfileLoaded(user: user));
+          },
+        );
       },
     );
   }

@@ -5,12 +5,11 @@ import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vexora_fe/data/models/History/history_model.dart';
-import 'package:vexora_fe/data/models/Music/music_model.dart';
 import 'package:vexora_fe/data/models/dto/Responses/scanFace_response.dart';
 
 class HistoryController {
   final Logger _logger = Logger('HistoryController');
-  static const String _baseUrl = 'http://192.168.84.249:5555/api/v1';
+  static const String _baseUrl = 'http://103.181.183.212:5555/api/v1';
 
   Future<Either<String, List<History>>> getHistory() async {
     try {
@@ -71,13 +70,27 @@ class HistoryController {
     }
   }
 
-  Future<Either<String, String>> getMostMood() async {
+  Future<Either<String, String>> getMostMood(String userId) async {
     try {
-      _logger.info('getMostMood');
-      final url = Uri.parse('$_baseUrl/history/most-mood');
+      final url = Uri.parse('$_baseUrl/history/most-mood?user_id=$userId');
       final prefs = await SharedPreferences.getInstance();
       final authData = prefs.getString('auth_data');
-      final accessToken = jsonDecode(authData!)['access_token'];
+
+      if (authData == null) {
+        return Left('Auth data not found');
+      }
+
+      final accessToken = jsonDecode(authData)['access_token'];
+
+      if (accessToken == null) {
+        return Left('Access token not found');
+      }
+
+      // Log the request details
+      print('Fetching most mood for user: $userId');
+      print('Request URL: $url');
+      print('Access Token: $accessToken');
+
       final response = await http.get(
         url,
         headers: {
@@ -86,21 +99,28 @@ class HistoryController {
         },
       );
 
-      _logger.info('Response Status: ${response.statusCode}');
-      _logger.info('Response Body: ${response.body}');
+      // Log the response details
+      print('Response Status: ${response.statusCode}');
+      print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
+
         if (parsed['success']) {
-          return Right(parsed['data']['mood']); // Mengambil data "mood"
+          final mood = parsed['data']['mood'];
+          print('Most mood: $mood');
+          return Right(mood);
         } else {
-          return Left(parsed['message']);
+          final message = parsed['message'] ?? 'Unknown error';
+          return Left(message);
         }
       } else {
-        return Left(jsonDecode(response.body)['message']);
+        final errorResponse = jsonDecode(response.body);
+        final message = errorResponse['message'] ?? 'Unknown error';
+        return Left(message);
       }
     } catch (e) {
-      _logger.severe("Error: $e");
+      print('Error: $e');
       return Left(e.toString());
     }
   }

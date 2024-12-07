@@ -1,6 +1,6 @@
 class User {
   String? uuid;
-  DateTime? createdAt;
+
   String? username;
   String? name;
   String? email;
@@ -10,7 +10,6 @@ class User {
 
   User({
     this.uuid,
-    this.createdAt,
     this.username,
     this.name,
     this.email,
@@ -27,7 +26,6 @@ class User {
       name: json['name'],
       email: json['email'],
       username: json['username'],
-      createdAt: DateTime.parse(json['created_at']),
       password: json['password'],
     );
   }
@@ -40,7 +38,6 @@ class User {
       'name': name,
       'email': email,
       'username': username,
-      'created_at': createdAt?.toIso8601String(),
       'password': password,
     };
   }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:month_picker_dialog/month_picker_dialog.dart'; // Import paket month_picker_dialog
 import 'package:intl/intl.dart';
-import 'package:vexora_fe/core/app_export.dart'; // Library untuk formatting tanggal
+import 'package:vexora_fe/core/app_export.dart';
 
-class CustomDropDownWithMonthPicker extends StatefulWidget {
+class CustomDropDownWithDatePicker extends StatefulWidget {
   final double width;
   final String hintText;
   final Alignment alignment;
@@ -11,8 +10,9 @@ class CustomDropDownWithMonthPicker extends StatefulWidget {
   final Widget prefix;
   final BoxConstraints prefixConstraint;
   final EdgeInsets contentPadding;
+  final Function(DateTime) onDateSelected;
 
-  const CustomDropDownWithMonthPicker({
+  const CustomDropDownWithDatePicker({
     Key? key,
     required this.width,
     required this.hintText,
@@ -21,23 +21,24 @@ class CustomDropDownWithMonthPicker extends StatefulWidget {
     required this.prefix,
     required this.prefixConstraint,
     required this.contentPadding,
+    required this.onDateSelected,
   }) : super(key: key);
 
   @override
-  _CustomDropDownWithMonthPickerState createState() =>
-      _CustomDropDownWithMonthPickerState();
+  CustomDropDownWithDatePickerState createState() =>
+      CustomDropDownWithDatePickerState();
 }
 
-class _CustomDropDownWithMonthPickerState
-    extends State<CustomDropDownWithMonthPicker> {
-  // Corrected: Specify the type here
-  String? selectedMonth;
+class CustomDropDownWithDatePickerState
+    extends State<CustomDropDownWithDatePicker> {
+  String? selectedDateText;
+  DateTime? selectedDate;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        DateTime? picked = await showMonthPicker(
+        DateTime? picked = await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
           firstDate: DateTime(2000),
@@ -46,16 +47,18 @@ class _CustomDropDownWithMonthPickerState
 
         if (picked != null) {
           setState(() {
-            selectedMonth = DateFormat('MMMM').format(picked);
+            selectedDateText = DateFormat('dd MMMM yyyy').format(picked);
+            selectedDate = picked;
           });
+          widget.onDateSelected(picked);
         }
       },
       child: Container(
-        width: widget.width, // Correct usage of widget here
+        width: widget.width,
         padding: widget.contentPadding,
         alignment: widget.alignment,
         decoration: BoxDecoration(
-          color: theme.colorScheme.primary,
+          color: Theme.of(context).primaryColor,
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -64,9 +67,10 @@ class _CustomDropDownWithMonthPickerState
             widget.prefix,
             Expanded(
               child: Text(
-                selectedMonth ?? widget.hintText,
+                selectedDateText ?? widget.hintText,
                 style: TextStyle(
-                    color: selectedMonth == null ? Colors.white : Colors.white),
+                  color: selectedDateText == null ? Colors.white : Colors.white,
+                ),
               ),
             ),
             Icon(
@@ -77,5 +81,12 @@ class _CustomDropDownWithMonthPickerState
         ),
       ),
     );
+  }
+
+  void resetDate() {
+    setState(() {
+      selectedDateText = null;
+      selectedDate = null;
+    });
   }
 }

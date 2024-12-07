@@ -10,7 +10,7 @@ import '../data/models/dto/Request/userProfileUpdate_dto.dart';
 class UserProfileController {
   final Logger _logger = Logger('UserProfileController');
 
-  static const String _baseUrl = 'http://192.168.84.249:5555/api/v1';
+  static const String _baseUrl = 'http://103.181.183.212:5555/api/v1';
 
   Future<Either<String, User>> user() async {
     try {
@@ -74,34 +74,45 @@ class UserProfileController {
     }
   }
 
-  Future<Either<String, User>> updateProfilePicture(File image) async {
-    try {
-      final url = Uri.parse('$_baseUrl/user/profile-picture');
+  Future<Either<String, void>> updateProfilePicture(File image) async {
+    const int maxRetries = 3;
+    int retryCount = 0;
 
-      final prefs = await SharedPreferences.getInstance();
-      final authData = prefs.getString('auth_data');
-      final accessToken = jsonDecode(authData!)['access_token'];
+    while (retryCount < maxRetries) {
+      try {
+        final url = Uri.parse('$_baseUrl/user/profile-picture');
 
-      var request = http.MultipartRequest('PUT', url)
-        ..headers['Content-Type'] = 'application/json'
-        ..headers['Authorization'] = 'Bearer $accessToken'
-        ..files.add(await http.MultipartFile.fromPath(
-          'image',
-          image.path,
-        ));
+        final prefs = await SharedPreferences.getInstance();
+        final authData = prefs.getString('auth_data');
+        final accessToken = jsonDecode(authData!)['access_token'];
 
-      final response = await request.send();
+        var request = http.MultipartRequest('PUT', url)
+          ..headers['Authorization'] = 'Bearer $accessToken'
+          ..files.add(await http.MultipartFile.fromPath(
+            'image',
+            image.path,
+          ));
 
-      if (response.statusCode == 200) {
-        final responseBody = await http.Response.fromStream(response);
-        return Right(User.fromJson(jsonDecode(responseBody.body)['data']));
-      } else {  
-        final responseBody = await http.Response.fromStream(response);
-        final errorMessage = jsonDecode(responseBody.body)['message'];
-        return Left(errorMessage ?? 'Failed to update profile picture');
+        final response = await request.send();
+        print('update profile picture');
+        print(response.statusCode);
+        if (response.statusCode == 200) {
+          return const Right(null);
+        } else {
+          final responseBody = await http.Response.fromStream(response);
+          final errorMessage = jsonDecode(responseBody.body)['message'];
+          return Left(errorMessage ?? 'Failed to update profile picture');
+        }
+      } catch (error) {
+        if (error is SocketException && retryCount < maxRetries - 1) {
+          retryCount++;
+          await Future.delayed(Duration(seconds: 2)); // Wait before retrying
+          continue;
+        }
+        return Left(error.toString());
       }
-    } catch (error) {
-      return Left(error.toString());
     }
+    return const Left(
+        'Failed to update profile picture after multiple attempts');
   }
 }

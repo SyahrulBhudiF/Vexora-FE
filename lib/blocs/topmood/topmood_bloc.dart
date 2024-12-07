@@ -15,13 +15,19 @@ class MostMoodBloc extends Bloc<MostMoodEvent, MostMoodState> {
       _logger.info("Get most mood event: $event");
       emit(MostMoodLoading());
       try {
-        _logger.info("Start get most mood");
-        final response = await historyController.getMostMood();
+        _logger.info("Start get most mood for userId: ${event.userId}");
+        final response = await historyController.getMostMood(event.userId);
         _logger.info("Response: $response");
 
         response.fold(
-          (failure) => emit(MostMoodFailure(message: failure)),
-          (mood) => emit(MostMoodSuccess(mood: mood)), // Emit mood
+          (failure) {
+            _logger.warning("Failed to load mood: $failure");
+            emit(MostMoodFailure(message: failure));
+          },
+          (mood) {
+            _logger.info("Successfully loaded mood: $mood");
+            emit(MostMoodSuccess(mood: mood));
+          },
         );
       } catch (e) {
         _logger.severe("Error: $e");
