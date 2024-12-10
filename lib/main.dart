@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
             theme: theme,
             title: 'Vexora',
             debugShowCheckedModeBanner: false,
-            initialRoute: AppRoutes.login,
+            initialRoute: AppRoutes.splash,
             routes: AppRoutes.routes,
           ),
         );
