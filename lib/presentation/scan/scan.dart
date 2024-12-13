@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart'
+    as img; // Import the image package for image manipulation
 import 'package:image_picker/image_picker.dart';
 import 'package:vexora_fe/presentation/scan_one/scan_one.dart';
 import 'package:vexora_fe/widget/app_bar/appbar_leading_image.dart';
@@ -17,7 +21,7 @@ class ScanScreen extends StatefulWidget {
 
 class _ScanScreenState extends State<ScanScreen> {
   late CameraController _controller;
-  int _currentCameraIndex = 0;
+  int _currentCameraIndex = 1;
   bool _isCameraInitialized = false;
   final ImagePicker _picker = ImagePicker();
 
@@ -45,13 +49,20 @@ class _ScanScreenState extends State<ScanScreen> {
       return; // Jika kamera belum siap, keluar dari fungsi
     }
     try {
-      await _controller.takePicture().then((XFile file) {
+      await _controller.takePicture().then((XFile file) async {
         if (mounted) {
+          String imagePath = file.path;
+
+          // Check if the current camera is the front camera (index 1)
+          if (_currentCameraIndex == 1) {
+            imagePath = await _flipImage(file.path);
+          }
+
           // Mengarahkan ke ScanOneScreen dan mengirimkan imagePath
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ScanOneScreen(imagePath: file.path),
+              builder: (context) => ScanOneScreen(imagePath: imagePath),
             ),
           );
         }
@@ -59,6 +70,21 @@ class _ScanScreenState extends State<ScanScreen> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<String> _flipImage(String imagePath) async {
+    final originalFile = File(imagePath);
+    final originalImage = img.decodeImage(await originalFile.readAsBytes());
+
+    if (originalImage == null) {
+      throw Exception('Failed to decode image');
+    }
+
+    final flippedImage = img.flipHorizontal(originalImage);
+    final flippedImagePath = imagePath.replaceFirst('.jpg', '_flipped.jpg');
+    await File(flippedImagePath).writeAsBytes(img.encodeJpg(flippedImage));
+
+    return flippedImagePath;
   }
 
   Future<void> _flipCamera() async {
@@ -109,7 +135,19 @@ class _ScanScreenState extends State<ScanScreen> {
           children: [
             _isCameraInitialized
                 ? Positioned.fill(
-                    child: CameraPreview(_controller),
+                    child: CameraPreview(
+                      _controller,
+                      child: CameraPreview(
+                        _controller,
+                        child: _currentCameraIndex == 1
+                            ? Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.rotationY(3.14159),
+                                child: CameraPreview(_controller),
+                              )
+                            : CameraPreview(_controller),
+                      ),
+                    ),
                   )
                 : const Center(child: CircularProgressIndicator()),
             // Bottom Bar
