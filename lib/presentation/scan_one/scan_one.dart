@@ -32,7 +32,7 @@ class ScanOneScreen extends StatelessWidget {
             }
             if (state is ScanFaceFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
+                SnackBar(content: Text("Mood is not detected")),
               );
             }
           },
