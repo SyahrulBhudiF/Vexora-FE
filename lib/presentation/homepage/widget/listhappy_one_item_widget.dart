@@ -120,11 +120,6 @@ class ListhappyOneItemWidget extends StatelessWidget {
                         builder: (context, state) {
                           if (state is MusicLoading) {
                             return CustomElevatedButton(
-                              decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(2.h),
-                              ),
-                              isDisabled: true,
                               height: 30.h,
                               width: 140.h,
                               text: 'Your Playlist',
@@ -138,7 +133,6 @@ class ListhappyOneItemWidget extends StatelessWidget {
                                 ),
                               ),
                               buttonTextStyle: theme.textTheme.labelMedium,
-                              onPressed: () {},
                             );
                           }
                           return CustomElevatedButton(

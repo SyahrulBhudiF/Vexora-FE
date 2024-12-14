@@ -224,7 +224,9 @@ class RegisterScreen extends StatelessWidget {
                 height: 24.h,
                 width: 24.h,
                 fit: BoxFit.contain,
-                color: _isObscured ? Colors.grey : Colors.blue, // Warna dinamis
+                color: _isObscured
+                    ? Colors.grey
+                    : Colors.deepPurple, // Warna dinamis
               ),
             ),
           ),
@@ -235,7 +237,6 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
-
 
   /// Section Widget
   Widget _buildEmailInput(BuildContext context) {

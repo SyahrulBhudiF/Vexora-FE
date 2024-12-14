@@ -281,7 +281,7 @@ class LoginScreen extends StatelessWidget {
                     fit: BoxFit.contain,
                     color: _isObscured
                         ? Colors.grey
-                        : Colors.blue, // Warna dinamis
+                        : Colors.deepPurple, // Warna dinamis
                   ),
                 ),
               ),
