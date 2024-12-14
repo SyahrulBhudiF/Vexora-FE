@@ -1,16 +1,19 @@
-# vexora_fe
+# VEXORA-FE
 
-A new Flutter project.
+Vexora is a mood-based music recommendation system that uses facial emotion detection to suggest personalized music
+playlists. The system leverages CNN for emotion detection
 
-## Getting Started
+## 🎯 Features
 
-This project is a starting point for a Flutter application.
+- 👤 User authentication and profile management
+- 😊 Facial emotion detection using CNN
+- 🎵 Mood-based music recommendations
+- 📝 Music history tracking
+- 🎼 Playlist management
 
-A few resources to get you started if this is your first Flutter project:
+## 🎭 Supported Mood Categories
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Happy 😊
+- Sad 😢
+- Angry 😠
+- Neutral/Calm 😐
