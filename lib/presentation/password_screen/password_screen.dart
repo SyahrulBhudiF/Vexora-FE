@@ -9,13 +9,22 @@ import 'package:vexora_fe/widget/app_bar/custom_app_bar.dart';
 import 'package:vexora_fe/widget/custom_elevated_button.dart';
 import 'package:vexora_fe/widget/custom_text_form_field.dart';
 
-class PasswordScreen extends StatelessWidget {
+class PasswordScreen extends StatefulWidget {
   PasswordScreen({super.key});
 
+  @override
+  _PasswordScreenState createState() => _PasswordScreenState();
+}
+
+class _PasswordScreenState extends State<PasswordScreen> {
   final TextEditingController previousPasswordInputController =
       TextEditingController();
   final TextEditingController newPasswordInputController =
       TextEditingController();
+
+  bool _isObscured = true;
+
+  bool _isOpen = true;
 
   @override
   Widget build(BuildContext context) {
@@ -103,34 +112,64 @@ class PasswordScreen extends StatelessWidget {
 
   Widget _buildPreviousPasswordInput(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: 4.h),
+      padding: const EdgeInsets.only(right: 4),
       child: CustomTextFormField(
         controller: previousPasswordInputController,
         fillColor: Colors.white,
         hintText: "Enter your previous password",
+        textInputAction: TextInputAction.done,
         textInputType: TextInputType.visiblePassword,
-        obscureText: true,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 12.h,
-          vertical: 16.h,
+        obscureText: _isObscured,
+        suffix: GestureDetector(
+          onTap: () => setState(() => _isObscured = !_isObscured),
+          child: Container(
+            margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
+            child: CustomImageView(
+              imagePath: ImageConstant.visiblePassword,
+              height: 24.h,
+              width: 24.h,
+              fit: BoxFit.contain,
+              color: _isObscured
+                  ? Colors.grey
+                  : Colors.deepPurple, // Warna dinamis
+            ),
+          ),
         ),
+        suffixConstraints: BoxConstraints(
+          maxHeight: 56.h,
+        ),
+        contentPadding: EdgeInsets.fromLTRB(12.h, 16.h, 30.h, 16.h),
       ),
     );
   }
 
   Widget _buildNewPasswordInput(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: 4.h),
+      padding: const EdgeInsets.only(right: 4),
       child: CustomTextFormField(
         controller: newPasswordInputController,
         fillColor: Colors.white,
         hintText: "Enter your new password",
+        textInputAction: TextInputAction.done,
         textInputType: TextInputType.visiblePassword,
-        obscureText: true,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 12.h,
-          vertical: 16.h,
+        obscureText: _isObscured,
+        suffix: GestureDetector(
+          onTap: () => setState(() => _isOpen = !_isOpen),
+          child: Container(
+            margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
+            child: CustomImageView(
+              imagePath: ImageConstant.visiblePassword,
+              height: 24.h,
+              width: 24.h,
+              fit: BoxFit.contain,
+              color: _isOpen ? Colors.grey : Colors.deepPurple, // Warna dinamis
+            ),
+          ),
         ),
+        suffixConstraints: BoxConstraints(
+          maxHeight: 56.h,
+        ),
+        contentPadding: EdgeInsets.fromLTRB(12.h, 16.h, 30.h, 16.h),
       ),
     );
   }
@@ -165,8 +204,9 @@ class PasswordScreen extends StatelessWidget {
             context.read<PasswordBloc>().add(
                   ChangePasswordEvent(
                     changePasswordDto: ChangePasswordDto(
-                        previous_password: previousPasswordInputController.text,
-                        new_password: newPasswordInputController.text),
+                      previous_password: previousPasswordInputController.text,
+                      new_password: newPasswordInputController.text,
+                    ),
                   ),
                 );
           },
