@@ -152,7 +152,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
         hintText: "Enter your new password",
         textInputAction: TextInputAction.done,
         textInputType: TextInputType.visiblePassword,
-        obscureText: _isObscured,
+        obscureText: _isOpen,
         suffix: GestureDetector(
           onTap: () => setState(() => _isOpen = !_isOpen),
           child: Container(
