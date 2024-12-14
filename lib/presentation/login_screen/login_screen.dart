@@ -236,7 +236,6 @@ class LoginScreen extends StatelessWidget {
 
   Widget _buildLoginForm(BuildContext context) {
     bool _isObscured = true; // Variabel untuk mengontrol visibilitas password
-
     return StatefulBuilder(
       builder: (context, setState) => SizedBox(
         width: double.maxFinite,
@@ -289,6 +288,19 @@ class LoginScreen extends StatelessWidget {
                 maxHeight: 56.h,
               ),
               contentPadding: EdgeInsets.fromLTRB(12.h, 16.h, 30.h, 16.h),
+            ),
+            SizedBox(height: 14.h),
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.resetpass);
+                },
+                child: Text(
+                  "Forgot Password?",
+                  style: CustomTextStyles.titleSmallBlack900_1,
+                ),
+              ),
             ),
           ],
         ),

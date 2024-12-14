@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vexora_fe/presentation/logout_dialog/logout_dialog.dart';
 import 'package:vexora_fe/presentation/password_screen/password_screen.dart';
 import 'package:vexora_fe/presentation/profile/profile_screen.dart';
+import 'package:vexora_fe/presentation/resetpass_screen/resetpass_screen.dart';
 import 'package:vexora_fe/presentation/result_screen/result_screen.dart';
 import 'package:vexora_fe/presentation/scan/scan.dart';
 import 'package:vexora_fe/presentation/scan_one/scan_one.dart';
@@ -33,6 +34,7 @@ class AppRoutes {
   static const String logout = "/logout";
   static const String otpCode = "/otp_code";
   static const String playlistHistory = "/playlist_history";
+  static const String resetpass = "/reset_password";
 
   static Map<String, WidgetBuilder> routes = {
     scan: (context) => const ScanScreen(),
@@ -52,5 +54,6 @@ class AppRoutes {
     password: (context) => PasswordScreen(),
     logout: (context) => const LogoutDialog(),
     otpCode: (context) => OtpScreen(),
+    resetpass: (context) => ResetPasswordScreen(),
   };
 }

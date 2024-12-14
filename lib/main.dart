@@ -5,9 +5,11 @@ import 'package:vexora_fe/blocs/auth/auth_bloc.dart';
 import 'package:vexora_fe/blocs/history/history_bloc.dart';
 import 'package:vexora_fe/blocs/history/history_event.dart';
 import 'package:vexora_fe/blocs/music/music_bloc.dart';
+import 'package:vexora_fe/blocs/reset_password/resetpass_bloc.dart';
 import 'package:vexora_fe/controller/auth_controller.dart';
 import 'package:vexora_fe/controller/change_password_controller.dart';
 import 'package:vexora_fe/controller/history_controller.dart';
+import 'package:vexora_fe/controller/resetpass_controller.dart';
 import 'package:vexora_fe/core/app_export.dart';
 import 'blocs/UserProfile/userProfile_bloc.dart';
 import 'blocs/random_recommendations/randomRec_bloc.dart';
@@ -50,6 +52,10 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) =>
                   PasswordBloc(passwordController: ChangePasswordController()),
+            ),
+            BlocProvider(
+              create: (context) => ResetPasswordBloc(
+                  resetpasswordController: ResetPasswordController()),
             ),
             BlocProvider(
               create: (context) =>
