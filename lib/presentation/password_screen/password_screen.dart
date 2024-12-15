@@ -24,7 +24,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   bool _isObscured = true;
 
-  bool _isOpen = true;
+  bool _isOpened = true;
 
   @override
   Widget build(BuildContext context) {
@@ -152,9 +152,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
         hintText: "Enter your new password",
         textInputAction: TextInputAction.done,
         textInputType: TextInputType.visiblePassword,
-        obscureText: _isObscured,
+        obscureText: _isOpened,
         suffix: GestureDetector(
-          onTap: () => setState(() => _isOpen = !_isOpen),
+          onTap: () => setState(() => _isOpened = !_isOpened),
           child: Container(
             margin: EdgeInsets.fromLTRB(16.h, 16.h, 30.h, 16.h),
             child: CustomImageView(
@@ -162,7 +162,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
               height: 24.h,
               width: 24.h,
               fit: BoxFit.contain,
-              color: _isOpen ? Colors.grey : Colors.deepPurple, // Warna dinamis
+              color:
+                  _isOpened ? Colors.grey : Colors.deepPurple, // Warna dinamis
             ),
           ),
         ),
