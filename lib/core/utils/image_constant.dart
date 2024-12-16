@@ -52,4 +52,5 @@ class ImageConstant {
   static String sadKuning = '$imagePath/cryKuning.svg';
   static String calmKuning = '$imagePath/calmKuning.svg';
   static String imgNewHappy = '$imagePath/newHappyGray.png';
+  static String defPro = '$imagePath/defPro.png';
 }

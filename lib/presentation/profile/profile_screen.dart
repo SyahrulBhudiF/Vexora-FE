@@ -107,7 +107,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 : BlocBuilder<UserProfileBloc,
                                     UserProfileState>(
                                     builder: (context, state) {
-                                      if (state is UserProfileLoaded) {
+                                      if (state is UserProfileLoaded &&
+                                          state.user.profilePicture != null &&
+                                          state.user.profilePicture!
+                                              .isNotEmpty) {
                                         return CustomImageView(
                                           imagePath: state.user.profilePicture,
                                           fit: BoxFit.cover,
@@ -116,7 +119,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           radius: BorderRadius.circular(40.0),
                                         );
                                       }
-                                      return Container();
+                                      return CustomImageView(
+                                        imagePath: ImageConstant.defPro,
+                                        fit: BoxFit.cover,
+                                        height: 80.0,
+                                        width: 80.0,
+                                        radius: BorderRadius.circular(40.0),
+                                      );
                                     },
                                   ),
                             Positioned(
@@ -314,9 +323,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             // if (nameInputController.text.isNotEmpty &&
             //     usernameInputController.text.isNotEmpty) {
-              context.read<UserProfileBloc>().add(UpdateUserProfile(
-                    userProfileUpdateDto: userProfileUpdateDto,
-                  ));
+            context.read<UserProfileBloc>().add(UpdateUserProfile(
+                  userProfileUpdateDto: userProfileUpdateDto,
+                ));
             // }
 
             if (_profileImage != null) {
