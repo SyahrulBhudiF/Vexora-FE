@@ -22,7 +22,7 @@ class ListhappyOneItemWidget extends StatelessWidget {
       case 'neutral':
         return ImageConstant.calmKuning;
       default:
-        return ImageConstant.happyIcon; // Default icon
+        return ImageConstant.imgNewHappy; // Default icon
     }
   }
 
