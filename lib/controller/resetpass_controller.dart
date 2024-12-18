@@ -7,7 +7,7 @@ import '../data/models/dto/Request/resetpass_dto.dart';
 class ResetPasswordController {
   final Logger _logger = Logger('ResetPasswordController');
 
-  static const String _baseUrl = 'http://103.181.183.212:5555/api/v1';
+  static const String _baseUrl = 'https://vexora.gjdev.tech/api/v1';
 
   Future<Either<String, String>> resetPassword(ResetPasswordDto request) async {
     try {

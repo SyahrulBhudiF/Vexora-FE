@@ -10,7 +10,7 @@ import 'package:vexora_fe/data/models/dto/Responses/scanFace_response.dart';
 
 class ScanFaceController {
   final Logger _logger = Logger('ScanFaceController');
-  static const String _baseUrl = 'http://103.181.183.212:5555/api/v1';
+  static const String _baseUrl = 'https://vexora.gjdev.tech/api/v1';
 
   Future<Either<String, Data>> getScanFace(ScanFaceDto request) async {
     try {
