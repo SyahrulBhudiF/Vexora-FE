@@ -9,7 +9,7 @@ import '../data/models/dto/Request/randomRecommendations_dto.dart';
 class PlaylistController {
   final Logger _logger = Logger('PlaylistController');
 
-  static const String _baseUrl = 'http://103.181.183.212:5555/api/v1';
+  static const String _baseUrl = 'https://vexora.gjdev.tech/api/v1';
 
   Future<Either<String, List<PlaylistDto>>> getPlaylists() async {
     try {
